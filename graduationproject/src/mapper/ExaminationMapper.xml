@@ -8,6 +8,9 @@
     <result column="duration" property="duration" jdbcType="INTEGER" />
     <result column="passscore" property="passscore" jdbcType="INTEGER" />
     <result column="taotiid" property="taotiid" jdbcType="INTEGER" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="po.Examination" extends="BaseResultMap" >
     <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
@@ -71,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, starttime, endtime, duration, passscore, taotiid
+    id, starttime, endtime, duration, passscore, taotiid, mid, createtime, name
   </sql>
   <sql id="Blob_Column_List" >
     introduction
@@ -127,9 +130,11 @@
   <insert id="insert" parameterType="po.Examination" >
     insert into examination (id, starttime, endtime, 
       duration, passscore, taotiid, 
+      mid, createtime, name, 
       introduction)
     values (#{id,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
       #{duration,jdbcType=INTEGER}, #{passscore,jdbcType=INTEGER}, #{taotiid,jdbcType=INTEGER}, 
+      #{mid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, 
       #{introduction,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="po.Examination" >
@@ -153,6 +158,15 @@
       <if test="taotiid != null" >
         taotiid,
       </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
       <if test="introduction != null" >
         introduction,
       </if>
@@ -175,6 +189,15 @@
       </if>
       <if test="taotiid != null" >
         #{taotiid,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="introduction != null" >
         #{introduction,jdbcType=LONGVARCHAR},
@@ -208,6 +231,15 @@
       <if test="record.taotiid != null" >
         taotiid = #{record.taotiid,jdbcType=INTEGER},
       </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
       <if test="record.introduction != null" >
         introduction = #{record.introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -224,6 +256,9 @@
       duration = #{record.duration,jdbcType=INTEGER},
       passscore = #{record.passscore,jdbcType=INTEGER},
       taotiid = #{record.taotiid,jdbcType=INTEGER},
+      mid = #{record.mid,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      name = #{record.name,jdbcType=VARCHAR},
       introduction = #{record.introduction,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -236,7 +271,10 @@
       endtime = #{record.endtime,jdbcType=TIMESTAMP},
       duration = #{record.duration,jdbcType=INTEGER},
       passscore = #{record.passscore,jdbcType=INTEGER},
-      taotiid = #{record.taotiid,jdbcType=INTEGER}
+      taotiid = #{record.taotiid,jdbcType=INTEGER},
+      mid = #{record.mid,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -259,6 +297,11 @@
       <if test="taotiid != null" >
         taotiid = #{taotiid,jdbcType=INTEGER},
       </if>
+      
+      
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="introduction != null" >
         introduction = #{introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -272,6 +315,8 @@
       duration = #{duration,jdbcType=INTEGER},
       passscore = #{passscore,jdbcType=INTEGER},
       taotiid = #{taotiid,jdbcType=INTEGER},
+      
+      name = #{name,jdbcType=VARCHAR},
       introduction = #{introduction,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -281,7 +326,21 @@
       endtime = #{endtime,jdbcType=TIMESTAMP},
       duration = #{duration,jdbcType=INTEGER},
       passscore = #{passscore,jdbcType=INTEGER},
-      taotiid = #{taotiid,jdbcType=INTEGER}
+      taotiid = #{taotiid,jdbcType=INTEGER},
+      mid = #{mid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getExamList" resultType="vo.ExamListVo">
+  	select e.*,t.name as taotiName,m.name as createuser
+  	from examination e,taoti t,manager m
+  	where e.taotiid=t.id and e.mid=m.id
+  </select>
+  <select id="getExamListByLimit" parameterType="Pagination" resultType="vo.ExamListVo">
+  	select e.*,t.name as taotiName,m.name as createuser
+  	from examination e,taoti t,manager m
+  	where e.taotiid=t.id and e.mid=m.id
+  	limit #{startPage},#{rows}
+  </select>
 </mapper>

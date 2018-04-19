@@ -27,6 +27,8 @@ public class Questions {
 
     private Integer taotiid;
 
+    private Integer mid;
+
     public Integer getId() {
         return id;
     }
@@ -121,5 +123,13 @@ public class Questions {
 
     public void setTaotiid(Integer taotiid) {
         this.taotiid = taotiid;
+    }
+
+    public Integer getMid() {
+        return mid;
+    }
+
+    public void setMid(Integer mid) {
+        this.mid = mid;
     }
 }

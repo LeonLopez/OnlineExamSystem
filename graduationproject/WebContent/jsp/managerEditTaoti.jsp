@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 
 <html lang="zh-CN">
@@ -10,10 +13,10 @@
 
 		<title>考试云平台</title>
 
-		<link rel="shortcut icon" href="https://admin.kaoshixing.com/static/base/images/new_logo.ico" />
+		<link rel="shortcut icon" href="${pageContext.request.contextPath }/images/new_logo.ico" />
 
-		<link rel="stylesheet" type="text/css" href="../boostrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="../styles/editTaoti.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/styles/editTaoti.css">
 
 	</head>
 

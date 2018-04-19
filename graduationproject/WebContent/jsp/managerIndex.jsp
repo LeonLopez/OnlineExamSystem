@@ -80,7 +80,7 @@
 	<div data-options="region:'west',title:'后台导航栏',split:true"
 		style="width: 200px">
 		<div class="easyui-accordion" data-options="fit:true">
-			<c:if test="${sessionScope.managerAuthority=='super' }">
+			<!-- <c:if test="${sessionScope.managerAuthority=='super' }">
 				<div title="管理员管理" style="padding: 10px"
 					data-options="iconCls:'icon-man'" align="center">
 					<a
@@ -89,6 +89,7 @@
 						data-options="iconCls:'icon-man',plain:true" style="width: 150px">管理员信息管理</a>
 				</div>
 			</c:if>
+			-->
 			<div title="考生管理" style="padding: 10px"
 				data-options="iconCls:'icon-group'" align="center">
 				<a
@@ -116,7 +117,7 @@
 					class="easyui-linkbutton"
 					data-options="iconCls:'icon-flow',plain:true" style="width: 150px">题库管理</a>
 				<a
-					href="javascript:openTab('考试管理','managerExaminationList.jsp','icon-definition')"
+					href="javascript:openTab('考试管理','managerExamList.jsp','icon-definition')"
 					class="easyui-linkbutton"
 					data-options="iconCls:'icon-definition',plain:true"
 					style="width: 150px">考试管理</a>

@@ -17,6 +17,8 @@ public class Studentresult {
 
     private Integer examinationid;
 
+    private String ispass;
+
     public Integer getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class Studentresult {
 
     public void setExaminationid(Integer examinationid) {
         this.examinationid = examinationid;
+    }
+
+    public String getIspass() {
+        return ispass;
+    }
+
+    public void setIspass(String ispass) {
+        this.ispass = ispass == null ? null : ispass.trim();
     }
 }

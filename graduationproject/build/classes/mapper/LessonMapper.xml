@@ -178,4 +178,7 @@
       createtime = #{createtime,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getLessonListByLimit" parameterType="Pagination" resultType="Lesson">
+  	select * from lesson limit #{startPage},#{rows}
+  </select>
 </mapper>

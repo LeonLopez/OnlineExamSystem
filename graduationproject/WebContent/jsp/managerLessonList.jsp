@@ -123,7 +123,7 @@
 <table id="tt"></table>
 <div id="tb">
 	&nbsp;<a href="javascript:openAddLessonDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加课程</a>
-	&nbsp;<a href="javascript:editLesson()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑课程</a>
+	
 	&nbsp;<a href="javascript:deleteLesson()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除课程</a>
 </div>
 <div id="dlg" align="center" class="easyui-dialog" data-options="closed:true,buttons:'#bts'" style="width: 400px;height: 200px;padding: 10px">

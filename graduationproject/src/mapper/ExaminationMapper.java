@@ -4,6 +4,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import po.Examination;
 import po.ExaminationExample;
+import po.Pagination;
+import vo.ExamListVo;
 
 public interface ExaminationMapper {
     int countByExample(ExaminationExample example);
@@ -33,4 +35,8 @@ public interface ExaminationMapper {
     int updateByPrimaryKeyWithBLOBs(Examination record);
 
     int updateByPrimaryKey(Examination record);
+
+	List<ExamListVo> getExamList();
+
+	List<ExamListVo> getExamListByLimit(Pagination pagination);
 }

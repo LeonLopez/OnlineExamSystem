@@ -2,8 +2,11 @@ package mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import po.Pagination;
 import po.Questions;
 import po.QuestionsExample;
+import vo.QuestionsListVo;
 
 public interface QuestionsMapper {
     int countByExample(QuestionsExample example);
@@ -27,4 +30,8 @@ public interface QuestionsMapper {
     int updateByPrimaryKeySelective(Questions record);
 
     int updateByPrimaryKey(Questions record);
+
+	List<QuestionsListVo> getQuestionsList();
+
+	List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination);
 }

@@ -524,6 +524,76 @@ public class StudentresultExample {
             addCriterion("examinationid not between", value1, value2, "examinationid");
             return (Criteria) this;
         }
+
+        public Criteria andIspassIsNull() {
+            addCriterion("isPass is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassIsNotNull() {
+            addCriterion("isPass is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassEqualTo(String value) {
+            addCriterion("isPass =", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassNotEqualTo(String value) {
+            addCriterion("isPass <>", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassGreaterThan(String value) {
+            addCriterion("isPass >", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassGreaterThanOrEqualTo(String value) {
+            addCriterion("isPass >=", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassLessThan(String value) {
+            addCriterion("isPass <", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassLessThanOrEqualTo(String value) {
+            addCriterion("isPass <=", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassLike(String value) {
+            addCriterion("isPass like", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassNotLike(String value) {
+            addCriterion("isPass not like", value, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassIn(List<String> values) {
+            addCriterion("isPass in", values, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassNotIn(List<String> values) {
+            addCriterion("isPass not in", values, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassBetween(String value1, String value2) {
+            addCriterion("isPass between", value1, value2, "ispass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIspassNotBetween(String value1, String value2) {
+            addCriterion("isPass not between", value1, value2, "ispass");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

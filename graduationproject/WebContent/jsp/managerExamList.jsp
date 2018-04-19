@@ -19,7 +19,7 @@
 <script type="text/javascript">
 	$(function(){
 		$("#dg").datagrid({
-			url:'${pageContext.request.contextPath}/managerGetQuestionsList.action',
+			url:'${pageContext.request.contextPath}/managerGetExamList.action',
 			pagination:true,
 			fit:true,
 			fitColumns:true,
@@ -32,7 +32,7 @@
 					checkbox:true,
 				},
 				{
-					field:'examName',
+					field:'name',
 					title:'考试名称',
 					width:100,
 					align:'center',
@@ -44,13 +44,19 @@
 					align:'center',
 				},
 				{
-					field:'totalScore',
-					title:'总分',
+					field:'duration',
+					title:'考试时长（分钟）',
+					width:100,
+					align:'center',
+				},
+				{
+					field:'passscore',
+					title:'及格分数',
 					width:50,
 					align:'center',
 				},
 				{
-					field:'startTime',
+					field:'starttime',
 					title:'开始时间',
 					width:100,
 					align:'center',
@@ -62,15 +68,16 @@
 						var h=date.getHours();
 						var min=date.getMinutes();
 						var s=date.getSeconds();
-						return y+"-"+m+"-"+d+"&nbsp;&nbsp;&nbsp;&nbsp;"+h+":"+min+":"+s;
+						return y+"-"+m+"-"+d+"&nbsp;"+h+":"+min+":"+s;
 					}
 				},
 				{
-					field:'endTime',
-					title:'开始时间',
+					field:'endtime',
+					title:'结束时间',
 					width:100,
 					align:'center',
 					formatter:function(value){
+						
 						var date=new Date(value);
 						var y=date.getFullYear();
 						var m=date.getMonth()+1;
@@ -78,11 +85,11 @@
 						var h=date.getHours();
 						var min=date.getMinutes();
 						var s=date.getSeconds();
-						return y+"-"+m+"-"+d+"&nbsp;&nbsp;&nbsp;&nbsp;"+h+":"+min+":"+s;
+						return y+"-"+m+"-"+d+"&nbsp;"+h+":"+min+":"+s;
 					}
 				},
 				{
-					field:'createUser',
+					field:'createuser',
 					title:'创建人',
 					width:50,
 					align:'center',
@@ -93,6 +100,7 @@
 					width:100,
 					align:'center',
 					formatter:function(value){
+						
 						var date=new Date(value);
 						var y=date.getFullYear();
 						var m=date.getMonth()+1;
@@ -100,22 +108,33 @@
 						var h=date.getHours();
 						var min=date.getMinutes();
 						var s=date.getSeconds();
-						return y+"-"+m+"-"+d+"&nbsp;&nbsp;&nbsp;&nbsp;"+h+":"+min+":"+s;
+						return y+"-"+m+"-"+d+"&nbsp;"+h+":"+min+":"+s;
 					}
 				}
 			]]
 		})
 	})
 	
+	function formatDate(value){
+						alert("value")
+						var date=new Date(value);
+						var y=date.getFullYear();
+						var m=date.getMonth()+1;
+						var d=date.getDate();
+						var h=date.getHours();
+						var min=date.getMinutes();
+						var s=date.getSeconds();
+						return y+"-"+m+"-"+d+" "+h+":"+min+":"+s;
+					}
+	
 	function resetValue(){
 		$("#cc2").val("");
-		$("#subject").val("");
-		$("#type").val("");
-		$("#optiond").val("");
-		$("#optionc").val("");
-		$("#optionb").val("");
-		$("#optiona").val("");
-		$("#remark").val("");
+		$("#name").val("");
+		$("#duration").val("");
+		$("#passscore").val("");
+		$("#introduction").val("");
+		$("#starttime").val("");
+		$("#endtime").val("");
 		$("#addorupdate").val("");
 		$("#id").val("");
 	}
@@ -132,9 +151,18 @@
 			$.messager.alert("系统提示","请选择要修改的数据！");
 			return;
 		}
+		//格式化日期时间
+		var starttime = selectedRow.starttime;
+		var endtime = selectedRow.endtime;
+		//修复格式化时间，上次因为格式化返回的字符串有"nbsp;",
+		//使得starttimeformat赋值给selectedRow.starttime时出现截断，使得显示没有具体的时间
+		starttimeformat = formatDate(starttime);
+		endtimeformat = formatDate(endtime);
+		selectedRow.starttime = starttimeformat;
+		selectedRow.endtime = endtimeformat;
 		$("#fm").form("load",selectedRow);
 		$("#addorupdate").val("2");
-		$("#name").attr("readonly",true);
+		$("#name").attr("readonly",false);
 		$("#dlg").dialog("open").dialog("setTitle","修改考试");
 	}
 	
@@ -147,9 +175,9 @@
 		var choice = $("#addorupdate").val();
 		var myUrl;
 		if (choice=="1") {
-			myUrl="${pageContext.request.contextPath }/managerAddQuestion.action";
+			myUrl="${pageContext.request.contextPath }/managerAddExam.action";
 		}else{
-			myUrl="${pageContext.request.contextPath }/managerUpdateQuestion.action";
+			myUrl="${pageContext.request.contextPath }/managerUpdateExam.action";
 		}
 		$("#fm").form("submit",{
 			url:myUrl,
@@ -184,7 +212,7 @@
 		$.messager.confirm("系统提示","确定要删除这"+selections.length+"条数据吗？",function(r){
 			if (r) {
 				$.ajax({
-					url:'${pageContext.request.contextPath }/managerDeleteQuestion.action',
+					url:'${pageContext.request.contextPath }/managerDeleteExam.action',
 					data:idsStr,
 					type:'post',
 					contentType:'application/json;charset=utf-8',
@@ -206,17 +234,21 @@
 <table id="dg"></table>
 <div id="tb">
 	&nbsp;<a href="javascript:openAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加考试</a>
-	&nbsp;<a href="exam_edit.htm" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑考试</a>
+	&nbsp;<a href="javascript:openUpdateDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑考试</a>
 	&nbsp;<a href="javascript:deleteQuestions()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除考试</a>
 </div>
-<!--  
+  
 <div id="dlg" class="easyui-dialog" data-options="buttons:'#bts',closed:true" style="width: 700px;height:450px">
 	<form id="fm" method="post"> 
 		<table cellpadding="10px">
 			<tr>
-				<td>所属套题</td>
+				<td>考试名称</td>
+				<td><input  id="name" name="name" class="easyui-validatebox" data-options="required:true"  style="width: 480px"></td>
+			</tr>
+			<tr>
+				<td>选用试卷</td>
 				<td><input id="cc2" class="easyui-combobox" name="taotiid"
-					data-options="textField:'name',valueField:'id',panelHeight:'auto',url:'${pageContext.request.contextPath }/managerGetTaotis.action'">
+					data-options="textField:'name',valueField:'id',panelHeight:'auto',url:'${pageContext.request.contextPath }/managerGetTaoti.action'">
 				</td>
 			</tr>
 			<tr>
@@ -228,48 +260,27 @@
 				</td>
 			</tr>
 			<tr>
-				<td>考试题目</td>
-				<td><textarea id="subject" name="subject" cols="65" rows="6"></textarea></td>
+			<td>考试时间</td>
+			<td><input class="easyui-datetimebox" name="starttime" id="starttime"
+    data-options="required:true,showSeconds:true" value="" style="width:150px">&nbsp;到&nbsp;<input class="easyui-datetimebox" name="endtime" id="endtime"
+    data-options="required:true,showSeconds:true" value="" style="width:150px"></td>
 			</tr>
 			<tr>
-				<td>试题类型</td>
-				<td>
-					<select id="type" name="type" class="easyui-combobox" data-options="panelHeight:'auto'" style="width:70px">
-						<option value="单选">单选</option>
-						<option value="多选">多选</option>
-					</select>
-				</td>
+				<td>答卷时长</td>
+				<td><input id="duration" name="duration" style="width: 60px"/>分钟</td>
 			</tr>
 			<tr>
-				<td>选项A</td>
-				<td><input  id="optiona" class="easyui-validatebox" data-options="required:true" name="optiona" style="width: 480px"></td>
+				<td>及格分数</td>
+				<td><input id="passscore" name="passscore" style="width: 60px"/>分</td>
 			</tr>
 			<tr>
-				
-				<td>选项B</td>
-				<td><input id="optionb" class="easyui-validatebox" data-options="required:true" name="optionb" style="width: 480px"></td>
+				<td>考试说明</td>
+				<td><textarea id="introduction" name="introduction" cols="65" rows="6"></textarea></td>
 			</tr>
-			<tr>
-				<td>选项C</td>
-				<td><input id="optionc" class="easyui-validatebox" data-options="required:true" name="optionc" style="width: 480px"></td>
-			</tr>
-			<tr>
-				<td>选项D</td>
-				<td><input id="optiond" class="easyui-validatebox" data-options="required:true" name="optiond" style="width: 480px"></td>
-			</tr>
-			<tr>
-				<td>正确答案</td>
-				<td>
-					A<input type="checkbox" name="answer" checked="checked" value="A">&nbsp;&nbsp;&nbsp;&nbsp;
-					B<input type="checkbox" name="answer" value="B">&nbsp;&nbsp;&nbsp;&nbsp;
-					C<input type="checkbox" name="answer" value="C">&nbsp;&nbsp;&nbsp;&nbsp;
-					D<input type="checkbox" name="answer" value="D">
-				</td>
-			</tr>
-			<tr>
-				<td>备注</td>
-				<td><input id="remark" type="text" name="note" style="width: 480px"></td>
-			</tr>
+			
+			
+			
+			
 		</table>
 	</form>
 </div>
@@ -278,6 +289,6 @@
 	<a href="javascript:addOrUpdateQuestions()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
 	<a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
 </div>
--->
+
 </body>
 </html>

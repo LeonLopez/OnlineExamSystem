@@ -11,6 +11,8 @@ public class Taoti {
 
     private Integer lessonid;
 
+    private Integer mid;
+
     public Integer getId() {
         return id;
     }
@@ -41,5 +43,13 @@ public class Taoti {
 
     public void setLessonid(Integer lessonid) {
         this.lessonid = lessonid;
+    }
+
+    public Integer getMid() {
+        return mid;
+    }
+
+    public void setMid(Integer mid) {
+        this.mid = mid;
     }
 }

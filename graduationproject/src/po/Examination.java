@@ -15,6 +15,12 @@ public class Examination {
 
     private Integer taotiid;
 
+    private Integer mid;
+
+    private Date createtime;
+
+    private String name;
+
     private String introduction;
 
     public Integer getId() {
@@ -63,6 +69,30 @@ public class Examination {
 
     public void setTaotiid(Integer taotiid) {
         this.taotiid = taotiid;
+    }
+
+    public Integer getMid() {
+        return mid;
+    }
+
+    public void setMid(Integer mid) {
+        this.mid = mid;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getIntroduction() {

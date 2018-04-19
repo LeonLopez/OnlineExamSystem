@@ -21,7 +21,7 @@
 		$("#tt").datagrid({
 			url:'${pageContext.request.contextPath}/managerStudentGetList.action',
 			pagination:true,
-			rownumbers:true,
+			rownumber:true,
 			fit:true,
 			fitColumns:true,
 			toolbar:'#tb',
@@ -75,7 +75,7 @@
 					}
 				},
 				{
-					field:'profesion',
+					field:'profession',
 					title:'专业',
 					width:150,
 					align:'center',
@@ -90,6 +90,29 @@
 			]]
 		})
 	})
+	
+	function openAddStudentDialog(){
+		
+		$("#dlg").dialog("open").dialog("setTitle","添加学生");
+	}
+	
+	function addStudent(){
+		$("#fm").form("submit",{
+			url:"${pageContext.request.contextPath }/managerAddStudent.action",
+			onSubmit:function(){
+				return $(this).form("validate");
+			},
+			success:function(result){
+				if (result=="success") {
+					$.messager.alert("系统提示","操作成功！");
+					closeDialog();
+					$("#tt").datagrid("reload");
+				}else{
+					$.messager.alert("系统提示","操作失败，请联系系统管理员！");
+				}
+			}
+		})
+	}
 	
 	function deleteStudent(){
 		var selections=$("#tt").datagrid("getSelections");
@@ -122,14 +145,56 @@
 			}
 		})
 	}
+
+	function closeDialog(){
+		$("#name").val("");
+		$("#dlg").dialog("close");
+	}
 </script>
 </head>
 <body style="margin: 1px">
 <table id="tt"></table>
 <div id="tb">
-	<a href="javascript:addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>
-	<a href="javascript:editStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
+	<a href="javascript:openAddStudentDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>
+	<a href="javascript:editStudentDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
 	<a href="javascript:deleteStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+</div>
+
+<div id="dlg" align="center" class="easyui-dialog" data-options="closed:true,buttons:'#bts'" style="width: 400px;height: 400px;padding: 10px">
+	<form id="fm" method="post"> 
+		<table cellpadding="15px">
+			<tr>
+				<td>账号</td>
+				<td><input id="name" name="name" class="easyui-validatebox" data-options="required:true"></td>
+			</tr>
+			<tr>
+				<td>密码</td>
+				<td><input id="password" name="password" class="easyui-validatebox" data-options="required:true"></td>
+			</tr>
+			<tr>
+				<td>性别</td>
+				<td>男<input type="radio" name="sex" value="男" checked>&nbsp;&nbsp;女<input type="radio" name="sex" value="女"></td>
+			</tr>
+			<tr>
+				<td>邮箱</td>
+				<td><input id="email" name="email" class="easyui-validatebox" data-options="required:true"></td>
+			</tr>
+			<tr>
+				<td>专业</td>
+				<td><input id="profession" name="profession" class="easyui-validatebox" data-options="required:true"></td>
+			</tr>
+			<tr>
+				<td>班别</td>
+				<td><input id="clazz" name="clazz" class="easyui-validatebox" data-options="required:true"></td>
+			</tr>
+			
+			
+		</table>
+	</form>
+</div>
+<div id="bts" align="center">
+	<a href="javascript:addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+	<a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
 </div>
 </body>
 </html>

@@ -4,6 +4,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import po.Studentresult;
 import po.StudentresultExample;
+import vo.QueryResultVo;
+import vo.ResultListVo;
+import vo.StudentListVo;
 
 public interface StudentresultMapper {
     int countByExample(StudentresultExample example);
@@ -27,4 +30,14 @@ public interface StudentresultMapper {
     int updateByPrimaryKeySelective(Studentresult record);
 
     int updateByPrimaryKey(Studentresult record);
+
+	List<ResultListVo> getResultList(QueryResultVo qrv);
+
+	List<ResultListVo> getResultListByLimit(QueryResultVo qrv);
+
+	List<String> getProfessionList(Integer managerId);
+
+	List<Integer> getClazzList(Integer managerId);
+
+	List<String> getExamNameList();
 }

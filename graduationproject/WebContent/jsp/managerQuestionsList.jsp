@@ -32,12 +32,6 @@
 					checkbox:true,
 				},
 				{
-					field:'lessonName',
-					title:'所属课程',
-					width:100,
-					align:'center',
-				},
-				{
 					field:'taotiName',
 					title:'试题名称',
 					width:150,
@@ -46,12 +40,24 @@
 				{
 					field:'subject',
 					title:'考试题目',
-					width:400,
+					width:500,
 					align:'center',
 				},
 				{
 					field:'type',
 					title:'试题类型',
+					width:50,
+					align:'center',
+				},
+				{
+					field:'score',
+					title:'分值',
+					width:50,
+					align:'center',
+				},
+				{
+					field:'createuser',
+					title:'创建人',
 					width:100,
 					align:'center',
 				},
@@ -79,6 +85,7 @@
 		$("#cc2").val("");
 		$("#subject").val("");
 		$("#type").val("");
+		$("#score").val("");
 		$("#optiond").val("");
 		$("#optionc").val("");
 		$("#optionb").val("");
@@ -182,9 +189,9 @@
 	<form id="fm" method="post"> 
 		<table cellpadding="10px">
 			<tr>
-				<td>所属套题</td>
+				<td>所属试题</td>
 				<td><input id="cc2" class="easyui-combobox" name="taotiid"
-					data-options="textField:'name',valueField:'id',panelHeight:'auto',url:'${pageContext.request.contextPath }/managerGetTaotis.action'">
+					data-options="textField:'name',valueField:'id',panelHeight:'auto',url:'${pageContext.request.contextPath }/managerGetTaoti.action'">
 				</td>
 			</tr>
 			<tr>
@@ -198,6 +205,7 @@
 			<tr>
 				<td>考试题目</td>
 				<td><textarea id="subject" name="subject" cols="65" rows="6"></textarea></td>
+				
 			</tr>
 			<tr>
 				<td>试题类型</td>
@@ -207,6 +215,12 @@
 						<option value="多选">多选</option>
 					</select>
 				</td>
+				
+				
+			</tr>
+			<tr>
+				<td>分值</td>
+				<td><input id="score" name="score" style="width: 60px"/></td>
 			</tr>
 			<tr>
 				<td>选项A</td>

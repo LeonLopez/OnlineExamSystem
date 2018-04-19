@@ -9,6 +9,7 @@
     <result column="restotal" property="restotal" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="examinationid" property="examinationid" jdbcType="INTEGER" />
+    <result column="isPass" property="ispass" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, sid, resingle, resmore, restotal, createtime, examinationid
+    id, sid, resingle, resmore, restotal, createtime, examinationid, isPass
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.StudentresultExample" >
     select
@@ -104,10 +105,10 @@
   <insert id="insert" parameterType="po.Studentresult" >
     insert into studentresult (id, sid, resingle, 
       resmore, restotal, createtime, 
-      examinationid)
+      examinationid, isPass)
     values (#{id,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, #{resingle,jdbcType=INTEGER}, 
       #{resmore,jdbcType=INTEGER}, #{restotal,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{examinationid,jdbcType=INTEGER})
+      #{examinationid,jdbcType=INTEGER}, #{ispass,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="po.Studentresult" >
     insert into studentresult
@@ -133,6 +134,9 @@
       <if test="examinationid != null" >
         examinationid,
       </if>
+      <if test="ispass != null" >
+        isPass,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -155,6 +159,9 @@
       </if>
       <if test="examinationid != null" >
         #{examinationid,jdbcType=INTEGER},
+      </if>
+      <if test="ispass != null" >
+        #{ispass,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,6 +195,9 @@
       <if test="record.examinationid != null" >
         examinationid = #{record.examinationid,jdbcType=INTEGER},
       </if>
+      <if test="record.ispass != null" >
+        isPass = #{record.ispass,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +211,8 @@
       resmore = #{record.resmore,jdbcType=INTEGER},
       restotal = #{record.restotal,jdbcType=INTEGER},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      examinationid = #{record.examinationid,jdbcType=INTEGER}
+      examinationid = #{record.examinationid,jdbcType=INTEGER},
+      isPass = #{record.ispass,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +238,9 @@
       <if test="examinationid != null" >
         examinationid = #{examinationid,jdbcType=INTEGER},
       </if>
+      <if test="ispass != null" >
+        isPass = #{ispass,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -237,7 +251,69 @@
       resmore = #{resmore,jdbcType=INTEGER},
       restotal = #{restotal,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      examinationid = #{examinationid,jdbcType=INTEGER}
+      examinationid = #{examinationid,jdbcType=INTEGER},
+      isPass = #{ispass,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getResultList" parameterType="vo.QueryResultVo" resultType="vo.ResultListVo">
+  	select sr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
+  	from managerstudent ms,studentresult sr,student s,examination e
+  	where ms.mid = #{managerId} and ms.sid = sr.sid and sr.sid = s.id and sr.examinationid = e.id
+  	<if test="rlv.profession!=null and rlv.profession!=''">
+  		and s.profession=#{rlv.profession}
+  	</if>
+  	<if test="rlv.clazz!=null and rlv.clazz!=''">
+  		and s.clazz=#{rlv.clazz}
+  	</if>
+  	  	<if test="rlv.sname!=null and rlv.sname!=''">
+  		and s.name=#{rlv.sname}
+  	</if>
+  	  	<if test="rlv.examname!=null and rlv.examname!=''">
+  		and e.name=#{rlv.examname}
+  	</if>
+  	<if test="rlv.ispass!=null and rlv.ispass!=''">
+  		and sr.ispass=#{rlv.ispass}
+  	</if>
+  	<if test="rlv.order!=null and rlv.order!=''">
+  		order by #{rlv.order}
+  	</if>
+  </select>
+  <select id="getResultListByLimit" parameterType="vo.QueryResultVo" resultType="vo.ResultListVo">
+  	select sr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
+  	from managerstudent ms,studentresult sr,student s,examination e
+  	where ms.mid = #{managerId} and ms.sid = sr.sid and sr.sid = s.id and sr.examinationid = e.id
+	<if test="rlv.profession!=null and rlv.profession!=''">
+  		and s.profession like "%"#{rlv.profession}"%"
+  	</if>
+  	<if test="rlv.clazz!=null and rlv.clazz!=''">
+  		and s.clazz=#{rlv.clazz}
+  	</if>
+  	  	<if test="rlv.sname!=null and rlv.sname!=''">
+  		and s.name like "%"#{rlv.sname}"%"
+  	</if>
+  	  	<if test="rlv.examname!=null and rlv.examname!=''">
+  		and e.name like "%"#{rlv.examname}"%"
+  	</if>
+  	<if test="rlv.ispass!=null and rlv.ispass!=''">
+  		and sr.ispass=#{rlv.ispass}
+  	</if>
+  	<if test="rlv.order!=null and rlv.order!=''">
+  		order by #{rlv.order}
+  	</if>
+  	limit #{pagination.startPage},#{pagination.rows}
+  	
+  </select>
+  <select id="getProfessionList" parameterType="java.lang.Integer" resultType="java.lang.String">
+  select distinct s.profession
+  from managerstudent ms,student s
+  where ms.mid=#{managerId} and ms.sid=s.id
+  </select>
+  <select id="getClazzList" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  select distinct s.clazz
+  from managerstudent ms,student s
+  where ms.mid=#{managerId} and ms.sid=s.id
+  </select>
+  <select id="getExamNameList"  resultType="java.lang.String">
+  	select distinct name from examination
+  </select>
 </mapper>

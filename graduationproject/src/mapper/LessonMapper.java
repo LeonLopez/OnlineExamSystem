@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import po.Lesson;
 import po.LessonExample;
+import po.Pagination;
 
 public interface LessonMapper {
     int countByExample(LessonExample example);
@@ -27,4 +28,6 @@ public interface LessonMapper {
     int updateByPrimaryKeySelective(Lesson record);
 
     int updateByPrimaryKey(Lesson record);
+
+	List<Lesson> getLessonListByLimit(Pagination pagination);
 }

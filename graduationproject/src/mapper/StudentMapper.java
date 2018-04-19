@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import po.Student;
 import po.StudentExample;
+import vo.StudentListVo;
 
 public interface StudentMapper {
     int countByExample(StudentExample example);
@@ -27,4 +28,10 @@ public interface StudentMapper {
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
+
+	List<Student> getStudentList(Integer managerId);
+
+	List<Student> getStudentListByLimit(StudentListVo stuListVo);
+
+	int addStudent(Student student);
 }

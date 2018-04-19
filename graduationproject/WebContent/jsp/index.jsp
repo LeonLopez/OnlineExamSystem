@@ -1,11 +1,12 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>大学生二手交易平台</title>
+    <title>课程考试系统</title>
 
     <!-- Bootstrap -->
     <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -53,7 +54,7 @@
                     id = "contentiframe"
                     name = "contentiframe"
                     scrolling="yes"
-                    src = "index.html">
+                    src = "examList.jsp">
             </iframe>
         </div>
     </div>
@@ -78,31 +79,25 @@
             $(this).css("background-color","#307ac1");
             $(this).css("color","#ffffff");
         });
-        /*首页按钮事件*/
         $("#main-btn").click(function(){
-           $("#contentiframe").attr("src","index.html");
+           $("#contentiframe").attr("src","examList.jsp");
         });
-        /*购物车按钮事件*/
         $("#cart-btn").click(function(){
-            $("#contentiframe").attr("src","index.html");
+            $("#contentiframe").attr("src","examList.jsp");
         });
-        /*个人资料按钮事件*/
         $("#psn-btn").click(function(){
-            $("#contentiframe").attr("src","personal_inf_edit.html");
+            $("#contentiframe").attr("src","scoreList.jsp");
         });
-        /*已购买按钮事件*/
         $("#pbuy-btn").click(function(){
-            $("#contentiframe").attr("src","already_purchase.php");
+            $("#contentiframe").attr("src","#");
         });
-        /*已收藏按钮事件*/
         $("#pcol-btn").click(function(){
-        	$("#contentiframe").attr("src","personal_inf_edit.html");
+            $("#contentiframe").attr("src","personal_inf_edit.jsp");
         });
        
        
-        /*退出按钮事件*/
         $("#exit-btn").click(function(){
-        	location.href = "logout.php";
+        	location.href = "logout.action";
         });
     })
 </script>

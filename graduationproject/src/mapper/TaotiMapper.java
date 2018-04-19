@@ -2,8 +2,11 @@ package mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import po.Pagination;
 import po.Taoti;
 import po.TaotiExample;
+import vo.TaotiListVo;
 
 public interface TaotiMapper {
     int countByExample(TaotiExample example);
@@ -27,4 +30,8 @@ public interface TaotiMapper {
     int updateByPrimaryKeySelective(Taoti record);
 
     int updateByPrimaryKey(Taoti record);
+
+	List<TaotiListVo> getTaotiListByLimit(Pagination pagination);
+
+	List<TaotiListVo> getTaotiList();
 }
