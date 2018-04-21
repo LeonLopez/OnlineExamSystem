@@ -333,12 +333,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getExamList" resultType="vo.ExamListVo">
-  	select e.*,t.name as taotiName,m.name as createuser
+  	select e.*,t.name as taotiName,t.totalscore,m.name as createuser
   	from examination e,taoti t,manager m
   	where e.taotiid=t.id and e.mid=m.id
   </select>
   <select id="getExamListByLimit" parameterType="Pagination" resultType="vo.ExamListVo">
-  	select e.*,t.name as taotiName,m.name as createuser
+  	select e.*,t.name as taotiName,t.totalscore,m.name as createuser
   	from examination e,taoti t,manager m
   	where e.taotiid=t.id and e.mid=m.id
   	limit #{startPage},#{rows}

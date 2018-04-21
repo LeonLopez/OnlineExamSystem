@@ -13,6 +13,8 @@ public class Taoti {
 
     private Integer mid;
 
+    private Integer totalscore;
+
     public Integer getId() {
         return id;
     }
@@ -51,5 +53,13 @@ public class Taoti {
 
     public void setMid(Integer mid) {
         this.mid = mid;
+    }
+
+    public Integer getTotalscore() {
+        return totalscore;
+    }
+
+    public void setTotalscore(Integer totalscore) {
+        this.totalscore = totalscore;
     }
 }

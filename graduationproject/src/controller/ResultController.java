@@ -38,6 +38,19 @@ public class ResultController {
 		return map;
 	}
 	
+	@RequestMapping("/getQueryResult.action")
+	public String getResultList(HttpServletRequest request) throws Exception{
+		
+		HttpSession session = request.getSession();
+		Integer studentId = (Integer) session.getAttribute("studentId");
+		List<ResultListVo> scoreList = resultService.getStuResultList(studentId);
+        request.setAttribute("scoreList", scoreList);
+		return "forward:/jsp/scoreList.jsp";
+	}
+	
+	
+	
+	
 	@RequestMapping("/managerGetProfession.action")
 	public @ResponseBody List<String> getProfessionList(HttpServletRequest request) throws Exception{
 		HttpSession session = request.getSession();

@@ -18,4 +18,7 @@ public interface ExaminationService {
 
 	void deleteExamById(int id);
 
+	Examination getExamById(Integer id);
+
+
 }

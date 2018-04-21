@@ -37,6 +37,11 @@ public class TaotiServiceImpl implements TaotiService{
 		
 		taotiMapper.deleteByPrimaryKey(id);
 	}
+
+	@Override
+	public Taoti getTaotiById(Integer taotiid) {
+		return taotiMapper.selectByPrimaryKey(taotiid);
+	}
 	
 	
 }

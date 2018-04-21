@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mapper.ExaminationMapper;
+import mapper.QuestionsMapper;
 import po.Examination;
 import po.Pagination;
+import po.Questions;
+import po.QuestionsExample;
+import po.QuestionsExample.Criteria;
 import vo.ExamListVo;
 
 @Service
@@ -15,6 +19,7 @@ public class ExaminationServiceImpl implements ExaminationService{
 	
 	@Autowired
 	private ExaminationMapper examinationMapper;
+	
 
 	@Override
 	public List<ExamListVo> getExamList() {
@@ -41,7 +46,13 @@ public class ExaminationServiceImpl implements ExaminationService{
 	public void deleteExamById(int id) {
 		examinationMapper.deleteByPrimaryKey(id);
 	}
-	
+
+	@Override
+	public Examination getExamById(Integer id) {
+		return examinationMapper.selectByPrimaryKey(id);
+	}
+
+
 	
 
 }

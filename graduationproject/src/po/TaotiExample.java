@@ -441,6 +441,66 @@ public class TaotiExample {
             addCriterion("mid not between", value1, value2, "mid");
             return (Criteria) this;
         }
+
+        public Criteria andTotalscoreIsNull() {
+            addCriterion("totalscore is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreIsNotNull() {
+            addCriterion("totalscore is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreEqualTo(Integer value) {
+            addCriterion("totalscore =", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreNotEqualTo(Integer value) {
+            addCriterion("totalscore <>", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreGreaterThan(Integer value) {
+            addCriterion("totalscore >", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("totalscore >=", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreLessThan(Integer value) {
+            addCriterion("totalscore <", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreLessThanOrEqualTo(Integer value) {
+            addCriterion("totalscore <=", value, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreIn(List<Integer> values) {
+            addCriterion("totalscore in", values, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreNotIn(List<Integer> values) {
+            addCriterion("totalscore not in", values, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreBetween(Integer value1, Integer value2) {
+            addCriterion("totalscore between", value1, value2, "totalscore");
+            return (Criteria) this;
+        }
+
+        public Criteria andTotalscoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("totalscore not between", value1, value2, "totalscore");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

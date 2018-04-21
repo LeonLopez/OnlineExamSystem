@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>高数</title>
+		<title>课程考试系统</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 		<link rel="shortcut icon" href="../images/new_logo.ico" />
@@ -22,7 +22,11 @@
 		<link rel="stylesheet" type="text/css" href="../styles/style.css">
 		<link rel="stylesheet" type="text/css" href="../styles/base.css">
 		<link rel="stylesheet" type="text/css" href="../styles/response.css">
-		
+		<script type="text/javascript">
+			function startExam(id){
+				window.location="${pageContext.request.contextPath }/startExam.action?id="+id;
+				}
+		</script>
 	</head>
 
 	<body>
@@ -38,7 +42,7 @@
 				</div>
 
 				<div class="user ellipsis">
-					<i class="icon icon-p_top_user"></i> sum
+					<i class="icon icon-p_top_user"></i>${studentName }
 				</div>
 
 				<a type="button" class="btn btn-default logout" id="logoutBtn">
@@ -51,13 +55,15 @@
 				<div class="icon-logo visible-xs">
 					<img src="../images/logo.png" />
 				</div>
-				<div class="title ellipsis">高数</div>
+				<div class="title ellipsis">
+				${param.name }
+				</div>
 				<div class="content">
 
 				</div>
 
 				<div class="btn-row">
-					<button type="button" class="btn btn-primary btn-fix btn-w-120 btn-h-40" id="startExamBtn" data-setIpRange="0" data-id="116508">开始</button>
+					<button type="button" onclick="startExam(${param.id})" class="btn btn-primary btn-fix btn-w-120 btn-h-40" id="startExamBtn" data-setIpRange="0" data-id="116508">开始</button>
 				</div>
 			</div>
 		</div>

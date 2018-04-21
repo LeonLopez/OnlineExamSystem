@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.AnswerresultMapper" >
+  <resultMap id="BaseResultMap" type="po.Answerresult" >
+    <id column="sturesultid" property="sturesultid" jdbcType="INTEGER" />
+    <id column="questionid" property="questionid" jdbcType="INTEGER" />
+    <result column="stuanswer" property="stuanswer" jdbcType="VARCHAR" />
+    <result column="rightorwrong" property="rightorwrong" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sturesultid, questionid, stuanswer, rightorwrong
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.AnswerresultExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from answerresult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="po.AnswerresultKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from answerresult
+    where sturesultid = #{sturesultid,jdbcType=INTEGER}
+      and questionid = #{questionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="po.AnswerresultKey" >
+    delete from answerresult
+    where sturesultid = #{sturesultid,jdbcType=INTEGER}
+      and questionid = #{questionid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.AnswerresultExample" >
+    delete from answerresult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Answerresult" >
+    insert into answerresult (sturesultid, questionid, stuanswer, 
+      rightorwrong)
+    values (#{sturesultid,jdbcType=INTEGER}, #{questionid,jdbcType=INTEGER}, #{stuanswer,jdbcType=VARCHAR}, 
+      #{rightorwrong,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Answerresult" >
+    insert into answerresult
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sturesultid != null" >
+        sturesultid,
+      </if>
+      <if test="questionid != null" >
+        questionid,
+      </if>
+      <if test="stuanswer != null" >
+        stuanswer,
+      </if>
+      <if test="rightorwrong != null" >
+        rightorwrong,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sturesultid != null" >
+        #{sturesultid,jdbcType=INTEGER},
+      </if>
+      <if test="questionid != null" >
+        #{questionid,jdbcType=INTEGER},
+      </if>
+      <if test="stuanswer != null" >
+        #{stuanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="rightorwrong != null" >
+        #{rightorwrong,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.AnswerresultExample" resultType="java.lang.Integer" >
+    select count(*) from answerresult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update answerresult
+    <set >
+      <if test="record.sturesultid != null" >
+        sturesultid = #{record.sturesultid,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionid != null" >
+        questionid = #{record.questionid,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuanswer != null" >
+        stuanswer = #{record.stuanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightorwrong != null" >
+        rightorwrong = #{record.rightorwrong,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update answerresult
+    set sturesultid = #{record.sturesultid,jdbcType=INTEGER},
+      questionid = #{record.questionid,jdbcType=INTEGER},
+      stuanswer = #{record.stuanswer,jdbcType=VARCHAR},
+      rightorwrong = #{record.rightorwrong,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Answerresult" >
+    update answerresult
+    <set >
+      <if test="stuanswer != null" >
+        stuanswer = #{stuanswer,jdbcType=VARCHAR},
+      </if>
+      <if test="rightorwrong != null" >
+        rightorwrong = #{rightorwrong,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sturesultid = #{sturesultid,jdbcType=INTEGER}
+      and questionid = #{questionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Answerresult" >
+    update answerresult
+    set stuanswer = #{stuanswer,jdbcType=VARCHAR},
+      rightorwrong = #{rightorwrong,jdbcType=VARCHAR}
+    where sturesultid = #{sturesultid,jdbcType=INTEGER}
+      and questionid = #{questionid,jdbcType=INTEGER}
+  </update>
+</mapper>

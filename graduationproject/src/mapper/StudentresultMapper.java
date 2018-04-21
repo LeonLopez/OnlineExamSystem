@@ -40,4 +40,6 @@ public interface StudentresultMapper {
 	List<Integer> getClazzList(Integer managerId);
 
 	List<String> getExamNameList();
+
+	List<ResultListVo> getStuResultList(Integer studentId);
 }

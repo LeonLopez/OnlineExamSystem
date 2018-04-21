@@ -18,4 +18,8 @@ public interface QuestionService {
 
 	void deleteQuestionById(int id);
 
+	List<Questions> getQuestionListByTaotiid(Integer taotiid);
+
+	Questions getQuestionById(Integer key);
+
 }

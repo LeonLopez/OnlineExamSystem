@@ -19,7 +19,24 @@ public class Studentresult {
 
     private String ispass;
 
-    public Integer getId() {
+    
+    
+    public Studentresult() {
+		super();
+	}
+
+	public Studentresult(Integer sid, Integer resingle, Integer resmore, Integer restotal, Date createtime,
+			Integer examinationid) {
+		super();
+		this.sid = sid;
+		this.resingle = resingle;
+		this.resmore = resmore;
+		this.restotal = restotal;
+		this.createtime = createtime;
+		this.examinationid = examinationid;
+	}
+
+	public Integer getId() {
         return id;
     }
 

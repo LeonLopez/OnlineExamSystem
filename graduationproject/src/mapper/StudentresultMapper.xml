@@ -113,9 +113,7 @@
   <insert id="insertSelective" parameterType="po.Studentresult" >
     insert into studentresult
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
+      
       <if test="sid != null" >
         sid,
       </if>
@@ -139,9 +137,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
+      
       <if test="sid != null" >
         #{sid,jdbcType=INTEGER},
       </if>
@@ -316,4 +312,10 @@
   <select id="getExamNameList"  resultType="java.lang.String">
   	select distinct name from examination
   </select>
+  <select id="getStuResultList" parameterType="java.lang.Integer" resultType="vo.ResultListVo" >
+  	select sr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
+  	from studentresult sr,student s,examination e
+  	where sr.sid = #{studentId} and sr.sid = s.id and sr.examinationid = e.id
+  </select>
+  
 </mapper>

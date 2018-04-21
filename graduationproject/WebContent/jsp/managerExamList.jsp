@@ -116,7 +116,7 @@
 	})
 	
 	function formatDate(value){
-						alert("value")
+						
 						var date=new Date(value);
 						var y=date.getFullYear();
 						var m=date.getMonth()+1;

@@ -7,6 +7,7 @@ import po.Pagination;
 import po.Taoti;
 import po.TaotiExample;
 import vo.TaotiListVo;
+import vo.UpdateTaotiVo;
 
 public interface TaotiMapper {
     int countByExample(TaotiExample example);
@@ -31,7 +32,9 @@ public interface TaotiMapper {
 
     int updateByPrimaryKey(Taoti record);
 
-	List<TaotiListVo> getTaotiListByLimit(Pagination pagination);
+	void updateTotalScore(UpdateTaotiVo utv);
 
 	List<TaotiListVo> getTaotiList();
+
+	List<TaotiListVo> getTaotiListByLimit(Pagination pagination);
 }

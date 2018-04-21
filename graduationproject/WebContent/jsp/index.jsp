@@ -32,15 +32,15 @@
         <div class="col-md-3">
           
             <div class="row">
-                <h5><strong>小明</strong></h5>
+                <h5><strong>${studentName}</strong></h5>
             </div>
             <div class="row">
                 <ul class="list-unstyled">
                     <li><button class="btn btn-default" id="main-btn" style="background-color: #307ac1;color:#fff">首页</button></li>
-                    <li><button class="btn btn-default" id="cart-btn" >在线考试</button></li>
-                    <li><button class="btn btn-default" id="psn-btn">成绩查询</button></li>
-                    <li><button class="btn btn-default" id="pbuy-btn">知识库</button></li>
-                    <li><button class="btn btn-default" id="pcol-btn">个人资料</button></li>
+                    <li><button class="btn btn-default" id="exam-btn" >在线考试</button></li>
+                    <li><button class="btn btn-default" id="score-btn">成绩查询</button></li>
+                    <li><button class="btn btn-default" id="repo-btn">知识库</button></li>
+                    <li><button class="btn btn-default" id="personal-btn">个人资料</button></li>
                     
                     <li><button class="btn btn-default" id="exit-btn">退出</button></li>
                 </ul>
@@ -54,7 +54,7 @@
                     id = "contentiframe"
                     name = "contentiframe"
                     scrolling="yes"
-                    src = "examList.jsp">
+                    src = "${pageContext.request.contextPath}/getExamList.action">
             </iframe>
         </div>
     </div>
@@ -80,18 +80,18 @@
             $(this).css("color","#ffffff");
         });
         $("#main-btn").click(function(){
-           $("#contentiframe").attr("src","examList.jsp");
+           $("#contentiframe").attr("src","${pageContext.request.contextPath }/getExamList.action");
         });
-        $("#cart-btn").click(function(){
-            $("#contentiframe").attr("src","examList.jsp");
+        $("#exam-btn").click(function(){
+            $("#contentiframe").attr("src","${pageContext.request.contextPath }/getExamList.action");
         });
-        $("#psn-btn").click(function(){
-            $("#contentiframe").attr("src","scoreList.jsp");
+        $("#score-btn").click(function(){
+            $("#contentiframe").attr("src","${pageContext.request.contextPath }/getQueryResult.action");
         });
-        $("#pbuy-btn").click(function(){
+        $("#repo-btn").click(function(){
             $("#contentiframe").attr("src","#");
         });
-        $("#pcol-btn").click(function(){
+        $("#personal-btn").click(function(){
             $("#contentiframe").attr("src","personal_inf_edit.jsp");
         });
        

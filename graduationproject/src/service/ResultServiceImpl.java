@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mapper.StudentresultMapper;
 import po.Pagination;
+import po.Studentresult;
 import vo.QueryResultVo;
 import vo.ResultListVo;
 import vo.StudentListVo;
@@ -57,6 +58,21 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public List<String> getExamNameList() {
 		return resultMapper.getExamNameList();
+	}
+
+
+
+	@Override
+	public void addStudentresult(Studentresult result) {
+		resultMapper.insertSelective(result);
+		
+	}
+
+
+
+	@Override
+	public List<ResultListVo> getStuResultList(Integer studentId) {
+		return resultMapper.getStuResultList(studentId);
 	}
 
 

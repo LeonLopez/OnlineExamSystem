@@ -6,6 +6,14 @@ public class ExamListVo extends Examination {
 
 	private String taotiName;
 	private String createuser;
+	private Integer totalscore;
+	
+	public Integer getTotalscore() {
+		return totalscore;
+	}
+	public void setTotalscore(Integer totalscore) {
+		this.totalscore = totalscore;
+	}
 	public String getTaotiName() {
 		return taotiName;
 	}

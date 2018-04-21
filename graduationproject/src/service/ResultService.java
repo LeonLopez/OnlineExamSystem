@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import po.Pagination;
+import po.Studentresult;
 import vo.ResultListVo;
 
 public interface ResultService {
@@ -17,5 +18,11 @@ public interface ResultService {
 	List<String> getExamNameList();
 
 	List<ResultListVo> getResultListByLimit(Pagination pagination, Integer managerId, ResultListVo rlv);
+
+
+	void addStudentresult(Studentresult result);
+
+
+	List<ResultListVo> getStuResultList(Integer studentId);
 
 }

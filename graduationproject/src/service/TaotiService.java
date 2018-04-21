@@ -16,4 +16,6 @@ public interface TaotiService {
 
 	void deleteTaotiById(int id);
 
+	Taoti getTaotiById(Integer taotiid);
+
 }
