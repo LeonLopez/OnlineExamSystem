@@ -10,8 +10,8 @@
 		<title></title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.min.css" />
 		<script type="text/javascript">
-			function getDetail(id){
-
+			function getDetail(id,examname){
+				window.open("${pageContext.request.contextPath }/getAnswerDetail.action?id="+id+"&examname="+examname);
 			}
 		</script>
 	</head>
@@ -42,7 +42,7 @@
 					<td>${result.restotal }</td>
 					<td>${result.ispass }</td>
 					<td><fmt:formatDate value="${result.createtime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-					<td><button class="btn btn-default" onclick="getDetail(${result.id})" value="查看">查看</button></td>
+					<td><button class="btn btn-default" onclick="getDetail(${result.id},'${result.examname }')" value="查看">查看</button></td>
 				</tr>
 			</c:forEach>
 			

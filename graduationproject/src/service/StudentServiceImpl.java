@@ -65,4 +65,25 @@ public class StudentServiceImpl implements StudentService {
 			return studentMapper.selectByExample(example);
 	}
 
+	@Override
+	public List<Student> checkStudentByName(String name) {
+		StudentExample example = new StudentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andNameEqualTo(name);
+		return studentMapper.selectByExample(example);
+	}
+
+	@Override
+	public void registerForStudent(Student student) {
+		studentMapper.insertSelective(student);
+		
+	}
+
+	@Override
+	public void activateStudentById(Integer id) {
+
+		studentMapper.updateActivateById(id);
+		
+	}
+
 }

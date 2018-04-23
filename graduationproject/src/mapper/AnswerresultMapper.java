@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import po.Answerresult;
 import po.AnswerresultExample;
 import po.AnswerresultKey;
+import vo.AnswerDetailVo;
 
 public interface AnswerresultMapper {
     int countByExample(AnswerresultExample example);
@@ -28,4 +29,6 @@ public interface AnswerresultMapper {
     int updateByPrimaryKeySelective(Answerresult record);
 
     int updateByPrimaryKey(Answerresult record);
+
+	List<AnswerDetailVo> getAnswerDetailListByResultId(Integer id);
 }

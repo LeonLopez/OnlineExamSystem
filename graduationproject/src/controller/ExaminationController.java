@@ -25,12 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import po.Answerresult;
 import po.Examination;
 import po.Lesson;
 import po.Pagination;
 import po.Questions;
 import po.Studentresult;
 import po.Taoti;
+import service.AnswerresultService;
 import service.ExaminationService;
 import service.QuestionService;
 import service.ResultService;
@@ -51,6 +53,9 @@ public class ExaminationController {
 	private ResultService resultService;
 	@Autowired
 	private TaotiService taotiService;
+	
+	@Autowired
+	private AnswerresultService answerresultService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder, WebRequest request) {
@@ -171,6 +176,7 @@ public class ExaminationController {
 
 	@RequestMapping("/postExam.action")
 	public String postExam(AnswerMap answerMap,String examname,Integer examid, HttpServletRequest request) throws Exception {
+		List<Answerresult> answerResultList = new ArrayList<Answerresult>();//保存回答结果集
 		Map<Integer, String> map = answerMap.getAnswerMap();
 		Set<Integer> keySet = map.keySet();
 		Iterator<Integer> it = keySet.iterator();
@@ -180,13 +186,25 @@ public class ExaminationController {
 			Integer key = it.next();
 			String answer = map.get(key);
 			Questions question = questionService.getQuestionById(key);
-			if (question.getAnswer().equals(answer)) {
+			Answerresult answerResult = new Answerresult();
+			if(answer==null || answer==""){
+				answerResult.setStuanswer("无");
+			}else{
+				answerResult.setStuanswer(answer);
+			}
+			
+			answerResult.setQuestionid(key);
+			if (question.getAnswer().equals(answer)) {//回答正确
+				answerResult.setRightorwrong("正确");
 				if (question.getType().equals("单选")) {
 					singleScore += question.getScore();
 				} else {
 					multiScore += question.getScore();
 				}
+			}else{                                   //回答错误
+				answerResult.setRightorwrong("错误");
 			}
+			answerResultList.add(answerResult);
 		}
 		Integer totalScore = singleScore + multiScore;//总得分
 		HttpSession session = request.getSession();
@@ -201,6 +219,10 @@ public class ExaminationController {
 			result.setIspass("否");
 		}
 		resultService.addStudentresult(result);
+		for(Answerresult answerresult:answerResultList){
+			answerresult.setSturesultid(result.getId());//设置resultid
+			answerresultService.addAnswerresult(answerresult);
+		}
 		Taoti taoti = taotiService.getTaotiById(exam.getTaotiid());
 		Integer fullMark = taoti.getTotalscore();//试卷满分分值
 		double accuracy = (double)totalScore/fullMark*100;

@@ -34,4 +34,6 @@ public interface StudentMapper {
 	List<Student> getStudentListByLimit(StudentListVo stuListVo);
 
 	int addStudent(Student student);
+
+	void updateActivateById(Integer id);
 }

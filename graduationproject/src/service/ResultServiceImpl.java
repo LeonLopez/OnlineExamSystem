@@ -63,8 +63,8 @@ public class ResultServiceImpl implements ResultService{
 
 
 	@Override
-	public void addStudentresult(Studentresult result) {
-		resultMapper.insertSelective(result);
+	public int addStudentresult(Studentresult result) {
+		return resultMapper.insertSelective(result);
 		
 	}
 

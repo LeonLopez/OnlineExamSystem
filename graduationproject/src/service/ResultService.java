@@ -20,7 +20,7 @@ public interface ResultService {
 	List<ResultListVo> getResultListByLimit(Pagination pagination, Integer managerId, ResultListVo rlv);
 
 
-	void addStudentresult(Studentresult result);
+	int addStudentresult(Studentresult result);
 
 
 	List<ResultListVo> getStuResultList(Integer studentId);

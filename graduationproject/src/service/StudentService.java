@@ -17,4 +17,10 @@ public interface StudentService {
 
 	List<Student> checkStudent(Student student);
 
+	List<Student> checkStudentByName(String name);
+
+	void registerForStudent(Student student);
+
+	void activateStudentById(Integer id);
+
 }

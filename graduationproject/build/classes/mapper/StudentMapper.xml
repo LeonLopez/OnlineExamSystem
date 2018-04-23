@@ -287,4 +287,10 @@
 	where ms.mid = #{managerId} and ms.sid = s.id
     limit #{pagination.startPage},#{pagination.rows}
   </select>
+  
+  <update id="updateActivateById" parameterType="java.lang.Integer" > 
+  	update student
+  	set activate=1
+  	where id=#{id}
+  </update>
 </mapper>

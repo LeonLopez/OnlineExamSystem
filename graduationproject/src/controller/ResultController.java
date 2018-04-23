@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import po.Answerresult;
 import po.Pagination;
+import po.Questions;
+import service.AnswerresultService;
 import service.ResultService;
+import vo.AnswerDetailVo;
 import vo.ExamListVo;
 import vo.ResultListVo;
 
@@ -23,6 +28,9 @@ public class ResultController {
 
 	@Autowired
 	private ResultService resultService;
+	
+	@Autowired
+	private AnswerresultService answerresultService;
 	
 	@RequestMapping("/managerGetQueryResult.action")
 	public @ResponseBody Map<String,Object> getExamList(Pagination pagination,ResultListVo rlv,HttpServletRequest request) throws Exception{
@@ -46,6 +54,46 @@ public class ResultController {
 		List<ResultListVo> scoreList = resultService.getStuResultList(studentId);
         request.setAttribute("scoreList", scoreList);
 		return "forward:/jsp/scoreList.jsp";
+	}
+	
+	
+	@RequestMapping("/getAnswerDetail.action")
+	public String getAnswerDetail(Integer id,String examname,HttpServletRequest request){
+		List<AnswerDetailVo> answerDetailVoList = answerresultService.getAnswerDetailListByResultId(id);
+		if (answerDetailVoList != null) {
+			request.setAttribute("totalQuestions", answerDetailVoList.size());// 总题数
+			List<AnswerDetailVo> singleList = new ArrayList<AnswerDetailVo>();
+			List<AnswerDetailVo> multiList = new ArrayList<AnswerDetailVo>();
+			for (AnswerDetailVo answerDetailVo : answerDetailVoList) {
+				if (answerDetailVo.getType().equals("单选")) {
+					singleList.add(answerDetailVo);
+				} else if (answerDetailVo.getType().equals("多选")) {
+					multiList.add(answerDetailVo);
+				}
+			}
+			request.setAttribute("singleList", singleList);// 单选列表
+			request.setAttribute("multiList", multiList);// 多选列表
+			if (singleList != null) {
+				request.setAttribute("singleQuestions", singleList.size());// 单选总数
+
+				int singleScore = 0;
+				for (AnswerDetailVo answerDetailVo : singleList) {
+					singleScore += answerDetailVo.getScore();
+
+				}
+				request.setAttribute("singleScore", singleScore);// 单选总分数
+			}
+			if (multiList != null) {
+				request.setAttribute("multiQuestions", multiList.size());// 多选总数
+				int multiScore = 0;
+				for (AnswerDetailVo answerDetailVo : multiList) {
+					multiScore += answerDetailVo.getScore();
+				}
+				request.setAttribute("multiScore", multiScore);// 多选总分数
+			}
+		}
+		request.setAttribute("examname", examname);
+		return "forward:/jsp/answerDetail.jsp";
 	}
 	
 	
@@ -73,4 +121,6 @@ public class ResultController {
 		List<String> examNameList = resultService.getExamNameList();
 		return examNameList;
 	}
+	
+	
 }

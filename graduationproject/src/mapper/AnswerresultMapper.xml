@@ -193,4 +193,12 @@
     where sturesultid = #{sturesultid,jdbcType=INTEGER}
       and questionid = #{questionid,jdbcType=INTEGER}
   </update>
+  
+  <select id="getAnswerDetailListByResultId" parameterType="java.lang.Integer" resultType="vo.AnswerDetailVo">
+  	select q.*,ar.*
+  	from answerresult ar,questions q
+  	where ar.sturesultid = #{id} and ar.questionid = q.id
+  
+  </select>
+  
 </mapper>
