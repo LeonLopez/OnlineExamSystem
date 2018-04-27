@@ -23,4 +23,8 @@ public interface StudentService {
 
 	void activateStudentById(Integer id);
 
+	Student getPersonalInfoById(Integer id);
+
+	void updatePersonalInfoById(Student student);
+
 }

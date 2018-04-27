@@ -42,7 +42,7 @@
 					<i class="icon icon-a_nav_my"></i> ${studentName }
 				</div>
 
-				<a type="button" class="btn btn-default logout" href="#">
+				<a type="button" class="btn btn-default logout" href="${pageContext.request.contextPath}/startExam.action?id=${examid}">
 					<i class="icon icon-a_btn_return btn-icon-left"></i> 返回
 				</a>
 

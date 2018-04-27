@@ -50,6 +50,12 @@
 					align:'center',
 				},
 				{
+					field:'totalscore',
+					title:'总分',
+					width:100,
+					align:'center',
+				},
+				{
 					field:'createuser',
 					title:'创建人',
 					width:100,
@@ -137,7 +143,7 @@
 <table id="dg"></table>
 <div id="tb">
 	<a href="javascript:openAddTaotiDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加试卷</a>
-	<a href="managerEditTaoti.jsp" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑试卷</a>
+	<!-- <a href="managerEditTaoti.jsp" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑试卷</a> -->
 	<a href="javascript:deleteTaoti()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除试卷</a>
 </div>
 <div id="dlg" align="center" class="easyui-dialog" data-options="buttons:'#bts',closed:true" style="width: 400px;height: 200px">

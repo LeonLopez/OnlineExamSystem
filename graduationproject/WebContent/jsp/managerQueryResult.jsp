@@ -218,6 +218,9 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="javascript:searchResult()" class="easyui-linkbutton"
 			data-options="iconCls:'icon-search'">查询</a>
+		<div style="float: right;margin-right:50px;">
+		<a href="${pageContext.request.contextPath }/managerSaveExcel.action" class="easyui-linkbutton" data-options="iconCls:'icon-signout'">导出成绩单</a>
+		</div>
 	</div>
 </body>
 </html>

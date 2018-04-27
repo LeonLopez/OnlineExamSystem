@@ -7,8 +7,16 @@ public class TaotiListVo {
 	private Integer id;
 	private String name;
 	private Date createtime;
+	private Integer totalscore;
 	private String lessonname;
 	private String createuser;
+	
+	public Integer getTotalscore() {
+		return totalscore;
+	}
+	public void setTotalscore(Integer totalscore) {
+		this.totalscore = totalscore;
+	}
 	public Integer getId() {
 		return id;
 	}

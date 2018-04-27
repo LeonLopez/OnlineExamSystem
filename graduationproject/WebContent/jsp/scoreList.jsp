@@ -20,6 +20,7 @@
 		<div class="page-header" >
 			<h3 style="margin-left: 40px;">成绩查询</h3>
 		</div>
+		<div style="float: right;margin-bottom: 12px;margin-right: 34px;"><a class="btn btn-default" href="${pageContext.request.contextPath }/saveExcel.action">下载成绩单</a></div>
 		<c:if test="${scoreList!=null && fn:length(scoreList)>0}">
 		<table class="table table-hover" style="text-align: center;">
 			<thead>

@@ -89,15 +89,15 @@
             $("#contentiframe").attr("src","${pageContext.request.contextPath }/getQueryResult.action");
         });
         $("#repo-btn").click(function(){
-            $("#contentiframe").attr("src","#");
+            $("#contentiframe").attr("src","${pageContext.request.contextPath }/getFileList.action");
         });
         $("#personal-btn").click(function(){
-            $("#contentiframe").attr("src","personal_inf_edit.jsp");
+            $("#contentiframe").attr("src","${pageContext.request.contextPath }/personalInfoEdit.action");
         });
        
        
         $("#exit-btn").click(function(){
-        	location.href = "logout.action";
+        	location.href = "${pageContext.request.contextPath }/logout.action";
         });
     })
 </script>

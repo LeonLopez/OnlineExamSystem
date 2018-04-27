@@ -50,6 +50,12 @@
 					align:'center',
 				},
 				{
+					field:'totalscore',
+					title:'总分',
+					width:50,
+					align:'center',
+				},
+				{
 					field:'passscore',
 					title:'及格分数',
 					width:50,

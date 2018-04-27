@@ -80,6 +80,28 @@ public class StudentController {
 		}
 	}
 	
+	@RequestMapping("/logout.action")
+	public String logout(HttpSession session) throws Exception{
+		session.invalidate();
+		return "redirect:/jsp/login.jsp";
+	}
+	
+	@RequestMapping("/personalInfoEdit.action")
+	public String getPersonalInfo(HttpSession session,HttpServletRequest request){
+		Student student = studentService.getPersonalInfoById((Integer)session.getAttribute("studentId"));
+		request.setAttribute("student", student);
+		return "forward:/jsp/personal_inf_edit.jsp";
+	}
+	
+	@RequestMapping("/updatePersonalInfo.action")
+	public String updatePersonalInfo(HttpServletRequest request,Student student){
+		HttpSession session = request.getSession();
+		Integer stuId = (Integer) session.getAttribute("studentId");
+		student.setId(stuId);
+		studentService.updatePersonalInfoById(student);
+		request.setAttribute("student", student);
+		return "forward:/jsp/personal_inf_edit.jsp";
+	}
 	@RequestMapping("/managerStudentGetList.action")
 	public @ResponseBody Map<String,Object> getStudentList(Pagination pagination,HttpServletRequest request) throws Exception{
 		Map<String,Object> map = new HashMap<String,Object>();

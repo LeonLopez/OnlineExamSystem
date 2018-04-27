@@ -2,6 +2,10 @@ package service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Workbook;
+
 import po.Pagination;
 import po.Studentresult;
 import vo.ResultListVo;
@@ -24,5 +28,8 @@ public interface ResultService {
 
 
 	List<ResultListVo> getStuResultList(Integer studentId);
+
+
+	void export(HttpServletResponse response, Workbook workbook, String string) throws Exception;
 
 }

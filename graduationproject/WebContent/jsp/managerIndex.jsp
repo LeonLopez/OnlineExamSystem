@@ -23,11 +23,11 @@
 
 <script type="text/javascript">
 	function openTab(title, url, icon) {
-		//var managerName="${sessionScope.managerName}";
-		//if (managerName=="") {
-		//window.location.href="${pageContext.request.contextPath }/managerLogout.action";
-		//return;
-		//}
+		var managerName="${sessionScope.managerName}";
+		if (managerName=="") {
+		window.location.href="${pageContext.request.contextPath }/managerLogout.action";
+		return;
+		}
 		if ($("#tabs").tabs("exists", title)) {
 			$("#tabs").tabs("select", title);
 		} else {
@@ -64,8 +64,7 @@
 
 		<div class="operation_user clearfix">
 			<div class="link fr">
-				<b>欢迎您 admin </b>&nbsp;&nbsp;&nbsp;&nbsp;<a href="../index.php"
-					class="icon icon_i">首页</a><span></span><a href="logout.php"
+				<b>欢迎您 ${managerName } </b>&nbsp;&nbsp;&nbsp;&nbsp;<span></span><a href="${pageContext.request.contextPath }/managerLogout.action"
 					class="icon icon_e">注销</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			</div>
 		</div>
@@ -122,12 +121,14 @@
 					data-options="iconCls:'icon-definition',plain:true"
 					style="width: 150px">考试管理</a>
 			</div>
-			<!--  <div title="系统管理" style="padding: 10px" align="center">
-				<a href="${pageContext.request.contextPath }/managerLogout.action"
+			  <div title="知识库" style="padding: 10px"
+				data-options="iconCls:'icon-tasks'" align="center">
+				<a
+					href="javascript:openTab('资料管理','managerFileList.jsp','icon-definition')"
 					class="easyui-linkbutton"
-					data-options="iconCls:'icon-signout',plain:true"
-					style="width: 150px">退出后台管理</a>
-			</div>-->
+					data-options="iconCls:'icon-definition',plain:true"
+					style="width: 150px">资料管理</a>
+			</div>
 		</div>
 	</div>
 

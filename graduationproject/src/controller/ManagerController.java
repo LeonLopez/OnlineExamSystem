@@ -33,4 +33,10 @@ public class ManagerController {
 			return "redirect:/jsp/managerLogin.jsp";
 		}
 	}
+	
+	@RequestMapping("/managerLogout.action")
+	public String logout(HttpSession session) throws Exception{
+		session.invalidate();
+		return "redirect:/jsp/managerLogin.jsp";
+	}
 }

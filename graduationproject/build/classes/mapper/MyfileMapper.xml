@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="mapper.TaotiMapper" >
-  <resultMap id="BaseResultMap" type="po.Taoti" >
+<mapper namespace="mapper.MyfileMapper" >
+  <resultMap id="BaseResultMap" type="po.Myfile" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="createtime" property="createtime" jdbcType="DATE" />
-    <result column="lessonid" property="lessonid" jdbcType="INTEGER" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="mid" property="mid" jdbcType="INTEGER" />
-    <result column="totalscore" property="totalscore" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, createtime, lessonid, mid, totalscore
+    id, filename, createtime, mid
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.TaotiExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.MyfileExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from taoti
+    from myfile
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,96 +85,76 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from taoti
+    from myfile
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from taoti
+    delete from myfile
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="po.TaotiExample" >
-    delete from taoti
+  <delete id="deleteByExample" parameterType="po.MyfileExample" >
+    delete from myfile
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="po.Taoti" >
-    insert into taoti (id, name, createtime, 
-      lessonid, mid, totalscore
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, 
-      #{lessonid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{totalscore,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="po.Myfile" >
+    insert into myfile (id, filename, createtime, 
+      mid)
+    values (#{id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{mid,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="po.Taoti" >
-    insert into taoti
+  <insert id="insertSelective" parameterType="po.Myfile" >
+    insert into myfile
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="filename != null" >
+        filename,
       </if>
       <if test="createtime != null" >
         createtime,
       </if>
-      <if test="lessonid != null" >
-        lessonid,
-      </if>
       <if test="mid != null" >
         mid,
-      </if>
-      <if test="totalscore != null" >
-        totalscore,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        #{createtime,jdbcType=DATE},
-      </if>
-      <if test="lessonid != null" >
-        #{lessonid,jdbcType=INTEGER},
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="mid != null" >
         #{mid,jdbcType=INTEGER},
       </if>
-      <if test="totalscore != null" >
-        #{totalscore,jdbcType=INTEGER},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="po.TaotiExample" resultType="java.lang.Integer" >
-    select count(*) from taoti
+  <select id="countByExample" parameterType="po.MyfileExample" resultType="java.lang.Integer" >
+    select count(*) from myfile
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update taoti
+    update myfile
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.filename != null" >
+        filename = #{record.filename,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
-        createtime = #{record.createtime,jdbcType=DATE},
-      </if>
-      <if test="record.lessonid != null" >
-        lessonid = #{record.lessonid,jdbcType=INTEGER},
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.mid != null" >
         mid = #{record.mid,jdbcType=INTEGER},
-      </if>
-      <if test="record.totalscore != null" >
-        totalscore = #{record.totalscore,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -184,61 +162,46 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update taoti
+    update myfile
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=DATE},
-      lessonid = #{record.lessonid,jdbcType=INTEGER},
-      mid = #{record.mid,jdbcType=INTEGER},
-      totalscore = #{record.totalscore,jdbcType=INTEGER}
+      filename = #{record.filename,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      mid = #{record.mid,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="po.Taoti" >
-    update taoti
+  <update id="updateByPrimaryKeySelective" parameterType="po.Myfile" >
+    update myfile
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        createtime = #{createtime,jdbcType=DATE},
-      </if>
-      <if test="lessonid != null" >
-        lessonid = #{lessonid,jdbcType=INTEGER},
+        createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="mid != null" >
         mid = #{mid,jdbcType=INTEGER},
       </if>
-      <if test="totalscore != null" >
-        totalscore = #{totalscore,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="po.Taoti" >
-    update taoti
-    set name = #{name,jdbcType=VARCHAR},
-      createtime = #{createtime,jdbcType=DATE},
-      lessonid = #{lessonid,jdbcType=INTEGER},
-      mid = #{mid,jdbcType=INTEGER},
-      totalscore = #{totalscore,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="po.Myfile" >
+    update myfile
+    set filename = #{filename,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      mid = #{mid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="getTaotiListByLimit" parameterType="po.Pagination" resultType="vo.TaotiListVo">
-  	select  t.id,t.name,t.createtime,t.totalscore,l.name as lessonname,m.name as createuser
-  	from taoti t,lesson l,manager m
-  	where t.lessonid=l.id and t.mid=m.id
+  <select id="getFileList" resultType="vo.FileListVo">
+  	select f.*,m.name as createuser
+  	from myfile f,manager m
+  	where m.id = f.mid
+  </select> 
+  <select id="getFileListByLimit" resultType="vo.FileListVo" parameterType="po.Pagination">
+  	select f.*,m.name as createuser
+  	from myfile f,manager m
+  	where m.id = f.mid
   	limit #{startPage},#{rows}
   </select>
-  <select id="getTaotiList"  resultType="vo.TaotiListVo">
-  	select  t.id,t.name,t.createtime,t.totalscore,l.name as lessonname,m.name as createuser
-  	from taoti t,lesson l,manager m
-  	where t.lessonid=l.id and t.mid=m.id
-  </select>
-  <update id="updateTotalScore" parameterType="vo.UpdateTaotiVo">
-  	update taoti 
-  	set totalscore = totalscore + #{score}
-  	where id = #{taotiid} 
-  </update>
 </mapper>

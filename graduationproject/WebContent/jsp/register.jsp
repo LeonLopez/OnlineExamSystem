@@ -61,7 +61,7 @@ label.valid{
     			rules:{		//配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
     				name:{
     					required:true,	//必填。如果验证方法不需要参数，则配置为true
-    					rangelength:[4,10],
+    					rangelength:[6,16],
     					//remote:{
     						//url:"checkStudentExits.action",
     						//type:"post"
@@ -69,7 +69,7 @@ label.valid{
     				},
     				password:{
     					required:true,
-    					rangelength:[6,10]
+    					rangelength:[6,16]
     				},
     				sure_password:{
     					required:true,

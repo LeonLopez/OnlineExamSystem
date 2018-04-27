@@ -86,4 +86,15 @@ public class StudentServiceImpl implements StudentService {
 		
 	}
 
+	@Override
+	public Student getPersonalInfoById(Integer id) {
+		return studentMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public void updatePersonalInfoById(Student student) {
+		studentMapper.updateByPrimaryKeySelective(student);
+		
+	}
+
 }

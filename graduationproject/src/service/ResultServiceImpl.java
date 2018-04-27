@@ -1,7 +1,12 @@
 package service;
 
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,6 +78,18 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public List<ResultListVo> getStuResultList(Integer studentId) {
 		return resultMapper.getStuResultList(studentId);
+	}
+
+
+
+	@Override
+	public void export(HttpServletResponse response, Workbook workbook, String fileName) throws Exception {
+		response.setHeader("Content-Disposition", "attachment;filename="+new String(fileName.getBytes("utf-8"),"iso8859-1"));
+		response.setContentType("application/ynd.ms-excel;charset=UTF-8");
+		OutputStream out=response.getOutputStream();
+		workbook.write(out);
+		out.flush();
+		out.close();
 	}
 
 

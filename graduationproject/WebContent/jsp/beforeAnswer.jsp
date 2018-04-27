@@ -45,7 +45,7 @@
 					<i class="icon icon-p_top_user"></i>${studentName }
 				</div>
 
-				<a type="button" class="btn btn-default logout" id="logoutBtn">
+				<a type="button" class="btn btn-default logout" id="logoutBtn" href="${pageContext.request.contextPath }/logout.action">
 					<i class="icon icon-a_btn_sign_out btn-icon-left"></i> 退出
 				</a>
 
