@@ -11,6 +11,7 @@
     <result column="optionc" property="optionc" jdbcType="VARCHAR" />
     <result column="optiond" property="optiond" jdbcType="VARCHAR" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="judgeanswer" property="judgeanswer" jdbcType="VARCHAR" />
     <result column="note" property="note" jdbcType="VARCHAR" />
     <result column="difficulty" property="difficulty" jdbcType="VARCHAR" />
     <result column="lessonid" property="lessonid" jdbcType="INTEGER" />
@@ -76,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, subject, type, createtime, optiona, optionb, optionc, optiond, answer, note, 
-    difficulty, lessonid, knowledgeid, mid
+    id, subject, type, createtime, optiona, optionb, optionc, optiond, answer, judgeanswer, 
+    note, difficulty, lessonid, knowledgeid, mid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.QuestionsExample" >
     select
@@ -113,13 +114,15 @@
     insert into questions (id, subject, type, 
       createtime, optiona, optionb, 
       optionc, optiond, answer, 
-      note, difficulty, lessonid, 
-      knowledgeid, mid)
+      judgeanswer, note, difficulty, 
+      lessonid, knowledgeid, mid
+      )
     values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=TIMESTAMP}, #{optiona,jdbcType=VARCHAR}, #{optionb,jdbcType=VARCHAR}, 
       #{optionc,jdbcType=VARCHAR}, #{optiond,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
-      #{note,jdbcType=VARCHAR}, #{difficulty,jdbcType=VARCHAR}, #{lessonid,jdbcType=INTEGER}, 
-      #{knowledgeid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER})
+      #{judgeanswer,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, #{difficulty,jdbcType=VARCHAR}, 
+      #{lessonid,jdbcType=INTEGER}, #{knowledgeid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="po.Questions" >
     insert into questions
@@ -150,6 +153,9 @@
       </if>
       <if test="answer != null" >
         answer,
+      </if>
+      <if test="judgeanswer != null" >
+        judgeanswer,
       </if>
       <if test="note != null" >
         note,
@@ -194,6 +200,9 @@
       </if>
       <if test="answer != null" >
         #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="judgeanswer != null" >
+        #{judgeanswer,jdbcType=VARCHAR},
       </if>
       <if test="note != null" >
         #{note,jdbcType=VARCHAR},
@@ -248,6 +257,9 @@
       <if test="record.answer != null" >
         answer = #{record.answer,jdbcType=VARCHAR},
       </if>
+      <if test="record.judgeanswer != null" >
+        judgeanswer = #{record.judgeanswer,jdbcType=VARCHAR},
+      </if>
       <if test="record.note != null" >
         note = #{record.note,jdbcType=VARCHAR},
       </if>
@@ -279,6 +291,7 @@
       optionc = #{record.optionc,jdbcType=VARCHAR},
       optiond = #{record.optiond,jdbcType=VARCHAR},
       answer = #{record.answer,jdbcType=VARCHAR},
+      judgeanswer = #{record.judgeanswer,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR},
       difficulty = #{record.difficulty,jdbcType=VARCHAR},
       lessonid = #{record.lessonid,jdbcType=INTEGER},
@@ -315,6 +328,9 @@
       <if test="answer != null" >
         answer = #{answer,jdbcType=VARCHAR},
       </if>
+      <if test="judgeanswer != null" >
+        judgeanswer = #{judgeanswer,jdbcType=VARCHAR},
+      </if>
       <if test="note != null" >
         note = #{note,jdbcType=VARCHAR},
       </if>
@@ -343,6 +359,7 @@
       optionc = #{optionc,jdbcType=VARCHAR},
       optiond = #{optiond,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
+      judgeanswer = #{judgeanswer,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR},
       difficulty = #{difficulty,jdbcType=VARCHAR},
       lessonid = #{lessonid,jdbcType=INTEGER},
@@ -350,6 +367,7 @@
       mid = #{mid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <select id="getQuestionsList" resultType="vo.QuestionsListVo">
   	select q.*,l.name as lessonName,k.name as knowledgeName,m.name as createuser
   	from questions q,lesson l,knowledge k,manager m
@@ -361,8 +379,39 @@
   	where q.lessonid=l.id and q.mid=m.id and q.knowledgeid=k.id
   	limit #{startPage},#{rows}
   </select>
+   <select id="getQuestionsListByLessonId" parameterType="vo.QuestionsQueryVo" resultType="vo.QuestionsListVo">
+  	select q.*,k.name as knowledgeName
+  	from questions q,knowledge k
+  	where q.lessonid=#{lessonid} and q.knowledgeid=k.id 
+  	<if test="knowledgeid!=null">
+  		and q.knowledgeid=#{knowledgeid}
+  	</if>
+  	<if test="type!=null and type!=''">
+  		and q.type=#{type}
+  	</if>
+  	<if test="difficulty!=null and difficulty!=''">
+  		and q.difficulty=#{difficulty}
+  	</if>
+  </select>
+  <select id="getQuestionsListByLessonIdAndLimit" resultType="vo.QuestionsListVo" parameterType="vo.ParamVo">
+  	select q.*,l.name as lessonName,k.name as knowledgeName,m.name as createuser
+  	from questions q,lesson l,knowledge k,manager m
+  	where q.lessonid=l.id and q.mid=m.id and q.knowledgeid=k.id and q.lessonid=#{id}
+  	limit #{pagination.startPage},#{pagination.rows}
+  </select>
   
-  
-  
-  
+  <select id="getQuestionListByAutoMakeTaotiVo" parameterType="vo.AutoMakeTaotiVo" resultType="po.Questions">
+  	select q.*
+  	from questions q
+  	where q.lessonid=#{lessonid}
+  	<if test="knowledgeid!=null">
+  		and q.knowledgeid=#{knowledgeid}
+  	</if>
+  	<if test="type!=null and type!=''">
+  		and q.type=#{type}
+  	</if>
+  	<if test="difficulty!=null and difficulty!=''">
+  		and q.difficulty=#{difficulty}
+  	</if>
+  </select>
 </mapper>

@@ -13,7 +13,10 @@ import po.Pagination;
 import po.Questions;
 import po.QuestionsExample;
 import po.QuestionsExample.Criteria;
+import vo.AutoMakeTaotiVo;
+import vo.ParamVo;
 import vo.QuestionsListVo;
+import vo.QuestionsQueryVo;
 import vo.UpdateTaotiVo;
 
 @Service
@@ -54,6 +57,7 @@ public class QuestionServiceImpl implements QuestionService{
 
 	@Override
 	public List<Questions> getQuestionListByTaotiid(Integer taotiid) {
+		//未完成
 		return questionsMapper.getQuestionListByTaotiid(taotiid);
 
 	}
@@ -61,6 +65,27 @@ public class QuestionServiceImpl implements QuestionService{
 	@Override
 	public Questions getQuestionById(Integer key) {
 		return questionsMapper.selectByPrimaryKey(key);
+	}
+
+	
+
+	@Override
+	public List<QuestionsListVo> getQuestionsListByLessonIdAndLimit(Pagination pagination, Integer lessonid) {
+		pagination.setStartPage((pagination.getPage()-1)*pagination.getRows());
+		ParamVo paramVo = new ParamVo();
+		paramVo.setId(lessonid);
+		paramVo.setPagination(pagination);
+		return questionsMapper.getQuestionsListByLessonIdAndLimit(paramVo);
+	}
+
+	@Override
+	public List<QuestionsListVo> getQuestionsListByLessonId(QuestionsQueryVo qqv) {
+		return questionsMapper.getQuestionsListByLessonId(qqv);
+	}
+
+	@Override
+	public List<Questions> getQuestionListByAutoMakeTaotiVo(AutoMakeTaotiVo amtv) {
+		return questionsMapper.getQuestionListByAutoMakeTaotiVo(amtv);
 	}
 
 }

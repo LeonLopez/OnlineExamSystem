@@ -6,7 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import po.Pagination;
 import po.Questions;
 import po.QuestionsExample;
+import vo.AutoMakeTaotiVo;
+import vo.ParamVo;
 import vo.QuestionsListVo;
+import vo.QuestionsQueryVo;
 
 public interface QuestionsMapper {
     int countByExample(QuestionsExample example);
@@ -30,10 +33,16 @@ public interface QuestionsMapper {
     int updateByPrimaryKeySelective(Questions record);
 
     int updateByPrimaryKey(Questions record);
-    
-    List<QuestionsListVo> getQuestionsList();
+
+	List<QuestionsListVo> getQuestionsList();
 
 	List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination);
 
 	List<Questions> getQuestionListByTaotiid(Integer taotiid);
+
+	List<QuestionsListVo> getQuestionsListByLessonId(QuestionsQueryVo qqv);
+
+	List<QuestionsListVo> getQuestionsListByLessonIdAndLimit(ParamVo paramVo);
+
+	List<Questions> getQuestionListByAutoMakeTaotiVo(AutoMakeTaotiVo amtv);
 }

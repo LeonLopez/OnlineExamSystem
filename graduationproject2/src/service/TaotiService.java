@@ -18,4 +18,6 @@ public interface TaotiService {
 
 	Taoti getTaotiById(Integer taotiid);
 
+	void addQuestionToTaoti(int taotiid, int questionid, int score);
+
 }

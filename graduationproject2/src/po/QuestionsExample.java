@@ -715,6 +715,76 @@ public class QuestionsExample {
             return (Criteria) this;
         }
 
+        public Criteria andJudgeanswerIsNull() {
+            addCriterion("judgeanswer is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerIsNotNull() {
+            addCriterion("judgeanswer is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerEqualTo(String value) {
+            addCriterion("judgeanswer =", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerNotEqualTo(String value) {
+            addCriterion("judgeanswer <>", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerGreaterThan(String value) {
+            addCriterion("judgeanswer >", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerGreaterThanOrEqualTo(String value) {
+            addCriterion("judgeanswer >=", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerLessThan(String value) {
+            addCriterion("judgeanswer <", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerLessThanOrEqualTo(String value) {
+            addCriterion("judgeanswer <=", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerLike(String value) {
+            addCriterion("judgeanswer like", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerNotLike(String value) {
+            addCriterion("judgeanswer not like", value, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerIn(List<String> values) {
+            addCriterion("judgeanswer in", values, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerNotIn(List<String> values) {
+            addCriterion("judgeanswer not in", values, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerBetween(String value1, String value2) {
+            addCriterion("judgeanswer between", value1, value2, "judgeanswer");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeanswerNotBetween(String value1, String value2) {
+            addCriterion("judgeanswer not between", value1, value2, "judgeanswer");
+            return (Criteria) this;
+        }
+
         public Criteria andNoteIsNull() {
             addCriterion("note is null");
             return (Criteria) this;

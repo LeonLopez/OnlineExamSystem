@@ -3,7 +3,9 @@ package po;
 public class Taotiquestion extends TaotiquestionKey {
     private Integer score;
 
-    public Integer getScore() {
+   
+
+	public Integer getScore() {
         return score;
     }
 

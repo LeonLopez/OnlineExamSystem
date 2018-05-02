@@ -18,6 +18,7 @@ import po.Pagination;
 import po.Questions;
 import service.QuestionService;
 import vo.QuestionsListVo;
+import vo.QuestionsQueryVo;
 
 @Controller
 public class QuestionController {
@@ -32,6 +33,17 @@ public class QuestionController {
 		List<QuestionsListVo> list2 = questionService.getQuestionsListByLimit(pagination);
 		map.put("total", list.size());
 		map.put("rows", list2);
+		return map;
+	}
+	//返回某课程的满足搜索条件的题目
+	@RequestMapping("/managerGetQuestionsListByLessonId.action")
+	public @ResponseBody Map<String,Object> getQuestionsListByLessonId(QuestionsQueryVo qqv) throws Exception{
+		System.out.println("**********************************************");
+		System.out.println(qqv.getLessonid());
+		System.out.println("**********************************************");
+		Map<String,Object> map = new HashMap<String,Object>();
+		List<QuestionsListVo> list = questionService.getQuestionsListByLessonId(qqv);
+		map.put("rows", list);
 		return map;
 	}
 	

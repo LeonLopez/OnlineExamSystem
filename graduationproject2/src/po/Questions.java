@@ -21,6 +21,8 @@ public class Questions {
 
     private String answer;
 
+    private String judgeanswer;
+
     private String note;
 
     private String difficulty;
@@ -101,6 +103,14 @@ public class Questions {
 
     public void setAnswer(String answer) {
         this.answer = answer == null ? null : answer.trim();
+    }
+
+    public String getJudgeanswer() {
+        return judgeanswer;
+    }
+
+    public void setJudgeanswer(String judgeanswer) {
+        this.judgeanswer = judgeanswer == null ? null : judgeanswer.trim();
     }
 
     public String getNote() {

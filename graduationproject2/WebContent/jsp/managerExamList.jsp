@@ -134,13 +134,13 @@
 					}
 	
 	function resetValue(){
-		$("#cc2").val("");
+		$('#cc2').combobox('clear');//清空选中项  
 		$("#name").val("");
 		$("#duration").val("");
 		$("#passscore").val("");
 		$("#introduction").val("");
-		$("#starttime").val("");
-		$("#endtime").val("");
+		$('#starttime').combo('setText','');  
+		$('#endtime').combo('setText','');  
 		$("#addorupdate").val("");
 		$("#id").val("");
 	}

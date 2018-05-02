@@ -1,39 +1,20 @@
 package vo;
 
-import java.util.Date;
 
-public class TaotiListVo {
+import po.Taoti;
 
-	private Integer id;
-	private String name;
-	private Date createtime;
-	private Integer totalscore;
+public class TaotiListVo extends Taoti{
+
+	private Integer lessonid;
 	private String lessonname;
 	private String createuser;
 	
-	public Integer getTotalscore() {
-		return totalscore;
+	
+	public Integer getLessonid() {
+		return lessonid;
 	}
-	public void setTotalscore(Integer totalscore) {
-		this.totalscore = totalscore;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Date getCreatetime() {
-		return createtime;
-	}
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
+	public void setLessonid(Integer lessonid) {
+		this.lessonid = lessonid;
 	}
 	public String getLessonname() {
 		return lessonname;
@@ -47,5 +28,7 @@ public class TaotiListVo {
 	public void setCreateuser(String createuser) {
 		this.createuser = createuser;
 	}
+	
+	
 	
 }

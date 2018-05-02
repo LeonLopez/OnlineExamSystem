@@ -4,7 +4,9 @@ import java.util.List;
 
 import po.Pagination;
 import po.Questions;
+import vo.AutoMakeTaotiVo;
 import vo.QuestionsListVo;
+import vo.QuestionsQueryVo;
 
 public interface QuestionService {
 
@@ -21,5 +23,11 @@ public interface QuestionService {
 	List<Questions> getQuestionListByTaotiid(Integer taotiid);
 
 	Questions getQuestionById(Integer key);
+
+	List<QuestionsListVo> getQuestionsListByLessonId(QuestionsQueryVo qqv);
+
+	List<QuestionsListVo> getQuestionsListByLessonIdAndLimit(Pagination pagination, Integer lessonid);
+
+	List<Questions> getQuestionListByAutoMakeTaotiVo(AutoMakeTaotiVo amtv);
 
 }

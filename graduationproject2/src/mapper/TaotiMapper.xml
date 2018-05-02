@@ -385,13 +385,13 @@
   </update>
   
   <select id="getTaotiListByLimit" parameterType="po.Pagination" resultType="vo.TaotiListVo">
-  	select  t.id,t.name,t.createtime,t.totalscore,l.name as lessonname,m.name as createuser
+  	select  t.*,l.name as lessonname,l.id as lessonid,m.name as createuser
   	from taoti t,lesson l,manager m
   	where t.lessonid=l.id and t.mid=m.id
   	limit #{startPage},#{rows}
   </select>
   <select id="getTaotiList"  resultType="vo.TaotiListVo">
-  	select  t.id,t.name,t.createtime,t.totalscore,l.name as lessonname,m.name as createuser
+  	select  t.*,l.name as lessonname,l.id as lessonid,m.name as createuser
   	from taoti t,lesson l,manager m
   	where t.lessonid=l.id and t.mid=m.id
   </select>

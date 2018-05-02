@@ -1,6 +1,7 @@
 package po;
 
 public class TaotiquestionKey {
+	
     private Integer taotiid;
 
     private Integer questionid;
