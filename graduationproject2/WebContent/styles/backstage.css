@@ -1,0 +1,47 @@
+@charset "utf-8";
+*{margin: 0;padding: 0;}
+li{list-style: none;}
+input,select,textarea{outline: none;border: none; background: none;}
+textarea{resize: none;}
+a{text-decoration: none;}
+a:hover{text-decoration: underline;}
+.clearfix:after,
+.clearfix:before{content: ""; display: table;}
+.clearfix:after{ clear: both;}
+.clearfix{zoom:1;}
+.fl{float: left;}
+.fr{float: right;}
+
+/*头部*/
+#header{height: 70px;margin: 0 auto;position: relative;background-color: #e0ecff;}
+#header .logo_bgm{position: absolute;left: 50px;top: 10px;}
+/*#header .logo_bgm img{width: 100px;height: 100px;}*/
+#header .head_text{color: #3a83c5;display: block;position: absolute;right: 50px;top:15px;}
+
+
+/*用户位置*/
+.operation_user{font:12px/2.5 "微软雅黑";padding: 0 10px; background-color:#95B8E7;}
+.link span{font-family: "宋体"; font-weight: 500; padding: 0 10px;}
+.link a{color: #000;}
+.icon{padding-left: 18px; background-position: left center; background-repeat: no-repeat;}
+.icon_i{background-image: url(../images/icon/i.png);}
+.icon_e{background-image: url(../images/icon/e.png);}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

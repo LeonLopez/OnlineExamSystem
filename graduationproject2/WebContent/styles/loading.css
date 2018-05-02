@@ -1,0 +1,68 @@
+    #facebook{
+      float:left;
+      margin-left:10px;
+/*        background-color:green;*/
+    }
+    .facebook_block{
+/*      background-color:#1b1b1b;*/
+        background-color:#fff;
+/*        background-color:#000;*/
+      float:left;
+      width:16px;
+      border-radius:8px;
+      height:16px;
+      margin-left:8px;
+          opacity:0.3;
+      -webkit-transform:scale(0.7);
+      -webkit-animation-name: facebook;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-direction: linear;
+      -moz-transform:scale(1);
+      -moz-animation-name: facebook;
+      -moz-animation-duration: 1s;
+      -moz-animation-iteration-count: infinite;
+      -moz-animation-direction: linear;
+
+    }
+    #block_1{
+      -webkit-animation-delay: .2s;
+      -moz-animation-delay: .2s;
+    }
+    #block_2{
+      -webkit-animation-delay: .4s;
+      -moz-animation-delay: .4s;
+    }
+    #block_3{
+      -webkit-animation-delay: .6s;
+      -moz-animation-delay: .6s;
+    }
+    @-webkit-keyframes facebook{
+      0%{-webkit-transform: scale(1.2);opacity:1;}
+      100%{-webkit-transform: scale(0.6);opacity:0.5;}
+    }
+    @-moz-keyframes facebook{
+        0%{-moz-transform: scale(1);opacity:1;}
+        100%{-moz-transform: scale(1);opacity:0.5;}
+    }
+    #Shimerx{
+      display: none;
+      filter: progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);
+      left: 0px;
+      position: absolute;
+      top: 0px;
+/*    background-color:blue;*/
+    }
+    #Loader{
+      z-index: 9999;
+/*        background-color:red;*/
+      left: 0px;
+      width:160px;
+      position: absolute;
+      margin-left:140px;
+      margin-top:50px;
+      top: 0px;
+      height:100px;
+      border-radius:6px;
+      text-align: center;
+    }

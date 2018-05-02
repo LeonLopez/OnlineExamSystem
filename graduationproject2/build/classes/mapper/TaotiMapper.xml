@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.TaotiMapper" >
+  <resultMap id="BaseResultMap" type="po.Taoti" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="difficultylevel" property="difficultylevel" jdbcType="VARCHAR" />
+    <result column="singlenum" property="singlenum" jdbcType="INTEGER" />
+    <result column="singlescore" property="singlescore" jdbcType="INTEGER" />
+    <result column="multinum" property="multinum" jdbcType="INTEGER" />
+    <result column="multiscore" property="multiscore" jdbcType="INTEGER" />
+    <result column="trueorfalsenum" property="trueorfalsenum" jdbcType="INTEGER" />
+    <result column="trueorfalsescore" property="trueorfalsescore" jdbcType="INTEGER" />
+    <result column="easyscore" property="easyscore" jdbcType="INTEGER" />
+    <result column="ordinaryscore" property="ordinaryscore" jdbcType="INTEGER" />
+    <result column="difficultscore" property="difficultscore" jdbcType="INTEGER" />
+    <result column="totalscore" property="totalscore" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="DATE" />
+    <result column="lessonid" property="lessonid" jdbcType="INTEGER" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, difficultylevel, singlenum, singlescore, multinum, multiscore, trueorfalsenum, 
+    trueorfalsescore, easyscore, ordinaryscore, difficultscore, totalscore, createtime, 
+    lessonid, mid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.TaotiExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from taoti
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from taoti
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from taoti
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.TaotiExample" >
+    delete from taoti
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Taoti" >
+    insert into taoti (id, name, difficultylevel, 
+      singlenum, singlescore, multinum, 
+      multiscore, trueorfalsenum, trueorfalsescore, 
+      easyscore, ordinaryscore, difficultscore, 
+      totalscore, createtime, lessonid, 
+      mid)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{difficultylevel,jdbcType=VARCHAR}, 
+      #{singlenum,jdbcType=INTEGER}, #{singlescore,jdbcType=INTEGER}, #{multinum,jdbcType=INTEGER}, 
+      #{multiscore,jdbcType=INTEGER}, #{trueorfalsenum,jdbcType=INTEGER}, #{trueorfalsescore,jdbcType=INTEGER}, 
+      #{easyscore,jdbcType=INTEGER}, #{ordinaryscore,jdbcType=INTEGER}, #{difficultscore,jdbcType=INTEGER}, 
+      #{totalscore,jdbcType=INTEGER}, #{createtime,jdbcType=DATE}, #{lessonid,jdbcType=INTEGER}, 
+      #{mid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Taoti" >
+    insert into taoti
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="difficultylevel != null" >
+        difficultylevel,
+      </if>
+      <if test="singlenum != null" >
+        singlenum,
+      </if>
+      <if test="singlescore != null" >
+        singlescore,
+      </if>
+      <if test="multinum != null" >
+        multinum,
+      </if>
+      <if test="multiscore != null" >
+        multiscore,
+      </if>
+      <if test="trueorfalsenum != null" >
+        trueorfalsenum,
+      </if>
+      <if test="trueorfalsescore != null" >
+        trueorfalsescore,
+      </if>
+      <if test="easyscore != null" >
+        easyscore,
+      </if>
+      <if test="ordinaryscore != null" >
+        ordinaryscore,
+      </if>
+      <if test="difficultscore != null" >
+        difficultscore,
+      </if>
+      <if test="totalscore != null" >
+        totalscore,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="lessonid != null" >
+        lessonid,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="difficultylevel != null" >
+        #{difficultylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="singlenum != null" >
+        #{singlenum,jdbcType=INTEGER},
+      </if>
+      <if test="singlescore != null" >
+        #{singlescore,jdbcType=INTEGER},
+      </if>
+      <if test="multinum != null" >
+        #{multinum,jdbcType=INTEGER},
+      </if>
+      <if test="multiscore != null" >
+        #{multiscore,jdbcType=INTEGER},
+      </if>
+      <if test="trueorfalsenum != null" >
+        #{trueorfalsenum,jdbcType=INTEGER},
+      </if>
+      <if test="trueorfalsescore != null" >
+        #{trueorfalsescore,jdbcType=INTEGER},
+      </if>
+      <if test="easyscore != null" >
+        #{easyscore,jdbcType=INTEGER},
+      </if>
+      <if test="ordinaryscore != null" >
+        #{ordinaryscore,jdbcType=INTEGER},
+      </if>
+      <if test="difficultscore != null" >
+        #{difficultscore,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null" >
+        #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="lessonid != null" >
+        #{lessonid,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.TaotiExample" resultType="java.lang.Integer" >
+    select count(*) from taoti
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update taoti
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.difficultylevel != null" >
+        difficultylevel = #{record.difficultylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singlenum != null" >
+        singlenum = #{record.singlenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.singlescore != null" >
+        singlescore = #{record.singlescore,jdbcType=INTEGER},
+      </if>
+      <if test="record.multinum != null" >
+        multinum = #{record.multinum,jdbcType=INTEGER},
+      </if>
+      <if test="record.multiscore != null" >
+        multiscore = #{record.multiscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.trueorfalsenum != null" >
+        trueorfalsenum = #{record.trueorfalsenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.trueorfalsescore != null" >
+        trueorfalsescore = #{record.trueorfalsescore,jdbcType=INTEGER},
+      </if>
+      <if test="record.easyscore != null" >
+        easyscore = #{record.easyscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.ordinaryscore != null" >
+        ordinaryscore = #{record.ordinaryscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.difficultscore != null" >
+        difficultscore = #{record.difficultscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalscore != null" >
+        totalscore = #{record.totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.lessonid != null" >
+        lessonid = #{record.lessonid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update taoti
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      difficultylevel = #{record.difficultylevel,jdbcType=VARCHAR},
+      singlenum = #{record.singlenum,jdbcType=INTEGER},
+      singlescore = #{record.singlescore,jdbcType=INTEGER},
+      multinum = #{record.multinum,jdbcType=INTEGER},
+      multiscore = #{record.multiscore,jdbcType=INTEGER},
+      trueorfalsenum = #{record.trueorfalsenum,jdbcType=INTEGER},
+      trueorfalsescore = #{record.trueorfalsescore,jdbcType=INTEGER},
+      easyscore = #{record.easyscore,jdbcType=INTEGER},
+      ordinaryscore = #{record.ordinaryscore,jdbcType=INTEGER},
+      difficultscore = #{record.difficultscore,jdbcType=INTEGER},
+      totalscore = #{record.totalscore,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=DATE},
+      lessonid = #{record.lessonid,jdbcType=INTEGER},
+      mid = #{record.mid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Taoti" >
+    update taoti
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="difficultylevel != null" >
+        difficultylevel = #{difficultylevel,jdbcType=VARCHAR},
+      </if>
+      <if test="singlenum != null" >
+        singlenum = #{singlenum,jdbcType=INTEGER},
+      </if>
+      <if test="singlescore != null" >
+        singlescore = #{singlescore,jdbcType=INTEGER},
+      </if>
+      <if test="multinum != null" >
+        multinum = #{multinum,jdbcType=INTEGER},
+      </if>
+      <if test="multiscore != null" >
+        multiscore = #{multiscore,jdbcType=INTEGER},
+      </if>
+      <if test="trueorfalsenum != null" >
+        trueorfalsenum = #{trueorfalsenum,jdbcType=INTEGER},
+      </if>
+      <if test="trueorfalsescore != null" >
+        trueorfalsescore = #{trueorfalsescore,jdbcType=INTEGER},
+      </if>
+      <if test="easyscore != null" >
+        easyscore = #{easyscore,jdbcType=INTEGER},
+      </if>
+      <if test="ordinaryscore != null" >
+        ordinaryscore = #{ordinaryscore,jdbcType=INTEGER},
+      </if>
+      <if test="difficultscore != null" >
+        difficultscore = #{difficultscore,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null" >
+        totalscore = #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="lessonid != null" >
+        lessonid = #{lessonid,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Taoti" >
+    update taoti
+    set name = #{name,jdbcType=VARCHAR},
+      difficultylevel = #{difficultylevel,jdbcType=VARCHAR},
+      singlenum = #{singlenum,jdbcType=INTEGER},
+      singlescore = #{singlescore,jdbcType=INTEGER},
+      multinum = #{multinum,jdbcType=INTEGER},
+      multiscore = #{multiscore,jdbcType=INTEGER},
+      trueorfalsenum = #{trueorfalsenum,jdbcType=INTEGER},
+      trueorfalsescore = #{trueorfalsescore,jdbcType=INTEGER},
+      easyscore = #{easyscore,jdbcType=INTEGER},
+      ordinaryscore = #{ordinaryscore,jdbcType=INTEGER},
+      difficultscore = #{difficultscore,jdbcType=INTEGER},
+      totalscore = #{totalscore,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=DATE},
+      lessonid = #{lessonid,jdbcType=INTEGER},
+      mid = #{mid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getTaotiListByLimit" parameterType="po.Pagination" resultType="vo.TaotiListVo">
+  	select  t.id,t.name,t.createtime,t.totalscore,l.name as lessonname,m.name as createuser
+  	from taoti t,lesson l,manager m
+  	where t.lessonid=l.id and t.mid=m.id
+  	limit #{startPage},#{rows}
+  </select>
+  <select id="getTaotiList"  resultType="vo.TaotiListVo">
+  	select  t.id,t.name,t.createtime,t.totalscore,l.name as lessonname,m.name as createuser
+  	from taoti t,lesson l,manager m
+  	where t.lessonid=l.id and t.mid=m.id
+  </select>
+  <update id="updateTotalScore" parameterType="vo.UpdateTaotiVo">
+  	update taoti 
+  	set totalscore = totalscore + #{score}
+  	where id = #{taotiid} 
+  </update>
+  
+</mapper>
