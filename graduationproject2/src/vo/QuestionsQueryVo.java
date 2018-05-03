@@ -1,5 +1,6 @@
 package vo;
 
+//自动组卷时用到的类，用于接收参数
 public class QuestionsQueryVo {
 	private Integer lessonid;
 	private Integer knowledgeid;

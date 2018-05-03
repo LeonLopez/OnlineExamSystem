@@ -33,41 +33,18 @@
 	src="${pageContext.request.contextPath }/scripts/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
 
-	function postExam(){
+	function postPractice(){
 		var flag = confirm("确定要交卷吗？");
 		if(flag){
 			$("form").submit();
 		}
 		
 	}
-	function countTime(totalTime){
-		if (totalTime == 0) {
-			alert("考试时间结束！系统将会自动提交试卷！");
-			$("form").submit();
-			
-		}
-		var remainTime = totalTime - 1;
-		var hour = Math.floor(remainTime/60/60);
-		var min = Math.floor(remainTime/60%60);
-		var sec = Math.floor(remainTime%60);
-		if(hour<10){
-			hour = "0" + hour;
-		}
-		if(min<10){
-			min = "0" + min;
-		}
-		if(sec<10){
-			sec = "0" + sec;
-		}
-		var str = hour+":"+min+":"+sec;
-		$("#timeDown").text(str);
-		setTimeout("countTime(" + remainTime + ")", 1000);
-		
-	}
+	
 </script>
 </head>
 
-<body onload = "countTime(${duration*60})">
+<body >
 
 
 	<div class="main exam-mode">
@@ -91,7 +68,7 @@
 		</div>
 
 		<div class="body-wrapper">
-		<form  action="${pageContext.request.contextPath }/postExam.action" method="post">
+		<form  action="${pageContext.request.contextPath }/postPractice.action" method="post">
 			<div class="body paper">
              
                <input type="hidden" name="examname" value="${examname}" />
@@ -280,10 +257,7 @@
 		<div class="nav-wrapper">
 			<div class="nav nav-status">
 				<ul class="menu-items">
-					<li class="menu-item menu-item-time">
-						<div class="item-label">剩余时间</div>
-						<div class="item-data" id="timeDown"></div>
-					</li>
+					
 					<li class="menu-item menu-item-process">
 						<div class="item-label">当前进度</div>
 						<div class="item-data">
@@ -296,7 +270,7 @@
 				</ul>
 			</div>
 
-			<button onclick="postExam()" class="btn btn-primary btn-nav" id="endExamBtn">提交</button>
+			<button onclick="postPractice()" class="btn btn-primary btn-nav" id="endExamBtn">提交</button>
 		</div>
 
 

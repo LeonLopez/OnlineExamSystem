@@ -419,6 +419,32 @@
 		$("#questionNum").val("");
 		$("#dlg3").dialog("close");
 	}
+
+	//查看试卷知识点详情
+	function openKnowledgeInfoDialog(){
+		var selectedRow = $("#dg").datagrid("getSelected");
+		if (selectedRow == null) {
+			$.messager.alert("系统提示", "请选择试卷！");
+			return;
+		}
+		var taotiid = selectedRow.id;
+		var lessonid = selectedRow.lessonid;
+		//alert(taotiid);
+		$
+		.ajax({
+			url : '${pageContext.request.contextPath }/managerGetKnowledgeDetail.action?lessonid='+lessonid+'&taotiid='+taotiid,
+			type : 'post',
+			dataType:"json",
+			success : function(result) {
+				       //alert(result.knowledgerate);
+				       //alert("knowledgepoints"+result.knowledgepoints);
+				       $("#knowledgerate").text(result.knowledgerate);
+				       $("#knowledgepoints").text(result.knowledgepoints);
+				       $("#lessonknowledgepoints").text(result.lessonknowledgepoints);
+			}
+		})
+		$("#dlg4").dialog("open").dialog("setTitle", "查看试卷知识点");
+	}
 </script>
 </head>
 <body>
@@ -434,7 +460,13 @@
 			href="javascript:openMakeTaotiDialog()" class="easyui-linkbutton"
 			data-options="iconCls:'icon-service',plain:true">人工组卷</a> <a
 			href="javascript:openAutoTaotiDialog()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-print',plain:true">自动组卷</a>
+			data-options="iconCls:'icon-print',plain:true">自动组卷</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a
+			href="#" class="easyui-linkbutton"
+			data-options="iconCls:'icon-tip',plain:true">预览试卷</a>&nbsp;&nbsp;&nbsp;
+			<a
+			href="javascript:openKnowledgeInfoDialog()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-definition',plain:true">查看试卷知识点</a>
 	</div>
 	
 	<!-- 新建试卷的窗口内容 -->
@@ -583,6 +615,29 @@
 		 <a
 			href="javascript:closeDialog3()" class="easyui-linkbutton"
 			data-options="iconCls:'icon-cancel'">关闭</a>
+	</div>
+	
+	<!-- 查看试卷知识点的窗口 -->
+	<div id="dlg4" align="center" class="easyui-dialog"
+		data-options="closed:true"
+		style="width: 550px; height: 260px">
+		<div style="margin-top: 10px;margin-left:10px;margin-right:10px;">
+			<table cellpadding="10px" border="1" cellspacing="0" bordercolor="#e0ecff">
+				<tr>
+					<td>知识点覆盖率</td>
+					<td><span id="knowledgerate"></span>%</td>
+				</tr>
+                <tr>
+					<td>试卷所含知识点</td>
+					<td><p id="knowledgepoints"></p></td>
+				</tr>
+				<tr>
+					<td>课程所含知识点</td>
+					<td><p id="lessonknowledgepoints"></p></td>
+				</tr>
+
+			</table>
+		</div>
 	</div>
 </body>
 </html>

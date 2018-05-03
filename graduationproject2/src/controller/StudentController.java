@@ -47,7 +47,7 @@ public class StudentController {
 		student.setJointime(new Date());
 		studentService.registerForStudent(student);
 		try {
-			MailUtils.sendMail(student.getEmail(), "这是一封激活邮件，请点击<a href='http://localhost:8080/graduationproject/activate.action?id="+student.getId()+"'>此链接</a>激活账号！");
+			MailUtils.sendMail(student.getEmail(), "这是一封激活邮件，请点击<a href='http://localhost:8080/graduationproject2/activate.action?id="+student.getId()+"'>此链接</a>激活账号！");
 			System.out.println("邮件已经发送");
 		} catch (Exception e) {
 			e.printStackTrace();

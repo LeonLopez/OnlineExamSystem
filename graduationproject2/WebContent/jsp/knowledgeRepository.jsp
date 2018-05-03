@@ -18,6 +18,7 @@
 		<div class="page-header" >
 			<h3 style="text-align:center">知识库</h3>
 		</div>
+		<c:if test="${fileList!=null && fn:length(fileList)>0}">
 		<table class="table table-hover" style="text-align: center;">
 			<thead>
 				<tr>
@@ -41,7 +42,10 @@
 			</c:forEach>
 			</tbody>
 		</table>
-		
+		</c:if>
+		<c:if test="${fileList==null || fn:length(fileList)==0}">
+				<span>目前知识库没有资料</span>
+		</c:if>
 	</body>
 
 </html>

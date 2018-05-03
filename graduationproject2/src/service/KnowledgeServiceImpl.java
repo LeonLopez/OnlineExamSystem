@@ -9,6 +9,7 @@ import mapper.KnowledgeMapper;
 import po.Knowledge;
 import po.KnowledgeExample;
 import po.KnowledgeExample.Criteria;
+import vo.KnowledgeDetailVo;
 
 @Service
 public class KnowledgeServiceImpl implements KnowledgeService {
@@ -23,5 +24,14 @@ public class KnowledgeServiceImpl implements KnowledgeService {
 		criteria.andLessonidEqualTo(id);
 		return knowledgeMapper.selectByExample(example);
 	}
+
+	@Override
+	public List<Knowledge> getKnowledgesByTaotiid(Integer taotiid) {
+		return knowledgeMapper.getKnowledgeByTaotiid(taotiid);
+	}
+
+	
+
+	
 
 }

@@ -414,4 +414,17 @@
   		and q.difficulty=#{difficulty}
   	</if>
   </select>
+  
+  <select id="getQuestionListByTaotiid" parameterType="java.lang.Integer" resultType="vo.TaotiQuestionsVo">
+  	select q.*,tq.score
+  	from questions q,taotiquestion tq
+  	where tq.taotiid=#{taotiid} and tq.questionid=q.id
+  
+  </select>
+  
+  <select id="getTaotiQuestionByTaotiQuestionIds" parameterType="vo.TaotiQuestionIdsVo" resultType="vo.TaotiQuestionsVo">
+  	select q.*,tq.score
+  	from questions q,taotiquestion tq
+  	where tq.taotiid=#{taotiid} and tq.questionid=#{questionid} and tq.questionid=q.id
+  </select>
 </mapper>

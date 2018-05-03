@@ -27,4 +27,6 @@ public interface KnowledgeMapper {
     int updateByPrimaryKeySelective(Knowledge record);
 
     int updateByPrimaryKey(Knowledge record);
+
+	List<Knowledge> getKnowledgeByTaotiid(Integer taotiid);
 }

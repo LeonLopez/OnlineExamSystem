@@ -16,11 +16,18 @@
 	function enterExam(id,name){
 			window.open("${pageContext.request.contextPath }/jsp/beforeAnswer.jsp?id="+id+"&name="+name); 
 		}
+	function enterPractice(id){
+		window.open("${pageContext.request.contextPath }/startPractice.action?id="+id); 
+	}
+	function lookanswer(id){
+		window.open("${pageContext.request.contextPath }/lookAnswer.action?id="+id); 
+	}
 </script>
 	<body>
 		<div class="page-header" >
 			<h3 style="margin-left: 40px;">正在进行的考试</h3>
 		</div>
+		<c:if test="${examList!=null && fn:length(examList)>0}">
 		<table class="table table-hover" style="text-align: center;">
 			<thead>
 				<tr>
@@ -45,14 +52,19 @@
 					<td><fmt:formatDate value="${exam.starttime }" pattern="yyyy-MM-dd"/> </td>
 					<td><fmt:formatDate value="${exam.endtime }" pattern="yyyy-MM-dd"/>  </td>
 					<td>${exam.duration }分钟</td>
-					<td><button class="btn btn-default" value="进入考试" onclick="enterExam(${exam.id},'${exam.name }')">进入考试</button>&nbsp;&nbsp;<button class="btn btn-default" value="成绩查询">成绩查询</button></td>
+					<td><button class="btn btn-default" value="进入考试" onclick="enterExam(${exam.id},'${exam.name }')">进入考试</button></td>
 				</tr>
 			</c:forEach>
 			</tbody>
 		</table>
+		</c:if>
+		<c:if test="${examList==null || fn:length(examList)==0}">
+				<span style="margin-left: 43px;">目前没有正在进行的考试</span>
+		</c:if>
 		<div class="page-header" >
 			<h3 style="margin-left: 40px;">已经结束的考试</h3>
 		</div>
+		<c:if test="${finishExamList!=null && fn:length(finishExamList)>0}">
 		<table class="table table-hover" style="text-align: center;">
 			<thead>
 				<tr>
@@ -77,12 +89,16 @@
 					<td><fmt:formatDate value="${exam.starttime }" pattern="yyyy-MM-dd"/> </td>
 					<td><fmt:formatDate value="${exam.endtime }" pattern="yyyy-MM-dd"/>  </td>
 					<td>${exam.duration }分钟</td>
-					<td><button class="btn btn-default" value="查看答案">查看答案</button>&nbsp;&nbsp;<button class="btn btn-default" value="成绩查询">成绩查询</button></td>
+					<td><button class="btn btn-default" value="进入练习" onclick="enterPractice(${exam.id})">进入练习</button>&nbsp;<button class="btn btn-default" value="查看答案" onclick="lookanswer(${exam.id})">查看答案</button></td>
 				</tr>
 			</c:forEach>
 				
 			</tbody>
 		</table>
+		</c:if>
+		<c:if test="${finishExamList==null || fn:length(finishExamList)==0}">
+				<span style="margin-left: 43px;">目前没有已经结束的考试</span>
+		</c:if>
 	</body>
 
 </html>

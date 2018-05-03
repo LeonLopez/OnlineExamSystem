@@ -17,6 +17,8 @@ import vo.AutoMakeTaotiVo;
 import vo.ParamVo;
 import vo.QuestionsListVo;
 import vo.QuestionsQueryVo;
+import vo.TaotiQuestionIdsVo;
+import vo.TaotiQuestionsVo;
 import vo.UpdateTaotiVo;
 
 @Service
@@ -56,8 +58,7 @@ public class QuestionServiceImpl implements QuestionService{
 	}
 
 	@Override
-	public List<Questions> getQuestionListByTaotiid(Integer taotiid) {
-		//未完成
+	public List<TaotiQuestionsVo> getQuestionListByTaotiid(Integer taotiid) {
 		return questionsMapper.getQuestionListByTaotiid(taotiid);
 
 	}
@@ -87,5 +88,15 @@ public class QuestionServiceImpl implements QuestionService{
 	public List<Questions> getQuestionListByAutoMakeTaotiVo(AutoMakeTaotiVo amtv) {
 		return questionsMapper.getQuestionListByAutoMakeTaotiVo(amtv);
 	}
+
+	@Override
+	public TaotiQuestionsVo getTaotiQuestionByTaotiQuestionIds(int taotiid, Integer key) {
+		TaotiQuestionIdsVo tqIdsVo = new TaotiQuestionIdsVo();
+		tqIdsVo.setTaotiid(taotiid);
+		tqIdsVo.setQuestionid(key);
+		return questionsMapper.getTaotiQuestionByTaotiQuestionIds(tqIdsVo);
+	}
+
+	
 
 }

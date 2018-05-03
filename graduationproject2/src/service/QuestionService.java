@@ -7,6 +7,7 @@ import po.Questions;
 import vo.AutoMakeTaotiVo;
 import vo.QuestionsListVo;
 import vo.QuestionsQueryVo;
+import vo.TaotiQuestionsVo;
 
 public interface QuestionService {
 
@@ -20,7 +21,7 @@ public interface QuestionService {
 
 	void deleteQuestionById(int id);
 
-	List<Questions> getQuestionListByTaotiid(Integer taotiid);
+	List<TaotiQuestionsVo> getQuestionListByTaotiid(Integer taotiid);
 
 	Questions getQuestionById(Integer key);
 
@@ -29,5 +30,8 @@ public interface QuestionService {
 	List<QuestionsListVo> getQuestionsListByLessonIdAndLimit(Pagination pagination, Integer lessonid);
 
 	List<Questions> getQuestionListByAutoMakeTaotiVo(AutoMakeTaotiVo amtv);
+
+	TaotiQuestionsVo getTaotiQuestionByTaotiQuestionIds(int taotiid, Integer key);
+
 
 }

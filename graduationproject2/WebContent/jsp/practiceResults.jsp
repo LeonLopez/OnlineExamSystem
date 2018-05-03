@@ -42,7 +42,7 @@
 					<i class="icon icon-a_nav_my"></i> ${studentName }
 				</div>
 
-				<a type="button" class="btn btn-default logout" href="${pageContext.request.contextPath}/startExam.action?id=${examid}">
+				<a type="button" class="btn btn-default logout" href="${pageContext.request.contextPath}/startPractice.action?id=${examid}">
 					<i class="icon icon-a_btn_return btn-icon-left"></i> 返回
 				</a>
 
@@ -100,7 +100,7 @@
 				<div class="footer-wrapper clearfix footer-tab-1">
 
 					<div class="tab-btn">
-						<a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/startExam.action?id=${examid}">再考一次</a>
+						<a type="button" class="btn btn-primary" href="${pageContext.request.contextPath}/startPractice.action?id=${examid}">再练习一次</a>
 					</div>
 
 				</div>

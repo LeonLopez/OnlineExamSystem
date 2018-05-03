@@ -195,9 +195,9 @@
   </update>
   
   <select id="getAnswerDetailListByResultId" parameterType="java.lang.Integer" resultType="vo.AnswerDetailVo">
-  	select q.*,ar.*
-  	from answerresult ar,questions q
-  	where ar.sturesultid = #{id} and ar.questionid = q.id
+  	select q.*,ar.*,tq.score
+  	from answerresult ar,questions q,taotiquestion tq,studentresult sr,examination e
+  	where ar.sturesultid = #{id} and ar.questionid = q.id and sr.id=#{id} and sr.examinationid=e.id and e.taotiid=tq.taotiid and q.id=tq.questionid
   
   </select>
 </mapper>

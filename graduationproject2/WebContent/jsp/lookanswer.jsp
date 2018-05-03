@@ -48,7 +48,7 @@
 
 			</div>
 
-			<div class="exam-name ellipsis">${examname }</div>
+			<div class="exam-name ellipsis">${examname }参考答案</div>
 			<div class="user ellipsis">
 				<i class="icon icon-a_nav_my"></i>${studentName }
 			</div>
@@ -107,27 +107,16 @@
 											<span class="words">D. ${single.optiond } </span>
 
 										</div>
-										<c:if test="${single.rightorwrong=='正确' }">
 											<div
 												style="background-color: #F8F8F8; border: 1px solid #ddd; color: #666; margin-top: 20px;">
-												<div class="select single-select d">
-
-													<span class="words">你的回答： ${single.stuanswer } </span>
-
-												</div>
+												
 												<div class="select single-select d">
 
 													<span class="words" style="color: #79A900;">正确答案：
 														${single.answer } </span>
 
 												</div>
-												<div class="select single-select d">
-
-													<span class="words">回答：</span> <span
-														style="color: #79A900; font-size: 18px">${single.rightorwrong }
-													</span>
-
-												</div>
+												
 												<div class="select single-select d">
 
 													<span class="words"><b>答案解析：</b></span> <span class="words"
@@ -138,39 +127,7 @@
 
 												</div>
 											</div>
-										</c:if>
-										<c:if test="${single.rightorwrong=='错误' }">
-											<div
-												style="background-color: #FFF3F3; border: 1px solid #F6BBBB; color: #666; margin-top: 20px;">
-												<div class="select single-select d">
-
-													<span class="words">你的回答： ${single.stuanswer } </span>
-
-												</div>
-												<div class="select single-select d">
-
-													<span class="words" style="color: #FF3F00;">正确答案：
-														${single.answer } </span>
-
-												</div>
-												<div class="select single-select d">
-
-													<span class="words">回答：</span> <span
-														style="color: #FF3F00; font-size: 18px">${single.rightorwrong }
-													</span>
-
-												</div>
-												<div class="select single-select d">
-
-													<span class="words"><b>答案解析：</b></span> <span class="words"
-														style="font-size: 12px;"> <c:if
-															test="${single.note==null or single.note=='' }">无</c:if>
-														<c:if test="${not empty single.note}">${single.note }</c:if>
-													</span>
-
-												</div>
-											</div>
-										</c:if>
+										
 									</div>
 
 								</div>
@@ -223,14 +180,8 @@
 											<span class="words">D. ${multi.optiond } </span>
 
 										</div>
-										<c:if test="${multi.rightorwrong=='正确' }">
 											<div
 												style="background-color: #F8F8F8; border: 1px solid #ddd; color: #666; margin-top: 20px;">
-												<div class="select single-select d">
-
-													<span class="words">你的回答： ${multi.stuanswer } </span>
-
-												</div>
 												<div class="select single-select d">
 
 													<span class="words" style="color: #79A900;">正确答案：
@@ -239,13 +190,6 @@
 												</div>
 												<div class="select single-select d">
 
-													<span class="words">回答：</span> <span
-														style="color: #79A900; font-size: 18px">${multi.rightorwrong }
-													</span>
-
-												</div>
-												<div class="select single-select d">
-
 													<span class="words"><b>答案解析：</b></span> <span class="words"
 														style="font-size: 12px;"> <c:if
 															test="${multi.note==null or multi.note=='' }">无</c:if> <c:if
@@ -254,40 +198,7 @@
 
 												</div>
 											</div>
-										</c:if>
-										<c:if test="${multi.rightorwrong=='错误' }">
-											<div
-												style="background-color: #FFF3F3; border: 1px solid #F6BBBB; color: #666; margin-top: 20px;">
-												<div class="select single-select d">
-
-													<span class="words">你的回答： ${multi.stuanswer } </span>
-
-												</div>
-												<div class="select single-select d">
-
-													<span class="words" style="color: #FF3F00;">正确答案：
-														${multi.answer } </span>
-
-												</div>
-												<div class="select single-select d">
-
-													<span class="words">回答：</span> <span
-														style="color: #FF3F00; font-size: 18px">${multi.rightorwrong }
-													</span>
-
-												</div>
-												<div class="select single-select d">
-
-													<span class="words"><b>答案解析：</b></span> <span class="words"
-														style="font-size: 12px;"> <c:if
-															test="${multi.note==null or multi.note=='' }">无</c:if> <c:if
-															test="${not empty multi.note}">${multi.note }</c:if>
-													</span>
-
-												</div>
-											</div>
-										</c:if>
-
+										
 
 										
 									</div>
@@ -326,28 +237,16 @@
 																
 
 																
-																<c:if test="${judge.rightorwrong=='正确' }">
 																	<div
 																		style="background-color: #F8F8F8; border: 1px solid #ddd; color: #666; margin-top: 20px;">
-																		<div class="select single-select d">
-
-																			<span class="words">你的回答： ${judge.stuanswer }
-																			</span>
-
-																		</div>
+																		
 																		<div class="select single-select d">
 
 																			<span class="words" style="color: #79A900;">正确答案：
 																				${judge.judgeanswer } </span>
 
 																		</div>
-																		<div class="select single-select d">
-
-																			<span class="words">回答：</span> <span
-																				style="color: #79A900; font-size: 18px">${judge.rightorwrong }
-																			</span>
-
-																		</div>
+																		
 																		<div class="select single-select d">
 
 																			<span class="words"><b>答案解析：</b></span> <span
@@ -358,40 +257,7 @@
 
 																		</div>
 																	</div>
-																</c:if>
-																<c:if test="${judge.rightorwrong=='错误' }">
-																	<div
-																		style="background-color: #FFF3F3; border: 1px solid #F6BBBB; color: #666; margin-top: 20px;">
-																		<div class="select single-select d">
-
-																			<span class="words">你的回答： ${judge.stuanswer }
-																			</span>
-
-																		</div>
-																		<div class="select single-select d">
-
-																			<span class="words" style="color: #FF3F00;">正确答案：
-																				${judge.answer } </span>
-
-																		</div>
-																		<div class="select single-select d">
-
-																			<span class="words">回答：</span> <span
-																				style="color: #FF3F00; font-size: 18px">${judge.rightorwrong }
-																			</span>
-
-																		</div>
-																		<div class="select single-select d">
-
-																			<span class="words"><b>答案解析：</b></span> <span
-																				class="words" style="font-size: 12px;"> <c:if
-																					test="${judge.note==null or judge.note=='' }">无</c:if>
-																				<c:if test="${not empty judge.note}">${judge.note }</c:if>
-																			</span>
-
-																		</div>
-																	</div>
-																</c:if>
+																
 															</div>
 
 														</div>

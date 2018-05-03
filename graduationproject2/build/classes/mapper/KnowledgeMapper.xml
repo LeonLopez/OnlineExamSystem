@@ -179,4 +179,11 @@
       lessonid = #{lessonid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="getKnowledgeByTaotiid" parameterType="java.lang.Integer" resultType="po.Knowledge">
+  	select distinct k.id,k.name 
+  	from knowledge k,taotiquestion tq,questions q
+  	where tq.taotiid=#{taotiid} and tq.questionid=q.id and q.knowledgeid = k.id
+  
+  </select>
 </mapper>

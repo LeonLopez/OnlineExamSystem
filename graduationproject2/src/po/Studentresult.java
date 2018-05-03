@@ -24,18 +24,17 @@ public class Studentresult {
    
     
     
-	public Studentresult(Integer sid, Integer resingle, Integer resmore, Integer restotal, Date createtime,
-			Integer examinationid) {
+	public Studentresult(Integer sid, Integer resingle, Integer resmore, Integer restorf, Integer restotal,
+			Date createtime, Integer examinationid) {
 		super();
 		this.sid = sid;
 		this.resingle = resingle;
 		this.resmore = resmore;
+		this.restorf = restorf;
 		this.restotal = restotal;
 		this.createtime = createtime;
 		this.examinationid = examinationid;
 	}
-
-
 
 	public Studentresult() {
 		super();

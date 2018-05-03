@@ -6,8 +6,17 @@ public class AnswerDetailVo extends Questions {
 	
 	private int sturesultid;
 	private int questionid;
+	private int score;
 	private String stuanswer;
 	private String rightorwrong;
+	
+	
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public int getSturesultid() {
 		return sturesultid;
 	}

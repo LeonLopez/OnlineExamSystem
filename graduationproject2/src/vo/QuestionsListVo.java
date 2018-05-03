@@ -1,7 +1,7 @@
 package vo;
 
 import po.Questions;
-
+//用于返回manager中的question列表
 public class QuestionsListVo extends Questions{
 
 	private String lessonName;

@@ -22,14 +22,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import po.Answerresult;
+import po.Examination;
 import po.Pagination;
 import po.Questions;
 import po.Student;
 import service.AnswerresultService;
+import service.ExaminationService;
+import service.QuestionService;
 import service.ResultService;
 import vo.AnswerDetailVo;
 import vo.ExamListVo;
 import vo.ResultListVo;
+import vo.TaotiQuestionsVo;
 
 @Controller
 public class ResultController {
@@ -39,6 +43,12 @@ public class ResultController {
 	
 	@Autowired
 	private AnswerresultService answerresultService;
+	
+	@Autowired
+	private ExaminationService examinationService;
+	
+	@Autowired
+	private QuestionService questionService;
 	
 	@RequestMapping("/managerGetQueryResult.action")
 	public @ResponseBody Map<String,Object> getExamList(Pagination pagination,ResultListVo rlv,HttpServletRequest request) throws Exception{
@@ -153,21 +163,25 @@ public class ResultController {
 			request.setAttribute("totalQuestions", answerDetailVoList.size());// 总题数
 			List<AnswerDetailVo> singleList = new ArrayList<AnswerDetailVo>();
 			List<AnswerDetailVo> multiList = new ArrayList<AnswerDetailVo>();
+			List<AnswerDetailVo> judgeList = new ArrayList<AnswerDetailVo>();
 			for (AnswerDetailVo answerDetailVo : answerDetailVoList) {
 				if (answerDetailVo.getType().equals("单选")) {
 					singleList.add(answerDetailVo);
 				} else if (answerDetailVo.getType().equals("多选")) {
 					multiList.add(answerDetailVo);
+				}else if (answerDetailVo.getType().equals("判断")) {
+					judgeList.add(answerDetailVo);
 				}
 			}
 			request.setAttribute("singleList", singleList);// 单选列表
 			request.setAttribute("multiList", multiList);// 多选列表
+			request.setAttribute("judgeList", judgeList);// 判断列表
 			if (singleList != null) {
 				request.setAttribute("singleQuestions", singleList.size());// 单选总数
 
 				int singleScore = 0;
 				for (AnswerDetailVo answerDetailVo : singleList) {
-					//singleScore += answerDetailVo.getScore();
+					singleScore += answerDetailVo.getScore();
 
 				}
 				request.setAttribute("singleScore", singleScore);// 单选总分数
@@ -176,15 +190,80 @@ public class ResultController {
 				request.setAttribute("multiQuestions", multiList.size());// 多选总数
 				int multiScore = 0;
 				for (AnswerDetailVo answerDetailVo : multiList) {
-					//multiScore += answerDetailVo.getScore();
+					multiScore += answerDetailVo.getScore();
 				}
 				request.setAttribute("multiScore", multiScore);// 多选总分数
+			}
+			if (judgeList != null) {
+				request.setAttribute("judgeQuestions", judgeList.size());// 判断题数
+				int judgeScore = 0;
+				for (AnswerDetailVo answerDetailVo : judgeList) {
+					judgeScore += answerDetailVo.getScore();
+				}
+				request.setAttribute("judgeScore", judgeScore);// 判断总分数
 			}
 		}
 		request.setAttribute("examname", examname);
 		return "forward:/jsp/answerDetail.jsp";
 	}
 	
+	@RequestMapping("/lookAnswer.action")
+	public String lookAnswer(Integer id, HttpServletRequest request) throws Exception {
+		Examination exam = examinationService.getExamById(id);
+		if (exam != null) {
+			request.setAttribute("examname", exam.getName());
+			request.setAttribute("examid", exam.getId());
+			request.setAttribute("duration", exam.getDuration());
+			List<TaotiQuestionsVo> questionsList = questionService.getQuestionListByTaotiid(exam.getTaotiid());
+			if (questionsList != null) {
+				request.setAttribute("totalQuestions", questionsList.size());// 总题数
+				List<TaotiQuestionsVo> singleList = new ArrayList<TaotiQuestionsVo>();
+				List<TaotiQuestionsVo> multiList = new ArrayList<TaotiQuestionsVo>();
+				List<TaotiQuestionsVo> judgeList = new ArrayList<TaotiQuestionsVo>();
+				for (TaotiQuestionsVo question : questionsList) {
+					if (question.getType().equals("单选")) {
+						singleList.add(question);
+					} else if (question.getType().equals("多选")) {
+						multiList.add(question);
+					} else if (question.getType().equals("判断")) {
+						judgeList.add(question);
+					}
+				}
+				request.setAttribute("singleList", singleList);// 单选列表
+				request.setAttribute("multiList", multiList);// 多选列表
+				request.setAttribute("judgeList", judgeList);// 判断列表
+				if (singleList != null) {
+					request.setAttribute("singleQuestions", singleList.size());// 单选总数
+
+					int singleScore = 0;
+					for (TaotiQuestionsVo question : singleList) {
+						singleScore += question.getScore();
+
+					}
+					request.setAttribute("singleScore", singleScore);// 单选总分数
+				}
+				if (multiList != null) {
+					request.setAttribute("multiQuestions", multiList.size());// 多选总数
+					int multiScore = 0;
+					for (TaotiQuestionsVo question : multiList) {
+						multiScore += question.getScore();
+					}
+					request.setAttribute("multiScore", multiScore);// 多选总分数
+				}
+				if (judgeList != null) {
+					request.setAttribute("judgeQuestions", judgeList.size());// 判断总数
+					int judgeScore = 0;
+					for (TaotiQuestionsVo question : judgeList) {
+						judgeScore += question.getScore();
+					}
+					request.setAttribute("judgeScore", judgeScore);// 判断总分数
+				}
+			}
+
+		}
+		return "forward:/jsp/lookanswer.jsp";
+	}
+
 	
 	@RequestMapping("/saveExcel.action")
 	public void saveExcel(HttpSession session,HttpServletResponse response) throws Exception{
@@ -200,11 +279,13 @@ public class ResultController {
 		Cell cell02=row.createCell(2);
 		cell02.setCellValue("多选题成绩");
 		Cell cell03=row.createCell(3);
-		cell03.setCellValue("总成绩");
+		cell03.setCellValue("判断题成绩");
 		Cell cell04=row.createCell(4);
-		cell04.setCellValue("及格");
+		cell04.setCellValue("总成绩");
 		Cell cell05=row.createCell(5);
-		cell05.setCellValue("考试时间");
+		cell05.setCellValue("及格");
+		Cell cell06=row.createCell(6);
+		cell06.setCellValue("考试时间");
 		for (int i = 0; i < list.size(); i++) {
 			ResultListVo resultListVo = list.get(i);
 			row=sheet.createRow(i+1);
@@ -215,18 +296,20 @@ public class ResultController {
 			Cell cell2=row.createCell(2);
 			cell2.setCellValue(resultListVo.getResmore());
 			Cell cell3=row.createCell(3);
-			cell3.setCellValue(resultListVo.getRestotal());
+			cell3.setCellValue(resultListVo.getRestorf());
 			Cell cell4=row.createCell(4);
-			cell4.setCellValue(resultListVo.getIspass());
+			cell4.setCellValue(resultListVo.getRestotal());
 			Cell cell5=row.createCell(5);
-			cell5.setCellValue(resultListVo.getCreatetime());
+			cell5.setCellValue(resultListVo.getIspass());
+			Cell cell6=row.createCell(6);
+			cell6.setCellValue(resultListVo.getCreatetime());
 			//获取单元格样式
 			CreationHelper creationHelper = workbook.getCreationHelper();
 			CellStyle cellStyle = workbook.createCellStyle();
 			//定义单元格日期样式
 			cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("yyyy-mm-dd hh:mm:ss"));
 			//设置单元格样式
-			cell5.setCellStyle(cellStyle);
+			cell6.setCellStyle(cellStyle);
 		}
 		
 		resultService.export(response, workbook, "examResults.xls");

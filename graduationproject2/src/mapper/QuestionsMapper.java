@@ -10,6 +10,8 @@ import vo.AutoMakeTaotiVo;
 import vo.ParamVo;
 import vo.QuestionsListVo;
 import vo.QuestionsQueryVo;
+import vo.TaotiQuestionIdsVo;
+import vo.TaotiQuestionsVo;
 
 public interface QuestionsMapper {
     int countByExample(QuestionsExample example);
@@ -38,11 +40,14 @@ public interface QuestionsMapper {
 
 	List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination);
 
-	List<Questions> getQuestionListByTaotiid(Integer taotiid);
+	List<TaotiQuestionsVo> getQuestionListByTaotiid(Integer taotiid);
 
 	List<QuestionsListVo> getQuestionsListByLessonId(QuestionsQueryVo qqv);
 
 	List<QuestionsListVo> getQuestionsListByLessonIdAndLimit(ParamVo paramVo);
 
 	List<Questions> getQuestionListByAutoMakeTaotiVo(AutoMakeTaotiVo amtv);
+
+	TaotiQuestionsVo getTaotiQuestionByTaotiQuestionIds(TaotiQuestionIdsVo tqIdsVo);
+
 }
