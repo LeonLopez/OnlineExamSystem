@@ -91,14 +91,52 @@
 		})
 	})
 	
+	
+	function resetValue(){
+		$("#name").val("");
+		$("#password").val("");
+		$("input[name=sex]").prop("checked",false);
+		$("#email").val("");
+		$("#profession").val("");
+		$("#clazz").val("");
+		$("#addorupdate").val("");
+		$("#id").val("");
+		$("#profession1").combobox('clear');
+		$("#clazz1").combobox('clear');
+		$("#name1").val("");
+	}
+
 	function openAddStudentDialog(){
-		
-		$("#dlg").dialog("open").dialog("setTitle","添加学生");
+		$("#addorupdate").val("1");
+		$("#dlg").dialog("open").dialog("setTitle","新增学生");
 	}
 	
-	function addStudent(){
+	function openUpdateStudentDialog(){
+		var selectedRow = $("#tt").datagrid("getSelected");
+		if (selectedRow==null) {
+			$.messager.alert("系统提示","请选择要修改的数据！");
+			return;
+		}
+		$("#fm").form("load",selectedRow);
+		$("#addorupdate").val("2");
+		$("#dlg").dialog("open").dialog("setTitle","编辑学生");
+	}
+	
+	function closeDialog(){
+		resetValue();
+		$("#dlg").dialog("close");
+	}
+	
+	function addOrUpdateLesson(){
+		var choice = $("#addorupdate").val();
+		var myUrl;
+		if (choice=="1") {
+			myUrl="${pageContext.request.contextPath }/managerAddStudent.action";
+		}else{
+			myUrl="${pageContext.request.contextPath }/managerUpdateStudent.action";
+		}
 		$("#fm").form("submit",{
-			url:"${pageContext.request.contextPath }/managerAddStudent.action",
+			url:myUrl,
 			onSubmit:function(){
 				return $(this).form("validate");
 			},
@@ -106,9 +144,11 @@
 				if (result=="success") {
 					$.messager.alert("系统提示","操作成功！");
 					closeDialog();
+					resetValue();
 					$("#tt").datagrid("reload");
 				}else{
 					$.messager.alert("系统提示","操作失败，请联系系统管理员！");
+					resetValue();
 				}
 			}
 		})
@@ -145,24 +185,49 @@
 			}
 		})
 	}
+	function searchResult(){
+		 var profession=$("#profession1").val();
+		 var clazz=$("#clazz1").val();
+		 var name=$("#name1").val();
 
-	function closeDialog(){
-		$("#name").val("");
-		$("#dlg").dialog("close");
+			$("#tt").datagrid("load",{
+					profession:profession,
+					clazz:clazz,
+					name:name,
+			})
 	}
+	
 </script>
 </head>
 <body style="margin: 1px">
 <table id="tt"></table>
 <div id="tb">
-	<a href="javascript:openAddStudentDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>
-	<a href="javascript:editStudentDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑</a>
-	<a href="javascript:deleteStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+	<a href="javascript:openAddStudentDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增学生</a>
+	<a href="javascript:openUpdateStudentDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑学生信息</a>
+	<a href="javascript:deleteStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除学生</a>
+	<font style="margin-left: 400px;">专业</font> <input id="profession1" name="profession"
+			class="easyui-combobox"
+			data-options="panelHeight:'auto',editable:false,valueField:'profession',textField:'profession',data:'rows',url:'${pageContext.request.contextPath}/managerGetProfessionByMid.action',onSelect: function(rec){var url = '${pageContext.request.contextPath }/managerGetClazzByProfessionAndMid.action?profession='+rec.profession;$('#clazz1').combobox('reload', url);}"
+			style="width: 90px;" /> &nbsp;&nbsp;<font>班别</font> <input id="clazz1"
+			class="easyui-combobox" name="clazz"
+			data-options="textField:'clazz',valueField:'clazz',panelHeight:'auto'"
+			value="" style="width: 70px;"> &nbsp;&nbsp;<font>账号</font>&nbsp;<input
+			id="name1" type="text" value="" style="width: 80px;">
+			<a href="javascript:searchResult()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-search'">查询</a>
 </div>
 
 <div id="dlg" align="center" class="easyui-dialog" data-options="closed:true,buttons:'#bts'" style="width: 400px;height: 400px;padding: 10px">
 	<form id="fm" method="post"> 
 		<table cellpadding="15px">
+			<tr>
+				<td>
+					<input type="hidden" id="id" name="id">
+				</td>
+				<td>
+					<input type="hidden" id="addorupdate" value="">
+				</td>
+			</tr>
 			<tr>
 				<td>账号</td>
 				<td><input id="name" name="name" class="easyui-validatebox" data-options="required:true"></td>
@@ -193,7 +258,7 @@
 	</form>
 </div>
 <div id="bts" align="center">
-	<a href="javascript:addStudent()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+	<a href="javascript:addOrUpdateLesson()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
 	<a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
 </div>
 </body>

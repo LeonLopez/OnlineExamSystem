@@ -445,6 +445,17 @@
 		})
 		$("#dlg4").dialog("open").dialog("setTitle", "查看试卷知识点");
 	}
+	function previewTaoti(){
+
+		var selectedRow = $("#dg").datagrid("getSelected");
+		if (selectedRow == null) {
+			$.messager.alert("系统提示", "请选择试卷！");
+			return;
+		}
+		var taotiid = selectedRow.id;
+		window.open("${pageContext.request.contextPath }/managerPreviewTaoti.action?id="+taotiid);
+
+	}
 </script>
 </head>
 <body>
@@ -462,7 +473,7 @@
 			href="javascript:openAutoTaotiDialog()" class="easyui-linkbutton"
 			data-options="iconCls:'icon-print',plain:true">自动组卷</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<a
-			href="#" class="easyui-linkbutton"
+			href="javascript:previewTaoti()" class="easyui-linkbutton"
 			data-options="iconCls:'icon-tip',plain:true">预览试卷</a>&nbsp;&nbsp;&nbsp;
 			<a
 			href="javascript:openKnowledgeInfoDialog()" class="easyui-linkbutton"

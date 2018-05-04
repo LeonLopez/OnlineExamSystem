@@ -11,9 +11,9 @@ import vo.TaotiQuestionsVo;
 
 public interface QuestionService {
 
-	List<QuestionsListVo> getQuestionsList();
+	List<QuestionsListVo> getQuestionsList(Questions question);
 
-	List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination);
+	List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination, Questions question);
 
 	int addQuestion(Questions question);
 

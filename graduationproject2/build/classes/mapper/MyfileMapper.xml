@@ -194,15 +194,21 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="getFileList" resultType="vo.FileListVo">
+  <select id="getFileList" resultType="vo.FileListVo" parameterType="java.lang.String">
   	select f.*,m.name as createuser
   	from myfile f,manager m
   	where m.id = f.mid
+  	<if test="filename!=null and filename!=''">
+  	and filename like "%"#{filename}"%"
+  	</if>
   </select> 
-  <select id="getFileListByLimit" resultType="vo.FileListVo" parameterType="po.Pagination">
+  <select id="getFileListByLimit" resultType="vo.FileListVo" parameterType="Map">
   	select f.*,m.name as createuser
   	from myfile f,manager m
   	where m.id = f.mid
+  	<if test="filename!=null and filename!=''">
+  	and filename like "%"#{filename}"%"
+  	</if>
   	limit #{startPage},#{rows}
   </select>
 </mapper>

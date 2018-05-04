@@ -1,5 +1,6 @@
 package service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,25 @@ public class QuestionServiceImpl implements QuestionService{
 	private LessonMapper lessonMapper;
 
 	@Override
-	public List<QuestionsListVo> getQuestionsList() {
-		return questionsMapper.getQuestionsList();
+	public List<QuestionsListVo> getQuestionsList(Questions question) {
+		return questionsMapper.getQuestionsList(question);
 	}
 
 	@Override
-	public List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination) {
+	public List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination, Questions question) {
 		pagination.setStartPage((pagination.getPage()-1)*pagination.getRows());
-		return questionsMapper.getQuestionsListByLimit(pagination);
+		HashMap <String,Object> map=new HashMap<String,Object>();
+
+		map.put("startPage",pagination.getStartPage());
+
+		map.put("rows",pagination.getRows());
+		
+		map.put("lessonid",question.getLessonid());
+		map.put("knowledgeid",question.getKnowledgeid());
+		map.put("type",question.getType());
+		map.put("difficulty",question.getDifficulty());
+		
+		return questionsMapper.getQuestionsListByLimit(map);
 	}
 
 	@Override
@@ -96,6 +108,8 @@ public class QuestionServiceImpl implements QuestionService{
 		tqIdsVo.setQuestionid(key);
 		return questionsMapper.getTaotiQuestionByTaotiQuestionIds(tqIdsVo);
 	}
+
+	
 
 	
 

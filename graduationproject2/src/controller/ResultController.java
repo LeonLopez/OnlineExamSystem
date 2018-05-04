@@ -122,28 +122,10 @@ public class ResultController {
 		resultService.export(response, workbook, "StuExamResults.xls");
 	}
 	
-	@RequestMapping("/managerGetProfession.action")
-	public @ResponseBody List<String> getProfessionList(HttpServletRequest request) throws Exception{
-		HttpSession session = request.getSession();
-		Integer managerId = (Integer) session.getAttribute("managerId");
-		List<String> professionList = resultService.getProfessionList(managerId);
-		System.out.println(professionList);
-		return professionList;
-	}
 	
-	@RequestMapping("/managerGetClazz.action")
-	public @ResponseBody List<Integer> getClazzList(HttpServletRequest request) throws Exception{
-		HttpSession session = request.getSession();
-		Integer managerId = (Integer) session.getAttribute("managerId");
-		List<Integer> clazzList = resultService.getClazzList(managerId);
-		return clazzList;
-	}
 	
-	@RequestMapping("/managerGetExamName.action")
-	public @ResponseBody List<String> ExamName() throws Exception{
-		List<String> examNameList = resultService.getExamNameList();
-		return examNameList;
-	}
+	
+	
 	
 	@RequestMapping("/getQueryResult.action")
 	public String getResultList(HttpServletRequest request) throws Exception{

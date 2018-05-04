@@ -2,8 +2,11 @@ package mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import po.Pagination;
 import po.Student;
 import po.StudentExample;
+import vo.StuQueryVo;
 import vo.StudentListVo;
 
 public interface StudentMapper {
@@ -29,11 +32,25 @@ public interface StudentMapper {
 
     int updateByPrimaryKey(Student record);
     
-    List<Student> getStudentList(Integer managerId);
+    List<Student> getStudentList(StudentListVo stuListVo);
 
 	List<Student> getStudentListByLimit(StudentListVo stuListVo);
 
 	int addStudent(Student student);
 
 	void updateActivateById(Integer id);
+
+	List<Student> getProfessions();
+
+	List<Student> getClazzByProfession(String profession);
+
+	List<Student> getAllStudentList(StuQueryVo stuQueryVo);
+
+	List<Student> getAllStudentListByLimit(StuQueryVo stuQueryVo);
+
+	List<Student> getProfessionsByMid(Integer managerId);
+
+
+	List<Student> getClazzByProfessionAndMid(Integer managerId, String profession);
+
 }

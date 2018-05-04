@@ -1,5 +1,6 @@
 package mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -36,9 +37,9 @@ public interface QuestionsMapper {
 
     int updateByPrimaryKey(Questions record);
 
-	List<QuestionsListVo> getQuestionsList();
+	List<QuestionsListVo> getQuestionsList(Questions question);
 
-	List<QuestionsListVo> getQuestionsListByLimit(Pagination pagination);
+	List<QuestionsListVo> getQuestionsListByLimit(HashMap<String, Object> map);
 
 	List<TaotiQuestionsVo> getQuestionListByTaotiid(Integer taotiid);
 

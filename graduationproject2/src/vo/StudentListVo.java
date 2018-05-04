@@ -1,9 +1,12 @@
 package vo;
 
 import po.Pagination;
+import po.Student;
 
 public class StudentListVo {
-
+	
+	
+	private Student student;
 	private Pagination pagination;
 	private Integer managerId;
 	
@@ -11,11 +14,32 @@ public class StudentListVo {
 		
 	}
 	
-	public StudentListVo(Pagination pagination2, Integer managerId2) {
-		this.pagination = pagination2;
-		this.managerId = managerId2;
-	}
 	
+	public StudentListVo(Student student, Integer managerId, Pagination pagination) {
+		super();
+		this.student = student;
+		this.pagination = pagination;
+		this.managerId = managerId;
+	}
+
+
+	public StudentListVo(Student student, Integer managerId) {
+		super();
+		this.student = student;
+		this.managerId = managerId;
+	}
+
+
+	public Student getStudent() {
+		return student;
+	}
+
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+
 	public Pagination getPagination() {
 		return pagination;
 	}

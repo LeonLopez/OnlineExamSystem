@@ -100,8 +100,8 @@
 		$('#cc3').combobox('clear');//清空选中项  
 		$("#type").combobox('clear');
 		$("#difficulty").combobox('clear');
-		$("input[name=answer]").prop("checked",false);
-		$("input[name=judgeanswer]").prop("checked",false);
+		$("input[name=answer]").prop("checked", false);
+		$("input[name=judgeanswer]").prop("checked", false);
 		$("#subject").val("");
 		$("#optiond").val("");
 		$("#optionc").val("");
@@ -110,6 +110,10 @@
 		$("#remark").val("");
 		$("#addorupdate").val("");
 		$("#id").val("");
+		$('#queryLesson').combobox('clear');//清空选中项  
+		$('#queryKnowledge').combobox('clear');//清空选中项  
+		$("#queryType").combobox('clear');
+		$("#queryDifficulty").combobox('clear');
 	}
 
 	function openAddDialog() {
@@ -123,28 +127,28 @@
 			$.messager.alert("系统提示", "请选择要修改的数据！");
 			return;
 		}
-		if(selectedRow.type=="多选"){
+		if (selectedRow.type == "多选") {
 			//选择题答案回显
 			var str = selectedRow.answer;
 			var arr = str.split(',');
-			for(var i=0;i<arr.length;i++){
-				$("#fm input[name='answer']").each(function(){
-					
-						if($(this).attr("value")==arr[i]){
-							//alert(arr[i]);
-							//用prop解决checked失效问题
-							$(this).prop("checked",true);
-						}
-					});
+			for (var i = 0; i < arr.length; i++) {
+				$("#fm input[name='answer']").each(function() {
+
+					if ($(this).attr("value") == arr[i]) {
+						//alert(arr[i]);
+						//用prop解决checked失效问题
+						$(this).prop("checked", true);
+					}
+				});
 			}
 			//判断题答案回显
 			/*$("#fm input[name='judgeanswer']").each(function() {
-	            if ($(this).attr("value") == selectedRow.judgeanswer) {
-	                $(this).attr("checked", true);
-	            }
+			    if ($(this).attr("value") == selectedRow.judgeanswer) {
+			        $(this).attr("checked", true);
+			    }
 
-	        });*/
-	        
+			});*/
+
 			$('#cc2').combobox('setValue', selectedRow.lessonid);
 			$('#cc3').combobox('setValue', selectedRow.knowledgeid);
 			$('#type').combobox('setValue', selectedRow.type);
@@ -156,13 +160,13 @@
 			$("#optiond").val(selectedRow.optiond);
 			$("#remark").val(selectedRow.note);
 			$("#id").val(selectedRow.id);
-			
-		}else{
+
+		} else {
 			$("#fm").form("load", selectedRow);
 		}
-		
+
 		//$("#fm").form("load", selectedRow);
-		
+
 		$("#addorupdate").val("2");
 		$("#dlg").dialog("open").dialog("setTitle", "修改考试题目");
 	}
@@ -245,7 +249,7 @@
 					$("#choicecontent").hide();
 					$("#answercontent1").hide();
 					$("#answercontent2").show();
-				}else{
+				} else {
 					$("#choicecontent").show();
 					$("#answercontent1").show();
 					$("#answercontent2").hide();
@@ -253,22 +257,60 @@
 			}
 		});
 		$("#cc2").combobox({
-			onChange:function(newvalue,oldvalue){
+			onChange : function(newvalue, oldvalue) {
 				$('#cc3').combobox('clear');//清空选中项  
-				}
-			});
+			}
+		});
 	});
+
+	function searchQuestion(){
+		 var lessonid=$('#queryLesson').val();
+		 var knowledgeid=$('#queryKnowledge').val();
+		 var type=$("#queryType").val();
+		 var difficulty=$("#queryDifficulty").val();
+			$("#dg").datagrid("load",{
+					lessonid:lessonid,
+					knowledgeid:knowledgeid,
+					type:type,
+					difficulty:difficulty
+			})
+	}
 </script>
 </head>
 <body style="margin: 1px">
 	<table id="dg"></table>
 	<div id="tb">
 		&nbsp;<a href="javascript:openAddDialog()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-add',plain:true">添加考试题目</a> &nbsp;<a
+			data-options="iconCls:'icon-add',plain:true">添加题目</a> &nbsp;<a
 			href="javascript:openUpdateDialog()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-edit',plain:true">修改考试题目</a> &nbsp;<a
+			data-options="iconCls:'icon-edit',plain:true">修改题目</a> &nbsp;<a
 			href="javascript:deleteQuestions()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-remove',plain:true">删除考试题目</a>
+			data-options="iconCls:'icon-remove',plain:true">删除题目</a>
+		<span style="margin-left:165px;">
+			所属课程 <input id="queryLesson" class="easyui-combobox" name="lessonid"
+				data-options="valueField: 'id',textField: 'name',panelHeight:'auto',url: '${pageContext.request.contextPath }/managerGetLesson.action',onSelect: function(rec){var url = '${pageContext.request.contextPath }/managerGetKnowledge.action?id='+rec.id;$('#queryKnowledge').combobox('reload', url);}" style="width: 80px">
+			&nbsp;&nbsp;所属知识点 <input id="queryKnowledge" class="easyui-combobox" name="knowledgeid"
+				data-options="textField:'name',valueField:'id',panelHeight:'auto'"
+				value="" style="width: 80px"> &nbsp;&nbsp;题目类型 <select id="queryType" name="type"
+				class="easyui-combobox" data-options="panelHeight:'auto'"
+				style="width: 80px">
+				<option value="">-请选择-</option>
+				<option value="单选">单选</option>
+				<option value="多选">多选</option>
+				<option value="判断">判断</option>
+			</select> &nbsp;&nbsp;题目难度 <select id="queryDifficulty" name="difficulty"
+				class="easyui-combobox" data-options="panelHeight:'auto'"
+				style="width: 80px">
+				<option value="">-请选择-</option>
+				<option value="简单">简单</option>
+				<option value="一般">一般</option>
+				<option value="困难">困难</option>
+			</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="javascript:searchQuestion()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-search'">查询</a>
+		</span>
+
+
 	</div>
 
 	<div id="dlg" class="easyui-dialog"
@@ -286,8 +328,8 @@
 				<tr>
 					<td>所属知识点</td>
 					<td><input id="cc3" class="easyui-combobox" name="knowledgeid"
-						data-options="textField:'name',valueField:'id',panelHeight:'auto'" value="">
-					</td>
+						data-options="textField:'name',valueField:'id',panelHeight:'auto'"
+						value=""></td>
 				</tr>
 				<tr>
 					<td><input type="hidden" id="id" name="id"></td>
@@ -306,8 +348,9 @@
 				</tr>
 				<tr>
 					<td>题目难度</td>
-					<td><select id="difficulty" name="difficulty" class="easyui-combobox"
-						data-options="panelHeight:'auto'" style="width: 70px">
+					<td><select id="difficulty" name="difficulty"
+						class="easyui-combobox" data-options="panelHeight:'auto'"
+						style="width: 70px">
 							<option value="简单">简单</option>
 							<option value="一般">一般</option>
 							<option value="困难">困难</option>
@@ -320,54 +363,56 @@
 					<td><textarea id="subject" name="subject" cols="65" rows="6"></textarea></td>
 
 				</tr>
-				
+
 			</table>
 			<div id="choicecontent">
 				<table cellpadding="10px">
 
 					<tr>
 						<td>选项A</td>
-						<td style="padding-left: 36px;"><input id="optiona" class="easyui-validatebox"
-							name="optiona" style="width: 480px"></td>
+						<td style="padding-left: 36px;"><input id="optiona"
+							class="easyui-validatebox" name="optiona" style="width: 480px"></td>
 					</tr>
 					<tr>
 
 						<td>选项B</td>
-						<td style="padding-left: 36px;"><input id="optionb" class="easyui-validatebox"
-							name="optionb" style="width: 480px"></td>
+						<td style="padding-left: 36px;"><input id="optionb"
+							class="easyui-validatebox" name="optionb" style="width: 480px"></td>
 					</tr>
 					<tr>
 						<td>选项C</td>
-						<td style="padding-left: 36px;"><input id="optionc" class="easyui-validatebox"
-							name="optionc" style="width: 480px"></td>
+						<td style="padding-left: 36px;"><input id="optionc"
+							class="easyui-validatebox" name="optionc" style="width: 480px"></td>
 					</tr>
 					<tr>
 						<td>选项D</td>
-						<td style="padding-left: 36px;"><input id="optiond" class="easyui-validatebox"
-							name="optiond" style="width: 480px"></td>
+						<td style="padding-left: 36px;"><input id="optiond"
+							class="easyui-validatebox" name="optiond" style="width: 480px"></td>
 					</tr>
-					</table>
+				</table>
 			</div>
 			<table cellpadding="10px">
-					<tr>
-						<td>正确答案</td>
-						<td id="answercontent1" style="padding-left: 36px;">A<input type="checkbox" name="answer" checked="checked"
-							value="A">&nbsp;&nbsp;&nbsp;&nbsp; B<input
-							type="checkbox" name="answer" value="B">&nbsp;&nbsp;&nbsp;&nbsp;
-							C<input type="checkbox" name="answer" value="C">&nbsp;&nbsp;&nbsp;&nbsp;
-							D<input type="checkbox" name="answer" value="D">
-						</td>
-						<td id="answercontent2" style="padding-left: 36px;"><label for="correct"><input id="correct" type="radio" name="judgeanswer" checked="checked"
-							value="正确">正确</label>&nbsp;&nbsp;&nbsp;&nbsp;<label for="wrong"> <input id="wrong" 
-							type="radio" name="judgeanswer" value="错误">错误</label>
-						</td>
-					</tr>
+				<tr>
+					<td>正确答案</td>
+					<td id="answercontent1" style="padding-left: 36px;">A<input
+						type="checkbox" name="answer" checked="checked" value="A">&nbsp;&nbsp;&nbsp;&nbsp;
+						B<input type="checkbox" name="answer" value="B">&nbsp;&nbsp;&nbsp;&nbsp;
+						C<input type="checkbox" name="answer" value="C">&nbsp;&nbsp;&nbsp;&nbsp;
+						D<input type="checkbox" name="answer" value="D">
+					</td>
+					<td id="answercontent2" style="padding-left: 36px;"><label
+						for="correct"><input id="correct" type="radio"
+							name="judgeanswer" checked="checked" value="正确">正确</label>&nbsp;&nbsp;&nbsp;&nbsp;<label
+						for="wrong"> <input id="wrong" type="radio"
+							name="judgeanswer" value="错误">错误
+					</label></td>
+				</tr>
 			</table>
 			<table cellpadding="10px">
 				<tr>
 					<td>备注</td>
-					<td style="padding-left: 46px;"><input id="remark" type="text" name="note"
-						style="width: 480px"></td>
+					<td style="padding-left: 46px;"><input id="remark" type="text"
+						name="note" style="width: 480px"></td>
 				</tr>
 			</table>
 		</form>

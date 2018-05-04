@@ -115,15 +115,16 @@ public class ExaminationController {
 		List<ExamListVo> examList = examinationService.getExamList();
 		List<ExamListVo> finishExamList = new ArrayList<ExamListVo>();
 		Long currentTime = (new Date()).getTime();
-		System.out.println(examList.get(0).getEndtime().getTime());
-		System.out.println(currentTime);
-		for (int i = 0; i < examList.size(); i++) {
-			if (examList.get(i).getEndtime().getTime() < currentTime) {
-				finishExamList.add(examList.get(i));
-				examList.remove(i);
-				--i;
+		if(examList!=null && examList.size()>0){
+			for (int i = 0; i < examList.size(); i++) {
+				if (examList.get(i).getEndtime().getTime() < currentTime) {
+					finishExamList.add(examList.get(i));
+					examList.remove(i);
+					--i;
+				}
 			}
 		}
+		
 
 		request.setAttribute("examList", examList);
 		request.setAttribute("finishExamList", finishExamList);

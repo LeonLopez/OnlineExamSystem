@@ -157,6 +157,14 @@
 							}
 						})
 	}
+
+	function searchFile(){
+		 var filename=$("#filename").val();
+
+			$("#dg").datagrid("load",{
+					filename:filename,
+			})
+	}
 </script>
 </head>
 <body>
@@ -171,9 +179,13 @@
 			</a>&nbsp;&nbsp; <a href="javascript:uploadFile()" class="easyui-linkbutton"
 				data-options="iconCls:'icon-upload',plain:true">上传</a>
 		</form>
-		<div style="margin-left: 975px;">
+		<div style="margin-left: 564px;">
+		<font>按文件名</font>&nbsp;<input
+			id="filename" type="text" value="" style="width: 145px;height: 23px;">
+			<a href="javascript:searchFile()" class="easyui-linkbutton"
+			data-options="iconCls:'icon-search'">查询</a><span style="margin-left: 97px;">
 <a href="javascript:deleteFile()" class="easyui-linkbutton"
-			data-options="iconCls:'icon-remove',plain:true">删除资料</a></div>
+			data-options="iconCls:'icon-remove',plain:true">删除资料</a></span></div>
 	</div>
 
 </body>

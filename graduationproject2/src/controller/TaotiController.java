@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import po.Examination;
 import po.Lesson;
 import po.Pagination;
 import po.Questions;
@@ -24,6 +26,7 @@ import service.TaotiService;
 import service.TaotiquestionService;
 import vo.AutoMakeTaotiVo;
 import vo.TaotiListVo;
+import vo.TaotiQuestionsVo;
 
 @Controller
 public class TaotiController {
@@ -127,5 +130,56 @@ public class TaotiController {
 		return "success";
 	}
 	
-	
+	@RequestMapping("/managerPreviewTaoti.action")
+	public String preview(Integer id, HttpServletRequest request) throws Exception {
+			
+			List<TaotiQuestionsVo> questionsList = questionService.getQuestionListByTaotiid(id);
+			if (questionsList != null) {
+				request.setAttribute("totalQuestions", questionsList.size());// 总题数
+				List<TaotiQuestionsVo> singleList = new ArrayList<TaotiQuestionsVo>();
+				List<TaotiQuestionsVo> multiList = new ArrayList<TaotiQuestionsVo>();
+				List<TaotiQuestionsVo> judgeList = new ArrayList<TaotiQuestionsVo>();
+				for (TaotiQuestionsVo question : questionsList) {
+					if (question.getType().equals("单选")) {
+						singleList.add(question);
+					} else if (question.getType().equals("多选")) {
+						multiList.add(question);
+					} else if (question.getType().equals("判断")) {
+						judgeList.add(question);
+					}
+				}
+				request.setAttribute("singleList", singleList);// 单选列表
+				request.setAttribute("multiList", multiList);// 多选列表
+				request.setAttribute("judgeList", judgeList);// 判断列表
+				if (singleList != null) {
+					request.setAttribute("singleQuestions", singleList.size());// 单选总数
+
+					int singleScore = 0;
+					for (TaotiQuestionsVo question : singleList) {
+						singleScore += question.getScore();
+
+					}
+					request.setAttribute("singleScore", singleScore);// 单选总分数
+				}
+				if (multiList != null) {
+					request.setAttribute("multiQuestions", multiList.size());// 多选总数
+					int multiScore = 0;
+					for (TaotiQuestionsVo question : multiList) {
+						multiScore += question.getScore();
+					}
+					request.setAttribute("multiScore", multiScore);// 多选总分数
+				}
+				if (judgeList != null) {
+					request.setAttribute("judgeQuestions", judgeList.size());// 判断总数
+					int judgeScore = 0;
+					for (TaotiQuestionsVo question : judgeList) {
+						judgeScore += question.getScore();
+					}
+					request.setAttribute("judgeScore", judgeScore);// 判断总分数
+				}
+			}
+
+		return "forward:/jsp/managerPreviewTaoti.jsp";
+	}
+
 }

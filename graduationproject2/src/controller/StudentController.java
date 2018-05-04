@@ -23,6 +23,7 @@ import po.Pagination;
 import po.Student;
 import service.StudentService;
 import util.MailUtils;
+import vo.StuQueryVo;
 
 @Controller
 public class StudentController {
@@ -102,13 +103,29 @@ public class StudentController {
 		request.setAttribute("student", student);
 		return "forward:/jsp/personal_inf_edit.jsp";
 	}
+	//获取我的学生列表
 	@RequestMapping("/managerStudentGetList.action")
-	public @ResponseBody Map<String,Object> getStudentList(Pagination pagination,HttpServletRequest request) throws Exception{
+	public @ResponseBody Map<String,Object> getStudentList(Pagination pagination,Student student,HttpServletRequest request) throws Exception{
 		Map<String,Object> map = new HashMap<String,Object>();
 		HttpSession session = request.getSession();
 		Integer managerId = (Integer) session.getAttribute("managerId");
-		List<Student> list = studentService.getStudentList(managerId);
-		List<Student> list2 = studentService.getStudentListByLimit(pagination,managerId);
+		List<Student> list = studentService.getStudentList(managerId,student);
+		List<Student> list2 = studentService.getStudentListByLimit(pagination,managerId,student);
+		map.put("total", list.size());
+		map.put("rows", list2);
+		return map;
+	}
+	
+	//获取所有学生列表
+	@RequestMapping("/managerGetAllStudent.action")
+	public @ResponseBody Map<String,Object> getAllStudentList(Pagination pagination,StuQueryVo stuQueryVo,HttpServletRequest request) throws Exception{
+		
+		pagination.setStartPage((pagination.getPage()-1)*pagination.getRows());
+		stuQueryVo.setPagination(pagination);
+		Map<String,Object> map = new HashMap<String,Object>();
+		HttpSession session = request.getSession();
+		List<Student> list = studentService.getAllStudentList(stuQueryVo);
+		List<Student> list2 = studentService.getAllStudentListByLimit(stuQueryVo);
 		map.put("total", list.size());
 		map.put("rows", list2);
 		return map;
@@ -126,6 +143,13 @@ public class StudentController {
 		else return "";
 	}
 	
+	@RequestMapping("/managerUpdateStudent.action")
+	public @ResponseBody String updateStudent(HttpServletRequest request,Student student){
+		
+		studentService.updatePersonalInfoById(student);
+		return "success";
+	}
+	
 	@RequestMapping("/managerDeleteStudent.action")
 	public @ResponseBody String managerDeleteStudent(@RequestBody String idsStr ) throws Exception{
 		String[] ids = idsStr.split(",");
@@ -134,5 +158,36 @@ public class StudentController {
 		}
 		return "success";
 	}
+	@RequestMapping("/managerGetProfession.action")
+	public @ResponseBody List<Student> getProfessions(){
+		
+		return studentService.getProfessions();
+	}
 	
+	
+	@RequestMapping("/managerGetClazz.action")
+	public @ResponseBody List<Student> getClazzByProfession(String profession){
+		return studentService.getClazzByProfession(profession);
+	}
+	
+	@RequestMapping("/managerGetProfessionByMid.action")
+	public @ResponseBody List<Student> getProfessionsByMid(HttpSession session){
+		Integer managerId = (Integer) session.getAttribute("managerId");
+		return studentService.getProfessionsByMid(managerId);
+	}
+	@RequestMapping("/managerGetClazzByProfessionAndMid.action")
+	public @ResponseBody List<Student> getClazzByProfessionAndMid(String profession,HttpSession session){
+		Integer managerId = (Integer) session.getAttribute("managerId");
+		return studentService.getClazzByProfessionAndMid(managerId,profession);
+	}
+	
+	@RequestMapping("/managerAddStudentToMyStuList.action")
+	public @ResponseBody String addStudentToMyStuList(@RequestBody String idsStr ,HttpSession session) throws Exception{
+		Integer managerId = (Integer) session.getAttribute("managerId");
+		String[] ids = idsStr.split(",");
+		for(int i=0;i<ids.length;i++){
+			studentService.addStudentToMyStuList(managerId,Integer.parseInt(ids[i]));
+		}
+		return "success";
+	}
 }

@@ -89,17 +89,16 @@
 				</div>
 			</c:if>
 			-->
-			<div title="考生管理" style="padding: 10px"
+			<div title="学生管理" style="padding: 10px"
 				data-options="iconCls:'icon-group'" align="center">
 				<a
-					href="javascript:openTab('考生信息管理','managerStudentList.jsp','icon-group')"
+					href="javascript:openTab('我的学生列表','managerStudentList.jsp','icon-man')"
 					class="easyui-linkbutton"
-					data-options="iconCls:'icon-group',plain:true" style="width: 150px">考生信息管理</a>
+					data-options="iconCls:'icon-man',plain:true" style="width: 150px">我的学生列表</a>
 				<a
-					href="javascript:openTab('考生成绩管理','managerQueryResult.jsp','icon-definition')"
+					href="javascript:openTab('所有学生列表','managerAllStudentList.jsp','icon-group')"
 					class="easyui-linkbutton"
-					data-options="iconCls:'icon-definition',plain:true"
-					style="width: 150px">考生成绩管理</a>
+					data-options="iconCls:'icon-group',plain:true" style="width: 150px">所有学生列表</a>
 			</div>
 			<div title="考试管理" style="padding: 10px"
 				data-options="iconCls:'icon-definition'" align="center">
@@ -121,6 +120,20 @@
 					class="easyui-linkbutton"
 					data-options="iconCls:'icon-definition',plain:true"
 					style="width: 150px">考试管理</a>
+			</div>
+			<div title="成绩管理" style="padding: 10px"
+				data-options="iconCls:'icon-definition'" align="center">
+				
+				<a
+					href="javascript:openTab('学生成绩查询','managerQueryResult.jsp','icon-definition')"
+					class="easyui-linkbutton"
+					data-options="iconCls:'icon-definition',plain:true"
+					style="width: 150px">学生成绩查询</a>
+				<a
+					href="javascript:openTab('成绩统计分析','managerScoreAnalysis.jsp','icon-sum')"
+					class="easyui-linkbutton"
+					data-options="iconCls:'icon-sum',plain:true"
+					style="width: 150px">成绩统计分析</a>
 			</div>
 			  <div title="知识库" style="padding: 10px"
 				data-options="iconCls:'icon-tasks'" align="center">

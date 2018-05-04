@@ -10,10 +10,13 @@ public interface FileService {
 
 	void addFile(Myfile myfile);
 
-	List<FileListVo> getFileList();
+	List<FileListVo> getFileList(String filename);
 
-	List<FileListVo> getFileListByLimit(Pagination pagination);
+	List<FileListVo> getFileListByLimit(Pagination pagination, String filename);
 
 	void deleteFileById(int id);
+
+	Myfile getFileById(int id);
+
 
 }

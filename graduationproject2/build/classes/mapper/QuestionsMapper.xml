@@ -368,15 +368,39 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="getQuestionsList" resultType="vo.QuestionsListVo">
+  <select id="getQuestionsList" resultType="vo.QuestionsListVo" parameterType="Questions">
   	select q.*,l.name as lessonName,k.name as knowledgeName,m.name as createuser
   	from questions q,lesson l,knowledge k,manager m
   	where q.lessonid=l.id and q.mid=m.id and q.knowledgeid=k.id
+  	<if test="lessonid!=null">
+  		and q.lessonid=#{lessonid}
+  	</if>
+  	<if test="knowledgeid!=null">
+  		and q.knowledgeid=#{knowledgeid}
+  	</if>
+  	<if test="type!=null and type!=''">
+  		and q.type=#{type}
+  	</if>
+  	<if test="difficulty!=null and difficulty!=''">
+  		and q.difficulty=#{difficulty}
+  	</if>
   </select>
   <select id="getQuestionsListByLimit" resultType="vo.QuestionsListVo" parameterType="Pagination">
   	select q.*,l.name as lessonName,k.name as knowledgeName,m.name as createuser
   	from questions q,lesson l,knowledge k,manager m
   	where q.lessonid=l.id and q.mid=m.id and q.knowledgeid=k.id
+  	<if test="lessonid!=null">
+  		and q.lessonid=#{lessonid}
+  	</if>
+  	<if test="knowledgeid!=null">
+  		and q.knowledgeid=#{knowledgeid}
+  	</if>
+  	<if test="type!=null and type!=''">
+  		and q.type=#{type}
+  	</if>
+  	<if test="difficulty!=null and difficulty!=''">
+  		and q.difficulty=#{difficulty}
+  	</if>
   	limit #{startPage},#{rows}
   </select>
    <select id="getQuestionsListByLessonId" parameterType="vo.QuestionsQueryVo" resultType="vo.QuestionsListVo">

@@ -27,10 +27,10 @@ public class QuestionController {
 	private QuestionService questionService;
 	
 	@RequestMapping("/managerGetQuestionsList.action")
-	public @ResponseBody Map<String,Object> getQuestionsList(Pagination pagination) throws Exception{
+	public @ResponseBody Map<String,Object> getQuestionsList(Pagination pagination,Questions question) throws Exception{
 		Map<String,Object> map = new HashMap<String,Object>();
-		List<QuestionsListVo> list = questionService.getQuestionsList();
-		List<QuestionsListVo> list2 = questionService.getQuestionsListByLimit(pagination);
+		List<QuestionsListVo> list = questionService.getQuestionsList(question);
+		List<QuestionsListVo> list2 = questionService.getQuestionsListByLimit(pagination,question);
 		map.put("total", list.size());
 		map.put("rows", list2);
 		return map;

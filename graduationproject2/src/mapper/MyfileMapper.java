@@ -1,5 +1,6 @@
 package mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import po.Myfile;
@@ -30,7 +31,8 @@ public interface MyfileMapper {
 
     int updateByPrimaryKey(Myfile record);
     
-    List<FileListVo> getFileList();
+    List<FileListVo> getFileList(@Param(value="filename") String filename);
 
-	List<FileListVo> getFileListByLimit(Pagination pagination);
+
+	List<FileListVo> getFileListByLimit(HashMap<String, Object> map);
 }
