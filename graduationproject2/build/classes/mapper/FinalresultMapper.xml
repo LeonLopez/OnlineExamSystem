@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.FinalresultMapper" >
+  <resultMap id="BaseResultMap" type="po.Finalresult" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <id column="examinationid" property="examinationid" jdbcType="INTEGER" />
+    <result column="resingle" property="resingle" jdbcType="INTEGER" />
+    <result column="resmore" property="resmore" jdbcType="INTEGER" />
+    <result column="restorf" property="restorf" jdbcType="INTEGER" />
+    <result column="restotal" property="restotal" jdbcType="INTEGER" />
+    <result column="ispass" property="ispass" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sid, examinationid, resingle, resmore, restorf, restotal, ispass, createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.FinalresultExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from finalresult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="po.FinalresultKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from finalresult
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="po.FinalresultKey" >
+    delete from finalresult
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.FinalresultExample" >
+    delete from finalresult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Finalresult" >
+    insert into finalresult (sid, examinationid, resingle, 
+      resmore, restorf, restotal, 
+      ispass, createtime)
+    values (#{sid,jdbcType=INTEGER}, #{examinationid,jdbcType=INTEGER}, #{resingle,jdbcType=INTEGER}, 
+      #{resmore,jdbcType=INTEGER}, #{restorf,jdbcType=INTEGER}, #{restotal,jdbcType=INTEGER}, 
+      #{ispass,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="po.Finalresult" >
+    insert into finalresult
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="examinationid != null" >
+        examinationid,
+      </if>
+      <if test="resingle != null" >
+        resingle,
+      </if>
+      <if test="resmore != null" >
+        resmore,
+      </if>
+      <if test="restorf != null" >
+        restorf,
+      </if>
+      <if test="restotal != null" >
+        restotal,
+      </if>
+      <if test="ispass != null" >
+        ispass,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="examinationid != null" >
+        #{examinationid,jdbcType=INTEGER},
+      </if>
+      <if test="resingle != null" >
+        #{resingle,jdbcType=INTEGER},
+      </if>
+      <if test="resmore != null" >
+        #{resmore,jdbcType=INTEGER},
+      </if>
+      <if test="restorf != null" >
+        #{restorf,jdbcType=INTEGER},
+      </if>
+      <if test="restotal != null" >
+        #{restotal,jdbcType=INTEGER},
+      </if>
+      <if test="ispass != null" >
+        #{ispass,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.FinalresultExample" resultType="java.lang.Integer" >
+    select count(*) from finalresult
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update finalresult
+    <set >
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.examinationid != null" >
+        examinationid = #{record.examinationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.resingle != null" >
+        resingle = #{record.resingle,jdbcType=INTEGER},
+      </if>
+      <if test="record.resmore != null" >
+        resmore = #{record.resmore,jdbcType=INTEGER},
+      </if>
+      <if test="record.restorf != null" >
+        restorf = #{record.restorf,jdbcType=INTEGER},
+      </if>
+      <if test="record.restotal != null" >
+        restotal = #{record.restotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.ispass != null" >
+        ispass = #{record.ispass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update finalresult
+    set sid = #{record.sid,jdbcType=INTEGER},
+      examinationid = #{record.examinationid,jdbcType=INTEGER},
+      resingle = #{record.resingle,jdbcType=INTEGER},
+      resmore = #{record.resmore,jdbcType=INTEGER},
+      restorf = #{record.restorf,jdbcType=INTEGER},
+      restotal = #{record.restotal,jdbcType=INTEGER},
+      ispass = #{record.ispass,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Finalresult" >
+    update finalresult
+    <set >
+      <if test="resingle != null" >
+        resingle = #{resingle,jdbcType=INTEGER},
+      </if>
+      <if test="resmore != null" >
+        resmore = #{resmore,jdbcType=INTEGER},
+      </if>
+      <if test="restorf != null" >
+        restorf = #{restorf,jdbcType=INTEGER},
+      </if>
+      <if test="restotal != null" >
+        restotal = #{restotal,jdbcType=INTEGER},
+      </if>
+      <if test="ispass != null" >
+        ispass = #{ispass,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Finalresult" >
+    update finalresult
+    set resingle = #{resingle,jdbcType=INTEGER},
+      resmore = #{resmore,jdbcType=INTEGER},
+      restorf = #{restorf,jdbcType=INTEGER},
+      restotal = #{restotal,jdbcType=INTEGER},
+      ispass = #{ispass,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </update>
+</mapper>

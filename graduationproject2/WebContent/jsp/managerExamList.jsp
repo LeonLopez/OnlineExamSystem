@@ -234,6 +234,15 @@
 			}
 		})
 	}
+	function tryExam(){
+
+		var selectedRow = $("#dg").datagrid("getSelected");
+		if (selectedRow==null) {
+			$.messager.alert("系统提示","请选择哪场考试！");
+			return;
+		}
+			window.open("${pageContext.request.contextPath }/managerTryExam.action?id="+selectedRow.id); 
+	}
 </script>
 </head>
 <body style="margin: 1px">
@@ -242,6 +251,7 @@
 	&nbsp;<a href="javascript:openAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加考试</a>
 	&nbsp;<a href="javascript:openUpdateDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">编辑考试</a>
 	&nbsp;<a href="javascript:deleteQuestions()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除考试</a>
+	&nbsp;<a href="javascript:tryExam()" class="easyui-linkbutton" data-options="iconCls:'icon-definition',plain:true">试考一下</a>
 </div>
   
 <div id="dlg" class="easyui-dialog" data-options="buttons:'#bts',closed:true" style="width: 700px;height:450px">

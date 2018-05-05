@@ -52,7 +52,7 @@
 					<td><fmt:formatDate value="${exam.starttime }" pattern="yyyy-MM-dd"/> </td>
 					<td><fmt:formatDate value="${exam.endtime }" pattern="yyyy-MM-dd"/>  </td>
 					<td>${exam.duration }分钟</td>
-					<td><button class="btn btn-default" value="进入考试" onclick="enterExam(${exam.id},'${exam.name }')">进入考试</button></td>
+					<td><button class="btn btn-default" value="进入考试" onclick="enterExam(${exam.id},'${exam.name }')" >进入考试</button></td>
 				</tr>
 			</c:forEach>
 			</tbody>

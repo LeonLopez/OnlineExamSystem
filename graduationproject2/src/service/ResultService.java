@@ -32,4 +32,7 @@ public interface ResultService {
 
 	void export(HttpServletResponse response, Workbook workbook, String string) throws Exception;
 
+
+	List<ResultListVo> getFinalResultList(Integer studentId);
+
 }

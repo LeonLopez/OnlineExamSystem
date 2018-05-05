@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.ExamtimesMapper" >
+  <resultMap id="BaseResultMap" type="po.Examtimes" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <id column="examinationid" property="examinationid" jdbcType="INTEGER" />
+    <result column="timescount" property="timescount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sid, examinationid, timescount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="po.ExamtimesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from examtimes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="po.ExamtimesKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from examtimes
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="po.ExamtimesKey" >
+    delete from examtimes
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="po.ExamtimesExample" >
+    delete from examtimes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="po.Examtimes" >
+    insert into examtimes (sid, examinationid, timescount
+      )
+    values (#{sid,jdbcType=INTEGER}, #{examinationid,jdbcType=INTEGER}, #{timescount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="po.Examtimes" >
+    insert into examtimes
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="examinationid != null" >
+        examinationid,
+      </if>
+      <if test="timescount != null" >
+        timescount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="examinationid != null" >
+        #{examinationid,jdbcType=INTEGER},
+      </if>
+      <if test="timescount != null" >
+        #{timescount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="po.ExamtimesExample" resultType="java.lang.Integer" >
+    select count(*) from examtimes
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update examtimes
+    <set >
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.examinationid != null" >
+        examinationid = #{record.examinationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.timescount != null" >
+        timescount = #{record.timescount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update examtimes
+    set sid = #{record.sid,jdbcType=INTEGER},
+      examinationid = #{record.examinationid,jdbcType=INTEGER},
+      timescount = #{record.timescount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="po.Examtimes" >
+    update examtimes
+    <set >
+      <if test="timescount != null" >
+        timescount = #{timescount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="po.Examtimes" >
+    update examtimes
+    set timescount = #{timescount,jdbcType=INTEGER}
+    where sid = #{sid,jdbcType=INTEGER}
+      and examinationid = #{examinationid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -7,7 +7,15 @@ public class ExamListVo extends Examination {
 	private String taotiName;
 	private String createuser;
 	private Integer totalscore;
+	private Integer timescount;
 	
+	
+	public Integer getTimescount() {
+		return timescount;
+	}
+	public void setTimescount(Integer timescount) {
+		this.timescount = timescount;
+	}
 	public Integer getTotalscore() {
 		return totalscore;
 	}

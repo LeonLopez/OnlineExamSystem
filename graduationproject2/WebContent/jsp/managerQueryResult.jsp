@@ -35,13 +35,7 @@
 							fitColumns : true,
 							toolbar : '#tb',
 							columns : [ [
-									{
-										field : 'id',
-										title : '编号',
-										width : 100,
-										align : 'center',
-
-									},
+									
 									{
 										field : 'sname',
 										title : '姓名',
@@ -114,93 +108,45 @@
 									}, ] ]
 						})
 	})
-	/*
-	 $(function() {
-	 alert("error");
-	 $.ajax({
-	 type: "post",
-	 url:'${pageContext.request.contextPath}/managerGetProfession.action' ,
-	 dataType: "json",
-	 success: function (response) {
-	
-	 var ddl = $("#profession");//列表框id
-	 //方法1：添加默认节点
-	 ddl.append("<option value='-1'>--请选择--</option>");
-	 //转成Json对象
-	 var result = eval(response.obj);
-	 //循环遍历 下拉框绑定
-	 $(result).each(function (key) {
-	 var opt = $("<option></option>").text(result[key].profession).val(result[key].profession);
-	 ddl.append(opt);
-	 });
-	
-	 },
-	 error: function (data){
-	 alert("error");
-	 }
-	 });
-	 });
-
-	function searchResult() {
-	var queryoption = $("#queryoption").val();
-	var optionvalue = $("#optionvalue").val();
-
-	$("#tt").datagrid("load", {
-		option : queryoption,
-		value : optionvalue
-	})
-}
-	 */
+   
 	function searchResult(){
-		 var profession1=$("#profession").val();
-		 var clazz1=$("#clazz").val();
-		 var examname1=$("#examname").val();
-		 var sname1=$("#sname").val();
-		 var ispass1=$("#ispass").val();
-		 var order1=$("#order").val();
-
-		 alert(profession1+"+"+clazz1+examname)
-			/*if(queryoption == "createtime"){
-				var reg=/^\d{4}\-\d{2}\-\d{2}$/;
-				if(!reg.test(optionvalue) && optionvalue!=""){
-					alert("日期格式错误！请输入正确格式的日期，如：1990-09-06");
-					return false;
-				}
-			}*/
+		 var profession=$("#profession").val();
+		 var clazz=$("#clazz").val();
+		 var sname=$("#sname").val();
+		 var examname=$("#examname").val();
+		 var ispass=$("#ispass").val();
+		 var order=$("#order").val();
+			
 			$("#tt").datagrid("load",{
-					profession:profession1,
-					clazz:clazz1,
-					examname:examname1,
-					sname:sname1,
-					ispass:ispass1,
-					order:order1,
+					profession:profession,
+					clazz:clazz,
+					examname:examname,
+					sname:sname,
+					ispass:ispass,
+					order:order
 			})
+	}
+	function saveExcel(){
+		$("form").submit();
 	}
 </script>
 </head>
 <body>
 	<table id="tt"></table>
+	
 	<div id="tb">
-		<!-- 
-	    &nbsp;&nbsp;<font>班别</font>
-		<select id="clazz" name="clazz" class="easyui-combobox"
-			data-options="panelHeight:'auto'"
-			style="width: 90px; text-align: center;">
-
-		</select>&nbsp;&nbsp;<font>考试名称</font> <select id="examname" name="examname"
-			class="easyui-combobox" data-options="panelHeight:'auto'"
-			style="width: 150px; text-align: center;">
-
-		</select>  
-		-->
-		 <font style="margin-left: 10px">专业</font>&nbsp;<input id="profession" name="profession"
-			type="text" value="" style="width: 100px; " >
-			<font style="margin-left: 10px">班别</font>&nbsp;<input id="clazz" name="clazz"
-			type="text" value="" style="width: 60px; " >
-			<font style="margin-left: 10px">考试名称</font>&nbsp;<input id="examname" name="examname"
-			type="text" value="" style="width: 100px; " >
-			<font style="margin-left: 10px">姓名</font>&nbsp;<input id="sname"
-			type="text" value="" style="width: 80px; ">
+		<form id="queryform" action="${pageContext.request.contextPath }/managerSaveExcel.action" method="post">
+		 <font style="margin-left:10px;">专业</font> <input id="profession" name="profession"
+			class="easyui-combobox"
+			data-options="panelHeight:'auto',editable:true,valueField:'profession',textField:'profession',data:'rows',url:'${pageContext.request.contextPath}/managerGetProfessionByMid.action',onSelect: function(rec){var url = '${pageContext.request.contextPath }/managerGetClazzByProfessionAndMid.action?profession='+rec.profession;$('#clazz').combobox('reload', url);}"
+			style="width: 90px;" /> &nbsp;&nbsp;<font>班别</font> <input id="clazz"
+			class="easyui-combobox" name="clazz"
+			data-options="textField:'clazz',valueField:'clazz',panelHeight:'auto',editable:false"
+			value="" style="width: 70px;"> &nbsp;&nbsp;<font>姓名</font>&nbsp;<input
+			id="sname" name="sname" type="text" value="" style="width: 80px;">&nbsp;&nbsp;
+			<font style="margin-left: 10px">考试名称</font>&nbsp;<input id="examname" name="examname" class="easyui-combobox"
+						data-options="panelHeight:'auto',editable:true,valueField:'examname',textField:'examname',data:'rows',url:'${pageContext.request.contextPath}/managerGetExamination.action'" style="width: 90px;"  />
+			
 		&nbsp;&nbsp;<font>及格</font> <select id="ispass" name="ispass"
 			class="easyui-combobox" data-options="panelHeight:'auto'"
 			style="width: 90px; text-align: center;">
@@ -208,19 +154,14 @@
 			<option value="是">是</option>
 			<option value="否">否</option>
 		</select> &nbsp;&nbsp;
-		<!--  <font>总分</font> <select id="order" name="order"
-			class="easyui-combobox" data-options="panelHeight:'auto'"
-			style="width: 90px; text-align: center;">
-			<option value="">--请选择--</option>
-			<option value="restotal desc">从高到低</option>
-			<option value="restotal asc">从低到高</option>
-		</select> -->
+		
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="javascript:searchResult()" class="easyui-linkbutton"
 			data-options="iconCls:'icon-search'">查询</a>
 		<div style="float: right;margin-right:50px;">
-		<a href="${pageContext.request.contextPath }/managerSaveExcel.action" class="easyui-linkbutton" data-options="iconCls:'icon-signout'">导出成绩单</a>
+		<a  onclick="saveExcel()" class="easyui-linkbutton" data-options="iconCls:'icon-signout'">导出成绩单</a>
 		</div>
+		</form>
 	</div>
 </body>
 </html>

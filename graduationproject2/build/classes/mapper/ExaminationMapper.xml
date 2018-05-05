@@ -349,5 +349,9 @@
   	where e.taotiid=t.id and e.mid=m.id
   	limit #{startPage},#{rows}
   </select>
+  <select id="getExaminations" resultType="vo.ExamnameVo" >
+  select e.id,e.name as examname
+  from examination e
+  </select>
   
 </mapper>

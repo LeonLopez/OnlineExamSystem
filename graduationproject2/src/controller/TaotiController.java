@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import mapper.QuestionsMapper;
 import po.Examination;
 import po.Lesson;
 import po.Pagination;
@@ -25,6 +26,7 @@ import service.QuestionService;
 import service.TaotiService;
 import service.TaotiquestionService;
 import vo.AutoMakeTaotiVo;
+import vo.PreviewTaotiVo;
 import vo.TaotiListVo;
 import vo.TaotiQuestionsVo;
 
@@ -131,11 +133,15 @@ public class TaotiController {
 	}
 	
 	@RequestMapping("/managerPreviewTaoti.action")
-	public String preview(Integer id, HttpServletRequest request) throws Exception {
+	public String previewTaoti(Integer id, HttpServletRequest request) throws Exception {
+			Taoti taoti = taotiService.getTaotiById(id);
+			request.setAttribute("taotiid", id);
+			request.setAttribute("taotiName", taoti.getName());
 			
 			List<TaotiQuestionsVo> questionsList = questionService.getQuestionListByTaotiid(id);
-			if (questionsList != null) {
+			if (questionsList != null && questionsList.size()!=0) {
 				request.setAttribute("totalQuestions", questionsList.size());// 总题数
+				request.setAttribute("totalScore", taoti.getTotalscore());//总分
 				List<TaotiQuestionsVo> singleList = new ArrayList<TaotiQuestionsVo>();
 				List<TaotiQuestionsVo> multiList = new ArrayList<TaotiQuestionsVo>();
 				List<TaotiQuestionsVo> judgeList = new ArrayList<TaotiQuestionsVo>();
@@ -151,7 +157,7 @@ public class TaotiController {
 				request.setAttribute("singleList", singleList);// 单选列表
 				request.setAttribute("multiList", multiList);// 多选列表
 				request.setAttribute("judgeList", judgeList);// 判断列表
-				if (singleList != null) {
+				if (singleList != null && singleList.size()!=0) {
 					request.setAttribute("singleQuestions", singleList.size());// 单选总数
 
 					int singleScore = 0;
@@ -160,26 +166,51 @@ public class TaotiController {
 
 					}
 					request.setAttribute("singleScore", singleScore);// 单选总分数
+				}else{
+					request.setAttribute("singleQuestions", 0);
+					request.setAttribute("singleScore",0);
 				}
-				if (multiList != null) {
+				if (multiList != null && multiList.size()!=0) {
 					request.setAttribute("multiQuestions", multiList.size());// 多选总数
 					int multiScore = 0;
 					for (TaotiQuestionsVo question : multiList) {
 						multiScore += question.getScore();
 					}
 					request.setAttribute("multiScore", multiScore);// 多选总分数
+				}else{
+					request.setAttribute("multiQuestions", 0);
+					request.setAttribute("multiScore",0);
 				}
-				if (judgeList != null) {
+				if (judgeList != null && judgeList.size()!=0) {
 					request.setAttribute("judgeQuestions", judgeList.size());// 判断总数
 					int judgeScore = 0;
 					for (TaotiQuestionsVo question : judgeList) {
 						judgeScore += question.getScore();
 					}
 					request.setAttribute("judgeScore", judgeScore);// 判断总分数
+				}else{
+					request.setAttribute("judgeQuestions", 0);// 判断总数
+					request.setAttribute("judgeScore",0);// 判断总分数
 				}
 			}
 
 		return "forward:/jsp/managerPreviewTaoti.jsp";
+	}
+	
+	@RequestMapping("/managerDeleteQuestionFromTaoti.action")
+	public @ResponseBody PreviewTaotiVo deleteQuestionFromTaoti(Integer taotiid,Integer questionid){
+		
+		List<TaotiQuestionsVo> questionsList = questionService.getQuestionListByTaotiid(taotiid);
+		PreviewTaotiVo ptv = new PreviewTaotiVo();
+		for(TaotiQuestionsVo tqv:questionsList){
+			if(tqv.getId()==questionid){
+				ptv.setScore(tqv.getScore());
+				ptv.setType(tqv.getType());
+			}
+		}
+		taotiquestionService.deleteQuestionFromTaoti(taotiid,questionid);
+		
+		return ptv;
 	}
 
 }

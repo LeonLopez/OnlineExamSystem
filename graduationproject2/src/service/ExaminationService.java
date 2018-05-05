@@ -5,6 +5,7 @@ import java.util.List;
 import po.Examination;
 import po.Pagination;
 import vo.ExamListVo;
+import vo.ExamnameVo;
 
 public interface ExaminationService {
 
@@ -19,6 +20,9 @@ public interface ExaminationService {
 	void deleteExamById(int id);
 
 	Examination getExamById(Integer id);
+
+	List<ExamnameVo> getExaminations();
+
 
 
 }

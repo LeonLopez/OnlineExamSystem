@@ -277,34 +277,11 @@
   </update>
   
   <select id="getResultList" parameterType="vo.QueryResultVo" resultType="vo.ResultListVo">
-  	select sr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
-  	from managerstudent ms,studentresult sr,student s,examination e
-  	where ms.mid = #{managerId} and ms.sid = sr.sid and sr.sid = s.id and sr.examinationid = e.id
+  	select fr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
+  	from managerstudent ms,finalresult fr,student s,examination e
+  	where ms.mid = #{managerId} and ms.sid = fr.sid and fr.sid = s.id and fr.examinationid = e.id
   	<if test="rlv.profession!=null and rlv.profession!=''">
   		and s.profession=#{rlv.profession}
-  	</if>
-  	<if test="rlv.clazz!=null and rlv.clazz!=''">
-  		and s.clazz=#{rlv.clazz}
-  	</if>
-  	  	<if test="rlv.sname!=null and rlv.sname!=''">
-  		and s.name=#{rlv.sname}
-  	</if>
-  	  	<if test="rlv.examname!=null and rlv.examname!=''">
-  		and e.name=#{rlv.examname}
-  	</if>
-  	<if test="rlv.ispass!=null and rlv.ispass!=''">
-  		and sr.ispass=#{rlv.ispass}
-  	</if>
-  	<if test="rlv.order!=null and rlv.order!=''">
-  		order by #{rlv.order}
-  	</if>
-  </select>
-  <select id="getResultListByLimit" parameterType="vo.QueryResultVo" resultType="vo.ResultListVo">
-  	select sr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
-  	from managerstudent ms,studentresult sr,student s,examination e
-  	where ms.mid = #{managerId} and ms.sid = sr.sid and sr.sid = s.id and sr.examinationid = e.id
-	<if test="rlv.profession!=null and rlv.profession!=''">
-  		and s.profession like "%"#{rlv.profession}"%"
   	</if>
   	<if test="rlv.clazz!=null and rlv.clazz!=''">
   		and s.clazz=#{rlv.clazz}
@@ -313,14 +290,33 @@
   		and s.name like "%"#{rlv.sname}"%"
   	</if>
   	  	<if test="rlv.examname!=null and rlv.examname!=''">
-  		and e.name like "%"#{rlv.examname}"%"
+  		and e.name=#{rlv.examname}
   	</if>
   	<if test="rlv.ispass!=null and rlv.ispass!=''">
-  		and sr.ispass=#{rlv.ispass}
+  		and fr.ispass=#{rlv.ispass}
   	</if>
-  	<if test="rlv.order!=null and rlv.order!=''">
-  		order by #{rlv.order}
+
+  </select>
+  <select id="getResultListByLimit" parameterType="vo.QueryResultVo" resultType="vo.ResultListVo">
+  	select fr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
+  	from managerstudent ms,finalresult fr,student s,examination e
+  	where ms.mid = #{managerId} and ms.sid = fr.sid and fr.sid = s.id and fr.examinationid = e.id
+	<if test="rlv.profession!=null and rlv.profession!=''">
+  		and s.profession =#{rlv.profession}
   	</if>
+  	<if test="rlv.clazz!=null and rlv.clazz!=''">
+  		and s.clazz=#{rlv.clazz}
+  	</if>
+  	  	<if test="rlv.sname!=null and rlv.sname!=''">
+  		and s.name like "%"#{rlv.sname}"%"
+  	</if>
+  	  	<if test="rlv.examname!=null and rlv.examname!=''">
+  		and e.name =#{rlv.examname}
+  	</if>
+  	<if test="rlv.ispass!=null and rlv.ispass!=''">
+  		and fr.ispass=#{rlv.ispass}
+  	</if>
+
   	limit #{pagination.startPage},#{pagination.rows}
   	
   </select>
@@ -342,5 +338,9 @@
   	from studentresult sr,student s,examination e
   	where sr.sid = #{studentId} and sr.sid = s.id and sr.examinationid = e.id
   </select>
-  
+  <select id="getFinalResultList" parameterType="java.lang.Integer" resultType="vo.ResultListVo" >
+  	select fr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
+  	from finalresult fr,student s,examination e
+  	where fr.sid = #{studentId} and fr.sid = s.id and fr.examinationid = e.id
+  </select>
 </mapper>

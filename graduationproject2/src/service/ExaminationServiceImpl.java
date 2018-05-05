@@ -13,6 +13,7 @@ import po.Questions;
 import po.QuestionsExample;
 import po.QuestionsExample.Criteria;
 import vo.ExamListVo;
+import vo.ExamnameVo;
 
 @Service
 public class ExaminationServiceImpl implements ExaminationService{
@@ -50,6 +51,11 @@ public class ExaminationServiceImpl implements ExaminationService{
 	@Override
 	public Examination getExamById(Integer id) {
 		return examinationMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<ExamnameVo> getExaminations() {
+		return examinationMapper.getExaminations();
 	}
 
 

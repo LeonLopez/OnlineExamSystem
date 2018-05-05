@@ -18,11 +18,10 @@
 	
 	<body>
 		<div class="page-header" >
-			<h3 style="margin-left: 40px;">成绩查询</h3>
+			<h3 style="margin-left: 40px;">答题详情</h3>
 		</div>
 		
 		<c:if test="${scoreList!=null && fn:length(scoreList)>0}">
-		<div style="float: right;margin-bottom: 12px;margin-right: 34px;"><a class="btn btn-default" href="${pageContext.request.contextPath }/saveExcel.action">下载成绩单</a></div>
 		<table class="table table-hover" style="text-align: center;">
 			<thead>
 				<tr>
@@ -54,7 +53,7 @@
 		</table>
 		</c:if>
 		<c:if test="${scoreList==null || fn:length(scoreList)==0}">
-				<span>你还没参加考试，没有成绩可以查询</span>
+				<span>你还没参加考试，没有答题情况可以查询</span>
 		</c:if>
 	</body>
 </html>

@@ -39,7 +39,68 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/scripts/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">
-	
+	function deleteFromTaoti(questionid,taotiid){
+
+		var status = confirm("你确定要将该题目从该试卷移除吗?");
+		  if(!status){
+		   return false;
+		  }
+
+		  $
+			.ajax({
+				url : '${pageContext.request.contextPath }/managerDeleteQuestionFromTaoti.action?taotiid='+taotiid+'&questionid='+questionid,
+				type : 'post',
+				dataType:'json',
+				success : function(result) {
+						alert("题目移除成功！");
+						$("#"+questionid).remove();
+						if(result.type=="单选"){
+							var singleQuestions= $("#singleQuestions").text();
+							singleQuestions = singleQuestions-1;
+							$("#singleQuestions").text(singleQuestions);
+							var singleScore= $("#singleScore").text();
+							singleScore = singleScore-result.score;
+							$("#singleScore").text(singleScore);
+							if(singleQuestions==0){
+
+								$("#singletitle").remove();
+							}
+						}
+						if(result.type=="多选"){
+							var multiQuestions= $("#multiQuestions").text();
+							multiQuestions = multiQuestions-1;
+							$("#multiQuestions").text(multiQuestions);
+							var multiScore= $("#multiScore").text();
+							multiScore = multiScore-result.score;
+							$("#multiScore").text(multiScore);
+							if(multiQuestions==0){
+
+								$("#multititle").remove();
+							}
+						}
+						if(result.type=="判断"){
+							var judgeQuestions= $("#judgeQuestions").text();
+							judgeQuestions = judgeQuestions-1;
+							$("#judgeQuestions").text(judgeQuestions);
+							var judgeScore= $("#judgeScore").text();
+							judgeScore = judgeScore-result.score;
+							$("#judgeScore").text(judgeScore);
+							if(judgeQuestions==0){
+
+								$("#judgetitle").remove();
+							}
+						}
+						var totalQuestions= $("#totalQuestions").text();
+						totalQuestions = totalQuestions-1;
+						$("#totalQuestions").text(totalQuestions);
+						var totalScore= $("#totalScore").text();
+						totalScore = totalScore-result.score;
+						$("#totalScore").text(totalScore);
+					
+				}
+			})
+		
+	}
 </script>
 </head>
 
@@ -67,13 +128,13 @@
 
 
 				<c:if test="${singleList!=null and singleQuestions!=0}">
-					<div class="questions">
+					<div class="questions" id="singletitle">
 
 						<div class="questions-title">单选题</div>
 
 						<div class="questions-content">
 							<c:forEach items="${singleList }" var="single" varStatus="status">
-								<div class="question-content" id="">
+								<div class="question-content" id="${single.id }">
 
 									<div class="question-operation operation-icon icon-mark"
 										data-type="1" data-toggle="tooltip" data-placement="top"
@@ -81,7 +142,8 @@
 										<i class="icon icon-p_exam_tag_de"></i>
 									</div>
 									<div style="float: right;">
-										<button class="btn btn-default">删除</button>
+										<button class="btn btn-default"
+											onclick="deleteFromTaoti(${single.id},${taotiid })">删除</button>
 									</div>
 									<div class="exam-question">${single.subject }(${single.score }分)
 									</div>
@@ -148,21 +210,22 @@
 
 
 				<c:if test="${multiList!=null and multiQuestions!=0}">
-					<div class="questions">
+					<div class="questions" id="multititle">
 
 						<div class="questions-title">多选题</div>
 
 						<div class="questions-content">
 							<c:forEach items="${multiList }" var="multi" varStatus="status">
-								<div class="question-content" id="">
+								<div class="question-content" id="${multi.id }">
 
 									<div class="question-operation operation-icon icon-mark"
 										data-type="1" data-toggle="tooltip" data-placement="top"
 										data-container="body" title="标记本题">
 										<i class="icon icon-p_exam_tag_de"></i>
 									</div>
-<div style="float: right;">
-										<button class="btn btn-default">删除</button>
+									<div style="float: right;">
+										<button class="btn btn-default"
+											onclick="deleteFromTaoti(${multi.id},${taotiid })">删除</button>
 									</div>
 									<div class="exam-question">${multi.subject }(${multi.score }分)
 									</div>
@@ -228,21 +291,22 @@
 				</c:if>
 
 				<c:if test="${judgeList!=null and judgeQuestions!=0}">
-					<div class="questions">
+					<div class="questions" id="judgetitle">
 
-						<div class="questions-title">判断题</div>
+						<div class="questions-title" >判断题</div>
 
 						<div class="questions-content">
 							<c:forEach items="${judgeList }" var="judge" varStatus="status">
-								<div class="question-content" id="">
+								<div class="question-content" id="${judge.id }">
 
 									<div class="question-operation operation-icon icon-mark"
 										data-type="1" data-toggle="tooltip" data-placement="top"
 										data-container="body" title="标记本题">
 										<i class="icon icon-p_exam_tag_de"></i>
 									</div>
-<div style="float: right;">
-										<button class="btn btn-default">删除</button>
+									<div style="float: right;">
+										<button class="btn btn-default"
+											onclick="deleteFromTaoti(${judge.id},${taotiid })">删除</button>
 									</div>
 									<div class="exam-question">${judge.subject }(${judge.score }分)
 									</div>
@@ -290,6 +354,43 @@
 			</div>
 		</div>
 
+		<div class="nav-wrapper">
+			<div class="nav nav-status">
+				<ul class="menu-items">
+					
+					<li class="menu-item menu-item-process">
+						<div class="item-label">单选题<span id="singleQuestions">${singleQuestions }</span>道</div>
+						<div class="item-data">
+							<span id="commitCount">共<span id="singleScore">${singleScore }</span>分</span>
+						</div>
+						
+					</li>
+					<li class="menu-item menu-item-process">
+						<div class="item-label">多选题<span id="multiQuestions">${multiQuestions }</span>道</div>
+						<div class="item-data">
+							<span id="commitCount">共<span id="multiScore">${multiScore }</span>分</span>
+						</div>
+						
+					</li>
+					<li class="menu-item menu-item-process">
+						<div class="item-label">判断题<span id="judgeQuestions">${judgeQuestions }</span>道</div>
+						<div class="item-data">
+							<span id="commitCount">共<span id="judgeScore">${judgeScore }</span>分</span>
+						</div>
+						
+					</li>
+					<li class="menu-item menu-item-process">
+						<div class="item-label">共<span id="totalQuestions">${totalQuestions }</span>道题目</div>
+						<div class="item-data">
+							<span id="commitCount">总分:<span id="totalScore">${totalScore }</span>分</span>
+						</div>
+						
+					</li>
+				</ul>
+			</div>
+
+			
+		</div>
 
 
 	</div>

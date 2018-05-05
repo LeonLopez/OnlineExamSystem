@@ -38,6 +38,7 @@
                 <ul class="list-unstyled">
                     <li><button class="btn btn-default" id="main-btn" style="background-color: #307ac1;color:#fff">首页</button></li>
                     <li><button class="btn btn-default" id="exam-btn" >在线考试</button></li>
+                    <li><button class="btn btn-default" id="detail-btn">答题详情</button></li>
                     <li><button class="btn btn-default" id="score-btn">成绩查询</button></li>
                     <li><button class="btn btn-default" id="repo-btn">知识库</button></li>
                     <li><button class="btn btn-default" id="personal-btn">个人资料</button></li>
@@ -85,8 +86,11 @@
         $("#exam-btn").click(function(){
             $("#contentiframe").attr("src","${pageContext.request.contextPath }/getExamList.action");
         });
-        $("#score-btn").click(function(){
+        $("#detail-btn").click(function(){
             $("#contentiframe").attr("src","${pageContext.request.contextPath }/getQueryResult.action");
+        });
+        $("#score-btn").click(function(){
+            $("#contentiframe").attr("src","${pageContext.request.contextPath }/getFinalResult.action");
         });
         $("#repo-btn").click(function(){
             $("#contentiframe").attr("src","${pageContext.request.contextPath }/getFileList.action");

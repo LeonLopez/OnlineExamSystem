@@ -41,4 +41,6 @@ public interface StudentresultMapper {
 	List<String> getExamNameList();
 
 	List<ResultListVo> getStuResultList(Integer studentId);
+
+	List<ResultListVo> getFinalResultList(Integer studentId);
 }

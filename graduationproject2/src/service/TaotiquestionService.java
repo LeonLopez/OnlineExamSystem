@@ -8,4 +8,6 @@ public interface TaotiquestionService  {
 
 	List<Taotiquestion> getTaotiQuestion(int taotiid, int questionid);
 
+	void deleteQuestionFromTaoti(Integer taotiid, Integer questionid);
+
 }

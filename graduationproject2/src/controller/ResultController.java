@@ -53,6 +53,7 @@ public class ResultController {
 	@RequestMapping("/managerGetQueryResult.action")
 	public @ResponseBody Map<String,Object> getExamList(Pagination pagination,ResultListVo rlv,HttpServletRequest request) throws Exception{
 		Map<String, Object> map=new HashMap<String, Object>();
+		System.out.println("***************"+rlv.getOrder());
 		
 		HttpSession session = request.getSession();
 		Integer managerId = (Integer) session.getAttribute("managerId");
@@ -137,6 +138,15 @@ public class ResultController {
 		return "forward:/jsp/scoreList.jsp";
 	}
 	
+	@RequestMapping("/getFinalResult.action")
+	public String getFinalList(HttpServletRequest request) throws Exception{
+		
+		HttpSession session = request.getSession();
+		Integer studentId = (Integer) session.getAttribute("studentId");
+		List<ResultListVo> scoreList = resultService.getFinalResultList(studentId);
+        request.setAttribute("scoreList", scoreList);
+		return "forward:/jsp/finalScoreList.jsp";
+	}
 	
 	@RequestMapping("/getAnswerDetail.action")
 	public String getAnswerDetail(Integer id,String examname,HttpServletRequest request){
@@ -250,7 +260,7 @@ public class ResultController {
 	@RequestMapping("/saveExcel.action")
 	public void saveExcel(HttpSession session,HttpServletResponse response) throws Exception{
 		Integer studentId = (Integer) session.getAttribute("studentId");
-		List<ResultListVo> list = resultService.getStuResultList(studentId);
+		List<ResultListVo> list = resultService.getFinalResultList(studentId);
 		Workbook workbook=new HSSFWorkbook();
 		Sheet sheet = workbook.createSheet("您的考试成绩单");
 		Row row=sheet.createRow(0);

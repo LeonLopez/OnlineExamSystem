@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import mapper.FinalresultMapper;
 import mapper.StudentresultMapper;
+import po.Finalresult;
+import po.FinalresultKey;
 import po.Pagination;
 import po.Studentresult;
 import vo.QueryResultVo;
@@ -22,6 +26,8 @@ public class ResultServiceImpl implements ResultService{
 	
 	@Autowired
 	private StudentresultMapper resultMapper;
+	@Autowired
+	private FinalresultMapper finalresultMapper;
 
 	@Override
 	public List<ResultListVo> getResultList(Integer managerId, ResultListVo rlv) {
@@ -34,11 +40,7 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public List<ResultListVo> getResultListByLimit(Pagination pagination, Integer managerId, ResultListVo rlv) {
 		System.out.println(pagination);
-		if(pagination.getPage()==null || pagination.getRows()==null){
-			pagination = new Pagination();
-			pagination.setPage(1);
-			pagination.setRows(10);
-		}
+
 		pagination.setStartPage((pagination.getPage()-1)*pagination.getRows());
 		QueryResultVo qrv = new QueryResultVo(rlv,managerId,pagination); 
 		return resultMapper.getResultListByLimit(qrv);
@@ -68,9 +70,33 @@ public class ResultServiceImpl implements ResultService{
 
 
 	@Override
+	@Transactional
 	public int addStudentresult(Studentresult result) {
-		return resultMapper.insertSelective(result);
+		System.out.println("插入成绩中");
+		int i = resultMapper.insertSelective(result);
+		Finalresult fr = new Finalresult();
+		fr.setSid(result.getSid());
+		fr.setExaminationid(result.getExaminationid());
+		fr.setResingle(result.getResingle());
+		fr.setResmore(result.getResmore());
+		fr.setRestorf(result.getRestorf());
+		fr.setRestotal(result.getRestotal());
+		fr.setIspass(result.getIspass());
+		fr.setCreatetime(result.getCreatetime());
 		
+		FinalresultKey finalresultKey = new FinalresultKey();
+		finalresultKey.setSid(result.getSid());
+		finalresultKey.setExaminationid(result.getExaminationid());
+		Finalresult finalresult = finalresultMapper.selectByPrimaryKey(finalresultKey);
+		if(finalresult==null ){
+			finalresultMapper.insertSelective(fr);
+		}else{
+			//如果考试成绩总分大于最终成绩表的总分，则将该成绩覆盖之前的数据
+			if(finalresult.getRestotal()<result.getRestotal()){
+				finalresultMapper.updateByPrimaryKeySelective(fr);
+			}
+		}
+		return i;
 	}
 
 
@@ -90,6 +116,13 @@ public class ResultServiceImpl implements ResultService{
 		workbook.write(out);
 		out.flush();
 		out.close();
+	}
+
+
+
+	@Override
+	public List<ResultListVo> getFinalResultList(Integer studentId) {
+		return resultMapper.getFinalResultList(studentId);
 	}
 
 

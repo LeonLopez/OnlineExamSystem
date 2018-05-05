@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,15 +31,18 @@ import po.Examination;
 import po.Lesson;
 import po.Pagination;
 import po.Questions;
+import po.Student;
 import po.Studentresult;
 import po.Taoti;
 import service.AnswerresultService;
 import service.ExaminationService;
+import service.ExamtimesService;
 import service.QuestionService;
 import service.ResultService;
 import service.TaotiService;
 import vo.AnswerMap;
 import vo.ExamListVo;
+import vo.ExamnameVo;
 import vo.TaotiQuestionsVo;
 
 @Controller
@@ -57,6 +61,9 @@ public class ExaminationController {
 
 	@Autowired
 	private AnswerresultService answerresultService;
+	
+	@Autowired
+	private ExamtimesService examtimesService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder, WebRequest request) {
@@ -74,6 +81,12 @@ public class ExaminationController {
 		map.put("total", list.size());
 		map.put("rows", list2);
 		return map;
+	}
+	
+	@RequestMapping("/managerGetExamination.action")
+	public @ResponseBody List<ExamnameVo> getExaminations(){
+		
+		return examinationService.getExaminations();
 	}
 
 	@RequestMapping("/managerAddExam.action")
@@ -131,6 +144,13 @@ public class ExaminationController {
 		return "forward:/jsp/examList.jsp";
 	}
 
+	@RequestMapping("/beforeAnswer.action")
+	public String beforeAnswer(Integer id, HttpServletRequest request) throws Exception {
+		Integer studentId = (Integer) request.getSession().getAttribute("studentId");
+	    int times = examtimesService.getExamtimesBySid(studentId,id);
+		return "forward:/jsp/beforeAnswer.jsp";
+	}
+	
 	@RequestMapping("/startExam.action")
 	public String startExam(Integer id, HttpServletRequest request) throws Exception {
 		Examination exam = examinationService.getExamById(id);
@@ -153,6 +173,10 @@ public class ExaminationController {
 						judgeList.add(question);
 					}
 				}
+				//打乱试题
+				Collections.shuffle(singleList);
+				Collections.shuffle(multiList);
+				Collections.shuffle(judgeList);
 				request.setAttribute("singleList", singleList);// 单选列表
 				request.setAttribute("multiList", multiList);// 多选列表
 				request.setAttribute("judgeList", judgeList);// 判断列表
@@ -345,7 +369,7 @@ public class ExaminationController {
 		return "forward:/jsp/practice_start.jsp";
 	}
 
-	@RequestMapping("/postPractice.action")
+	@RequestMapping(value={"/postPractice.action"})
 	public String postPractice(AnswerMap answerMap, String examname, Integer examid, HttpServletRequest request)
 			throws Exception {
 
@@ -393,5 +417,112 @@ public class ExaminationController {
 		request.setAttribute("judgeScore", judgeScore);
 		request.setAttribute("totalScore", totalScore);
 		return "forward:/jsp/practiceResults.jsp";
+	}
+	
+	@RequestMapping("/managerTryExam.action")
+	public String tryExam(Integer id, HttpServletRequest request) throws Exception {
+		Examination exam = examinationService.getExamById(id);
+		if (exam != null) {
+			request.setAttribute("examname", exam.getName());
+			request.setAttribute("examid", exam.getId());
+			request.setAttribute("duration", exam.getDuration());
+			List<TaotiQuestionsVo> questionsList = questionService.getQuestionListByTaotiid(exam.getTaotiid());
+			if (questionsList != null) {
+				request.setAttribute("totalQuestions", questionsList.size());// 总题数
+				List<TaotiQuestionsVo> singleList = new ArrayList<TaotiQuestionsVo>();
+				List<TaotiQuestionsVo> multiList = new ArrayList<TaotiQuestionsVo>();
+				List<TaotiQuestionsVo> judgeList = new ArrayList<TaotiQuestionsVo>();
+				for (TaotiQuestionsVo question : questionsList) {
+					if (question.getType().equals("单选")) {
+						singleList.add(question);
+					} else if (question.getType().equals("多选")) {
+						multiList.add(question);
+					} else if (question.getType().equals("判断")) {
+						judgeList.add(question);
+					}
+				}
+				request.setAttribute("singleList", singleList);// 单选列表
+				request.setAttribute("multiList", multiList);// 多选列表
+				request.setAttribute("judgeList", judgeList);// 判断列表
+				if (singleList != null) {
+					request.setAttribute("singleQuestions", singleList.size());// 单选总数
+
+					int singleScore = 0;
+					for (TaotiQuestionsVo question : singleList) {
+						singleScore += question.getScore();
+
+					}
+					request.setAttribute("singleScore", singleScore);// 单选总分数
+				}
+				if (multiList != null) {
+					request.setAttribute("multiQuestions", multiList.size());// 多选总数
+					int multiScore = 0;
+					for (TaotiQuestionsVo question : multiList) {
+						multiScore += question.getScore();
+					}
+					request.setAttribute("multiScore", multiScore);// 多选总分数
+				}
+				if (judgeList != null) {
+					request.setAttribute("judgeQuestions", judgeList.size());// 判断总数
+					int judgeScore = 0;
+					for (TaotiQuestionsVo question : judgeList) {
+						judgeScore += question.getScore();
+					}
+					request.setAttribute("judgeScore", judgeScore);// 判断总分数
+				}
+			}
+
+		}
+		return "forward:/jsp/managerTryExam.jsp";
+	}
+	
+	@RequestMapping(value={"/managerPostExam.action"})
+	public String managerpostPractice(AnswerMap answerMap, String examname, Integer examid, HttpServletRequest request)
+			throws Exception {
+
+		Examination exam = examinationService.getExamById(examid);
+		int taotiid = exam.getTaotiid();
+		List<Answerresult> answerResultList = new ArrayList<Answerresult>();// 保存回答结果集
+		Map<Integer, String> map = answerMap.getAnswerMap();
+		Set<Integer> keySet = map.keySet();
+		System.out.println("keyNum" + keySet.size());
+		Iterator<Integer> it = keySet.iterator();
+		Integer singleScore = 0;
+		Integer multiScore = 0;
+		Integer judgeScore = 0;
+		while (it.hasNext()) {
+			Integer key = it.next();
+			String answer = map.get(key);
+			TaotiQuestionsVo question = questionService.getTaotiQuestionByTaotiQuestionIds(taotiid, key);// 获取相应的题目和分数
+
+			if (!question.getType().equals("判断")) {
+				if (question.getAnswer().equals(answer)) {// 回答正确
+					if (question.getType().equals("单选")) {
+						singleScore += question.getScore();
+					} else {
+						multiScore += question.getScore();
+					}
+				}
+			} else {// 为判断题
+				if (question.getJudgeanswer().equals(answer)) {
+					judgeScore += question.getScore();
+				}
+			}
+		}
+		Integer totalScore = singleScore + multiScore + judgeScore;// 总得分
+
+		Taoti taoti = taotiService.getTaotiById(exam.getTaotiid());
+		Integer fullMark = taoti.getTotalscore();// 试卷满分分值
+		double accuracy = (double) totalScore / fullMark * 100;
+		DecimalFormat df = new DecimalFormat("0.0");
+		String accuracyFormat = df.format(accuracy);// 准确率
+		request.setAttribute("accuracy", accuracyFormat);
+		request.setAttribute("examname", examname);
+		request.setAttribute("examid", examid);
+		request.setAttribute("singleScore", singleScore);
+		request.setAttribute("multiScore", multiScore);
+		request.setAttribute("judgeScore", judgeScore);
+		request.setAttribute("totalScore", totalScore);
+		return "forward:/jsp/managerTryExamResult.jsp";
 	}
 }

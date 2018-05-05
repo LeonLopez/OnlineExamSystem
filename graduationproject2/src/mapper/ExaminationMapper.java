@@ -6,6 +6,7 @@ import po.Examination;
 import po.ExaminationExample;
 import po.Pagination;
 import vo.ExamListVo;
+import vo.ExamnameVo;
 
 public interface ExaminationMapper {
     int countByExample(ExaminationExample example);
@@ -39,4 +40,7 @@ public interface ExaminationMapper {
     List<ExamListVo> getExamList();
 
 	List<ExamListVo> getExamListByLimit(Pagination pagination);
+
+	List<ExamnameVo> getExaminations();
+
 }
