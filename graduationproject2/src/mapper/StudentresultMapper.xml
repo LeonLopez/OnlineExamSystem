@@ -295,7 +295,7 @@
   	<if test="rlv.ispass!=null and rlv.ispass!=''">
   		and fr.ispass=#{rlv.ispass}
   	</if>
-
+     order by restotal desc
   </select>
   <select id="getResultListByLimit" parameterType="vo.QueryResultVo" resultType="vo.ResultListVo">
   	select fr.*,s.name as sname,s.profession,s.clazz,e.name as examname 
@@ -316,7 +316,7 @@
   	<if test="rlv.ispass!=null and rlv.ispass!=''">
   		and fr.ispass=#{rlv.ispass}
   	</if>
-
+	order by restotal desc
   	limit #{pagination.startPage},#{pagination.rows}
   	
   </select>

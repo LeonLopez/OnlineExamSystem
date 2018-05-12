@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import po.Manager;
 import po.ManagerExample;
+import po.Pagination;
 
 public interface ManagerMapper {
     int countByExample(ManagerExample example);
@@ -27,4 +28,6 @@ public interface ManagerMapper {
     int updateByPrimaryKeySelective(Manager record);
 
     int updateByPrimaryKey(Manager record);
+
+	List<Manager> getListByLimit(Pagination pagination);
 }

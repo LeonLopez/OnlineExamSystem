@@ -37,7 +37,7 @@
 		}
 		$("#fm").form("load",selectedRow);
 		$("#addorupdate").val("2");
-		$("#name").attr("readonly",true);
+		$("#name").attr("readonly",false);
 		$("#dlg").dialog("open").dialog("setTitle","修改管理员信息");
 	}
 	
@@ -143,8 +143,8 @@
 				<td>权限</td>
 				<td>
 					<select id="authority" class="easyui-combobox" name="authority" data-options="editable:false,panelHeight:'auto'">
-						<option value="simple" selected="selected">simple</option>
-						<option value="super">super</option>
+						<option value="普通" selected="selected">普通</option>
+						<option value="超级">超级</option>
 					</select>
 				</td>
 			</tr>
@@ -152,7 +152,7 @@
 	</form>
 </div>
 <div id="bts">
-	<a href="javascript:addOrUpdateManager()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">保存</a>
+	<a href="javascript:addOrUpdateManager()" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
 	<a href="javascript:closeDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
 </div>
 </body>

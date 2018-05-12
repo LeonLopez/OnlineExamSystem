@@ -35,4 +35,6 @@ public interface ResultService {
 
 	List<ResultListVo> getFinalResultList(Integer studentId);
 
+
+
 }

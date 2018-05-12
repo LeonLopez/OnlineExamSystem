@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>后台管理系统登录</title>
 
-<link href="../styles/main.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath }/styles/main.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -18,6 +18,7 @@
 			<div class="input">
 				
 					<div class="log">
+					<div class="tip" style="text-align: center;color:red;">${message}</div>
 					<form
 					action="${pageContext.request.contextPath }/managerLogin.action"
 					method="post">
@@ -32,7 +33,7 @@
 							<div class="check"></div>
 						</div>
 						</form>
-						<div class="tip">${message}</div>
+						
 					</div>
 				
 			</div>
@@ -42,9 +43,9 @@
 		<div class="footer"></div>
 	</div>
 
-	<script type="text/javascript" src="../scripts/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="../scripts/fun.base.js"></script>
-	<script type="text/javascript" src="../scripts/script.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/scripts/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/scripts/fun.base.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/scripts/script.js"></script>
 
 
 	<!--[if IE 6]>

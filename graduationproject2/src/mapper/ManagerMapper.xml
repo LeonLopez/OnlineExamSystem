@@ -82,6 +82,9 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="getListByLimit" parameterType="Pagination" resultType="Manager">
+		SELECT * FROM manager LIMIT #{startPage},#{rows}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -193,4 +196,5 @@
       authority = #{authority,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  	
 </mapper>

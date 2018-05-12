@@ -86,7 +86,7 @@ label.valid {
 						<div>
 							<span>账号：</span><input style="border: 2px solid #307ac1"
 								type="text" id="username" class="username" name="name"
-								value='${student.name }'  />
+								value='${student.name }' readonly />
 
 							<div class="tips"></div>
 						</div>

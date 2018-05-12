@@ -47,13 +47,7 @@
 	<input id="managerAuthority" type="hidden"
 		value="${sessionScope.managerAuthority }">
 	<div data-options="region:'north'">
-		<!--  <div
-			style="line-height:60px;height:58px;background-image:url('${pageContext.request.contextPath}/image/signinback.jpg');background-size:cover">
-			<font color="white" size="8px" face="仿宋"
-				style="font-weight: bold; margin-left: 2%">课程考试系统<font
-				size="5px" color="black"> -- 后 台 管 理 </font></font> <font id="ft"
-				style="margin-left: 20%">当 前 管 理 员：<span id="sp">${sessionScope.managerName }</span></font>
-		</div>-->
+		
 		<div id="header">
 			<div class="logo_bgm">
 				<img src="${pageContext.request.contextPath}/images/logo.png" alt="网站logo" />
@@ -79,7 +73,7 @@
 	<div data-options="region:'west',title:'后台导航栏',split:true"
 		style="width: 200px">
 		<div class="easyui-accordion" data-options="fit:true">
-			<!-- <c:if test="${sessionScope.managerAuthority=='super' }">
+			<c:if test="${sessionScope.managerAuthority=='超级'}">
 				<div title="管理员管理" style="padding: 10px"
 					data-options="iconCls:'icon-man'" align="center">
 					<a
@@ -88,7 +82,6 @@
 						data-options="iconCls:'icon-man',plain:true" style="width: 150px">管理员信息管理</a>
 				</div>
 			</c:if>
-			-->
 			<div title="学生管理" style="padding: 10px"
 				data-options="iconCls:'icon-group'" align="center">
 				<a

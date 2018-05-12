@@ -78,7 +78,6 @@
   outline: none;
   border: none;
   color:#999;
-  width: calc(100% - 38px);
 }
 .focus {
   border-color: #1A8DFF;

@@ -19,10 +19,27 @@ public class ExamtimesServiceImpl implements ExamtimesService {
 		key.setSid(studentId);
 		key.setExaminationid(id);
 		Examtimes examtimes = examtimesMapper.selectByPrimaryKey(key);
-		if(examtimes.getTimescount()==null){
+		if(examtimes==null){
 			return 0;
 		}else{
 			return examtimes.getTimescount();
+		}
+	}
+
+	@Override
+	public void updateExamtimesBySid(Integer studentId, Integer id) {
+		Examtimes examtimes = new Examtimes();
+		examtimes.setSid(studentId);
+		examtimes.setExaminationid(id);
+
+		int times = getExamtimesBySid(studentId,id);
+		if(times==0){
+			examtimes.setTimescount(1);
+			examtimesMapper.insertSelective(examtimes);
+		}
+		else{
+			examtimes.setTimescount(times+1);
+			examtimesMapper.updateByPrimaryKey(examtimes);
 		}
 	}
 

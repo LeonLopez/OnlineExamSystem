@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 	function enterExam(id,name){
-			window.open("${pageContext.request.contextPath }/jsp/beforeAnswer.jsp?id="+id+"&name="+name); 
+			window.open("${pageContext.request.contextPath }/beforeAnswer.action?id="+id+"&name="+name); 
 		}
 	function enterPractice(id){
 		window.open("${pageContext.request.contextPath }/startPractice.action?id="+id); 

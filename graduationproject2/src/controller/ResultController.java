@@ -1,5 +1,6 @@
 package controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,7 @@ import service.ResultService;
 import vo.AnswerDetailVo;
 import vo.ExamListVo;
 import vo.ResultListVo;
+import vo.ScoreAnalysis;
 import vo.TaotiQuestionsVo;
 
 @Controller
@@ -125,8 +127,56 @@ public class ResultController {
 	
 	
 	
-	
-	
+	@RequestMapping("/managerStatisticAnalysis.action")
+	public  String statisticAnalysis(ResultListVo rlv,HttpServletRequest request,Integer medium,Integer good,Integer excellent) throws Exception{
+		HttpSession session = request.getSession();
+		Integer managerId = (Integer) session.getAttribute("managerId");
+		List<ResultListVo> list = resultService.getResultList(managerId,rlv);
+		
+		if(list!=null && list.size()!=0){
+			ScoreAnalysis scoreAnalysis = new ScoreAnalysis();
+			scoreAnalysis.setTotalNum(list.size());
+			scoreAnalysis.setTopScore(list.get(0).getRestotal());
+			scoreAnalysis.setLowScore(list.get(list.size()-1).getRestotal());
+			int notpassNum = 0;
+			int passNum = 0;
+			int mediumNum = 0;
+			int goodNum = 0;
+			int excellentNum = 0;
+			int totalScore = 0;
+			double passRate = 0;
+			double averageScore = 0;
+			for(ResultListVo result:list){
+				if(result.getIspass().equals("否")){
+					++notpassNum;
+				}else{
+					++passNum;
+					if(result.getRestotal()>=excellent){
+						++excellentNum;
+					}else if(result.getRestotal()>=good){
+						++goodNum;
+					}else if(result.getRestotal()>=medium){
+						++mediumNum;
+					}
+				}
+				totalScore+=result.getRestotal();
+			}
+			averageScore = (double)totalScore/list.size();
+			passRate = (double)passNum/list.size()*100;
+			DecimalFormat df = new DecimalFormat("0.0");
+			String passRateStr = df.format(passRate);
+			scoreAnalysis.setAverageScore(averageScore);
+			scoreAnalysis.setExcellentNum(excellentNum);
+			scoreAnalysis.setGoodNum(goodNum);
+			scoreAnalysis.setMediumNum(mediumNum);
+			scoreAnalysis.setNotpassNum(notpassNum);
+			scoreAnalysis.setPassNum(passNum-excellentNum-goodNum-mediumNum);
+			scoreAnalysis.setPassRate(passRateStr);
+			request.setAttribute("examname", rlv.getExamname());
+			request.setAttribute("scoreAnalysis", scoreAnalysis);
+		}
+		return "forward:/jsp/managerScoreAnalysis.jsp";
+	}
 	
 	@RequestMapping("/getQueryResult.action")
 	public String getResultList(HttpServletRequest request) throws Exception{

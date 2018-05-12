@@ -145,14 +145,24 @@ public class ExaminationController {
 	}
 
 	@RequestMapping("/beforeAnswer.action")
-	public String beforeAnswer(Integer id, HttpServletRequest request) throws Exception {
+	public String beforeAnswer(Integer id,String name, HttpServletRequest request) throws Exception {
+		System.out.println("执行beforeanswer***************************");
 		Integer studentId = (Integer) request.getSession().getAttribute("studentId");
 	    int times = examtimesService.getExamtimesBySid(studentId,id);
+	    System.out.println(times+"*****************************times");
+	    request.setAttribute("id", id);
+	    request.setAttribute("name", name);
+	    request.setAttribute("examtimes", times);
 		return "forward:/jsp/beforeAnswer.jsp";
 	}
 	
 	@RequestMapping("/startExam.action")
 	public String startExam(Integer id, HttpServletRequest request) throws Exception {
+		//考试次数记录
+		Integer studentId = (Integer) request.getSession().getAttribute("studentId");
+	    examtimesService.updateExamtimesBySid(studentId,id);
+	    
+	    
 		Examination exam = examinationService.getExamById(id);
 		if (exam != null) {
 			request.setAttribute("examname", exam.getName());

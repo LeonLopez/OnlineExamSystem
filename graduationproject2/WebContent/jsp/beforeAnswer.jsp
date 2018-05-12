@@ -17,19 +17,43 @@
 		<meta name="renderer" content="webkit">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="../styles/styles.min.css">
-		<link rel="stylesheet" type="text/css" href="../styles/style.css">
-		<link rel="stylesheet" type="text/css" href="../styles/base.css">
-		<link rel="stylesheet" type="text/css" href="../styles/response.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/styles/styles.min.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/styles/style.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/styles/base.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/styles/response.css">
+		<script type="text/javascript"
+	src="${pageContext.request.contextPath }/scripts/jquery-1.11.0.min.js"></script>
 		<script type="text/javascript">
+
+		function countExamtime(examtime){
+			var time = examtime+1;
+			var resttimes = 2 -time;
+			if(time<3){
+				alert("这是你第"+time+"次考试！你还剩"+resttimes+"次考试机会");
+
+			}else{
+				$("#startBtn").attr('disabled','disabled');
+				alert("你的考试机会已经用完，不能再次进入考试");
+
+			}
+			
+			
+
+
+			}
+			
+			
+		
 			function startExam(id){
 				window.location="${pageContext.request.contextPath }/startExam.action?id="+id;
 				}
+
+			
 		</script>
 	</head>
 
-	<body>
+	<body onload = "countExamtime(${examtimes})">
 		
 
 		<div class="wrapper">
@@ -37,7 +61,7 @@
 
 				<div class="logo-wrapper">
 					<a href="https://exam.kaoshixing.com/exam" title="logo">
-						<img class="icon-logo logo-ksx" src="../images/logo.png" />
+						<img class="icon-logo logo-ksx" src="${pageContext.request.contextPath }/images/logo.png" />
 					</a>
 				</div>
 
@@ -53,17 +77,17 @@
 
 			<div class="panel-block ">
 				<div class="icon-logo visible-xs">
-					<img src="../images/logo.png" />
+					<img src="${pageContext.request.contextPath }/images/logo.png" />
 				</div>
 				<div class="title ellipsis">
-				${param.name }
+				${name }
 				</div>
 				<div class="content">
 
 				</div>
 
 				<div class="btn-row">
-					<button type="button" onclick="startExam(${param.id})" class="btn btn-primary btn-fix btn-w-120 btn-h-40" id="startExamBtn" data-setIpRange="0" data-id="116508">开始</button>
+					<button type="button" onclick="startExam(${id})" class="btn btn-primary btn-fix btn-w-120 btn-h-40" id="startBtn" data-setIpRange="0" data-id="116508" >开始</button>
 				</div>
 			</div>
 		</div>

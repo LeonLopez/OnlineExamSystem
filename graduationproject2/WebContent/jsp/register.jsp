@@ -62,10 +62,22 @@ label.valid{
     				name:{
     					required:true,	//必填。如果验证方法不需要参数，则配置为true
     					rangelength:[6,16],
-    					//remote:{
-    						//url:"checkStudentExits.action",
-    						//type:"post"
-    					//}
+    					/*remote: {
+    				          type: "post",
+    				          url: "${pageContext.request.contextPath }/checkStudentExits.action",
+    				          data: {
+    				            name: function() {
+    				              return $("#username").val();
+    				            }
+    				          },
+    				          dataType: "json",
+    				          dataFilter: function(data, type) {
+    				            if (data == "true")
+    				              return true;
+    				            else
+    				              return false;
+    				          }
+    				        }*/
     				},
     				password:{
     					required:true,

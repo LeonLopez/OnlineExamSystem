@@ -1,14 +1,10 @@
 package controller;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import po.Manager;
 import po.Pagination;
 import po.Student;
 import service.StudentService;
@@ -31,17 +26,17 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	
-	@RequestMapping("/checkStudentExits.action")
-	public InputStream checkStudentExits(String name){
+	@RequestMapping("/checkExits.action")
+	public @ResponseBody String checkStudentExits(String name){
+		System.out.println("********************existsornot");
 		List<Student> list = studentService.checkStudentByName(name);
-		InputStream inputStream = null;
-		if(list.size()>0){
-			inputStream = new ByteArrayInputStream("false".getBytes());
-		}else{
-			inputStream = new ByteArrayInputStream("true".getBytes());
+		if(list!=null && list.size()>0){
+			return "success";
 		}
-		return inputStream;
+		else
+			return "failure";
 	}
+	
 	@RequestMapping("/register.action")
 	public String registerForStudent(Student student) {
 		student.setActivate(0);
@@ -77,7 +72,7 @@ public class StudentController {
 			return "redirect:/jsp/index.jsp";
 		}else {
 			request.setAttribute("message", "对不起，帐号或密码错误！");
-			return "redirect:/jsp/login.jsp";
+			return "forward:/jsp/login.jsp";
 		}
 	}
 	
@@ -123,7 +118,6 @@ public class StudentController {
 		pagination.setStartPage((pagination.getPage()-1)*pagination.getRows());
 		stuQueryVo.setPagination(pagination);
 		Map<String,Object> map = new HashMap<String,Object>();
-		HttpSession session = request.getSession();
 		List<Student> list = studentService.getAllStudentList(stuQueryVo);
 		List<Student> list2 = studentService.getAllStudentListByLimit(stuQueryVo);
 		map.put("total", list.size());
